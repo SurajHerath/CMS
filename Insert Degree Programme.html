@@ -93,8 +93,9 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="department" placeholder="Department">
-                                    <label for="department">Department</label>
+                                        <select class="form-select" id="department">
+                                        </select>
+                                        <label for="department">Department</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -184,15 +185,90 @@
     <script src="js/main.js"></script>
 
     <!-- Custom Javascript for Insert Degree Programme -->
+   
+
     <script>
-        document.getElementById('insertDegreeProgrammeForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Implement insert logic here
-            alert('Degree Programme inserted successfully');
-            // Redirect to view all degree programmes page
-            window.location.href = 'view-all-degree-programmes.html';
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("insertDegreeProgrammeForm").addEventListener("submit", function (event) {
+            event.preventDefault(); 
+
+            // Get form values
+            let deptId = document.getElementById("department").value.trim();
+            let programName = document.getElementById("programName").value.trim();
+            let description = document.getElementById("description").value.trim();
+            let duration = document.getElementById("duration").value.trim();
+            let level = document.getElementById("level").value.trim();
+            let degreeType = document.getElementById("degreeType").value.trim();
+            let entryRequirement = document.getElementById("entryRequirement").value.trim();
+            let maxStudents = document.getElementById("maxStudents").value.trim();
+            let status = document.getElementById("status").value.trim();
+
+            // Basic validation
+            if (!deptId || !programName || !description || !duration || !level || !degreeType || !entryRequirement || !maxStudents || !status) {
+                alert("All fields are required.");
+                return;
+            }
+
+            // Construct JSON payload
+            let requestData = {
+                department: {
+                    deptId: parseInt(deptId)
+                },
+                program_name: programName,
+                description: description,
+                duration: parseInt(duration),
+                level: level,
+                degree_type: degreeType,
+                entry_requirement: entryRequirement,
+                max_students: parseInt(maxStudents),
+                status: status
+            };
+
+            let requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            };
+
+            fetch("http://localhost:8080/degreeProgrammes", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result);
+                    alert("Degree program added successfully!");
+
+                    // Clear form fields
+                    document.getElementById("insertDegreeProgrammeForm").reset();
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Failed to add degree program.");
+                });
         });
+    });
+</script>
+
+
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("http://localhost:8080/departments")
+            .then(response => response.json())
+            .then(data => {
+                const departmentSelect = document.getElementById("department");
+                departmentSelect.innerHTML = '<option value="">Select Department</option>';
+    
+                data.forEach(department => {
+                    const option = document.createElement("option");
+                    option.value = department.deptId;
+                    option.textContent = department.deptName;
+                    departmentSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching departments:", error));
+    });
     </script>
+    
 </body>
 
 </html>

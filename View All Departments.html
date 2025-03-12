@@ -100,24 +100,8 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Computer Science</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary me-2" onclick="viewDetails('Computer Science')">View Details</button>
-                                        <a href="edit-department.html?id=1" class="btn btn-sm btn-warning me-2">Edit</a>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteDepartment(1)">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Mathematics</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary me-2" onclick="viewDetails('Mathematics')">View Details</button>
-                                        <a href="edit-department.html?id=2" class="btn btn-sm btn-warning me-2">Edit</a>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteDepartment(2)">Delete</button>
-                                    </td>
-                                </tr>
-                                <!-- Add more rows as needed -->
+                            <tbody id="departmentTableBody">
+                                <!-- Departments will be loaded dynamically here -->
                             </tbody>
                         </table>
                     </div>
@@ -149,14 +133,41 @@
 
     <!-- Custom Javascript for Department Management -->
     <script>
+        // Fetch department data from the server and populate the table
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("http://localhost:8080/departments")
+                .then(response => response.json())
+                .then(data => {
+                    const departmentTableBody = document.getElementById("departmentTableBody");
+                    departmentTableBody.innerHTML = '';  // Clear table before adding new rows
+
+                    // Loop through the department data and add it to the table
+                    data.forEach(department => {
+                        const row = document.createElement("tr");
+                        
+                        // Add department name and description to the row
+                        row.innerHTML = `
+                            <td>${department.deptName}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewDetails('${department.deptName}')">View Details</button>
+                                <a href="edit-department.html?id=${department.deptId}" class="btn btn-sm btn-warning me-2">Edit</a>
+                                <button class="btn btn-sm btn-danger" onclick="deleteDepartment(${department.deptId})">Delete</button>
+                            </td>
+                        `;
+                        
+                        // Append the row to the table body
+                        departmentTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error("Error fetching departments:", error));
+        });
+
         function viewDetails(departmentName) {
             alert(`Department Details: ${departmentName}`);
-            // You can replace this with a modal or a more sophisticated popup
         }
 
         function deleteDepartment(id) {
             if (confirm('Are you sure you want to delete this department?')) {
-                // Implement delete logic here
                 alert(`Department with ID ${id} deleted`);
             }
         }
