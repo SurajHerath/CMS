@@ -153,18 +153,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>789012345V</td>
-                                    <td>Sarah Johnson</td>
-                                    <td>sarah.johnson@example.com</td>
-                                    <td>IT</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary me-2" onclick="viewDetails('789012345V')">View Details</button>
-                                        <a href="edit-admin.html?id=789012345V" class="btn btn-sm btn-warning me-2">Edit</a>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteAdmin('789012345V')">Delete</button>
-                                    </td>
-                                </tr>
-                                <!-- Add more rows as needed -->
+                           
                             </tbody>
                         </table>
                     </div>
@@ -252,47 +241,91 @@
     <script src="js/main.js"></script>
 
     <!-- Custom Javascript for Admin Management -->
+    
+
     <script>
-        function viewDetails(nic) {
-            // Simulated data fetch (replace with actual API call)
-            const adminData = {
-                nic: "789012345V",
-                firstName: "Sarah",
-                lastName: "Johnson",
-                email: "sarah.johnson@example.com",
-                phoneNumber: "0771234567",
-                address: "456 Admin Street, Colombo",
-                dob: "1985-05-15",
-                gender: "Female",
-                role: "Admin",
-                status: "Active",
-                department: "IT"
-            };
+        document.addEventListener("DOMContentLoaded", function() {
+    fetchAdmins();
+});
 
-            // Populate modal with admin data
-            document.getElementById('adminNIC').textContent = adminData.nic;
-            document.getElementById('adminFirstName').textContent = adminData.firstName;
-            document.getElementById('adminLastName').textContent = adminData.lastName;
-            document.getElementById('adminEmail').textContent = adminData.email;
-            document.getElementById('adminPhoneNumber').textContent = adminData.phoneNumber;
-            document.getElementById('adminAddress').textContent = adminData.address;
-            document.getElementById('adminDOB').textContent = adminData.dob;
-            document.getElementById('adminGender').textContent = adminData.gender;
-            document.getElementById('adminRole').textContent = adminData.role;
-            document.getElementById('adminStatus').textContent = adminData.status;
-            document.getElementById('adminDepartment').textContent = adminData.department;
+function fetchAdmins() {
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
 
-            // Show the modal
-            var myModal = new bootstrap.Modal(document.getElementById('adminDetailsModal'));
-            myModal.show();
-        }
+    fetch("http://localhost:8080/admins", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            populateAdminTable(result);
+        })
+        .catch(error => console.log('error', error));
+}
 
-        function deleteAdmin(nic) {
-            if (confirm(`Are you sure you want to delete the admin with NIC: ${nic}?`)) {
-                // Implement delete logic
-                alert(`Admin with NIC ${nic} deleted`);
+function populateAdminTable(admins) {
+    const tableBody = document.querySelector("tbody");
+
+    admins.forEach(admin => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${admin.user.nic}</td>
+            <td>${admin.user.firstName} ${admin.user.lastName}</td>
+            <td>${admin.user.email}</td>
+            <td>${admin.department.deptName}</td>
+            <td>
+                <button class="btn btn-sm btn-primary me-2" onclick="viewDetails(${admin.adminId})">View Details</button>
+                <a href="edit-admin.html?id=${admin.user.nic}" class="btn btn-sm btn-warning me-2">Edit</a>
+                <button class="btn btn-sm btn-danger" onclick="deleteAdmin(${admin.adminId})">Delete</button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+function viewDetails(adminId) {
+    // Fetch the admin details (or find in the already fetched list)
+    fetch("http://localhost:8080/admins/" + adminId)
+        .then(response => response.json())
+        .then(admin => {
+            document.getElementById("adminNIC").textContent = admin.user.nic;
+            document.getElementById("adminFirstName").textContent = admin.user.firstName;
+            document.getElementById("adminLastName").textContent = admin.user.lastName;
+            document.getElementById("adminEmail").textContent = admin.user.email;
+            document.getElementById("adminPhoneNumber").textContent = admin.user.phoneNumber;
+            document.getElementById("adminAddress").textContent = admin.user.address;
+            document.getElementById("adminDOB").textContent = admin.user.dob;
+            document.getElementById("adminGender").textContent = admin.user.gender;
+            document.getElementById("adminRole").textContent = admin.user.role;
+            document.getElementById("adminStatus").textContent = admin.user.status;
+            document.getElementById("adminDepartment").textContent = admin.department.deptName;
+
+            // Show modal
+            $('#adminDetailsModal').modal('show');
+        })
+        .catch(error => console.log('error', error));
+}
+
+function deleteAdmin(adminId) {
+    // Add your delete logic here (confirm, then make DELETE request)
+    if (confirm("Are you sure you want to delete this admin?")) {
+        fetch("http://localhost:8080/admins/" + adminId, {
+            method: 'DELETE',
+            redirect: 'follow'
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Admin deleted successfully!');
+                location.reload(); // Refresh the page to reflect the changes
+            } else {
+                alert('Error deleting admin!');
             }
-        }
+        })
+        .catch(error => console.log('error', error));
+    }
+}
+
     </script>
 </body>
 

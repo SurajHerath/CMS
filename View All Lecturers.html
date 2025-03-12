@@ -154,19 +154,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>901234567V</td>
-                                    <td>Dr. John Smith</td>
-                                    <td>john.smith@example.com</td>
-                                    <td>Computer Science</td>
-                                    <td>Senior Lecturer</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary me-2" onclick="viewDetails('901234567V')">View Details</button>
-                                        <a href="edit-lecturer.html?id=901234567V" class="btn btn-sm btn-warning me-2">Edit</a>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteLecturer('901234567V')">Delete</button>
-                                    </td>
-                                </tr>
-                                <!-- Add more rows as needed -->
+                              
                             </tbody>
                         </table>
                     </div>
@@ -265,55 +253,97 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- Custom Javascript for Lecturer Management -->
+    
+    
     <script>
-        function viewDetails(nic) {
-            // Simulated data fetch (replace with actual API call)
-            const lecturerData = {
-                nic: "901234567V",
-                firstName: "John",
-                lastName: "Smith",
-                email: "john.smith@example.com",
-                phoneNumber: "0789012345",
-                address: "123 University Road, Colombo",
-                dob: "1975-03-20",
-                gender: "Male",
-                role: "Lecturer",
-                status: "Active",
-                department: "Computer Science",
-                designation: "Senior Lecturer",
-                specialisation: "Software Engineering",
-                highestQualification: "PhD in Computer Science"
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchLecturers();
+        });
+    
+        function fetchLecturers() {
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
             };
-
-            // Populate modal with lecturer data
-            document.getElementById('lecturerNIC').textContent = lecturerData.nic;
-            document.getElementById('lecturerFirstName').textContent = lecturerData.firstName;
-            document.getElementById('lecturerLastName').textContent = lecturerData.lastName;
-            document.getElementById('lecturerEmail').textContent = lecturerData.email;
-            document.getElementById('lecturerPhoneNumber').textContent = lecturerData.phoneNumber;
-            document.getElementById('lecturerAddress').textContent = lecturerData.address;
-            document.getElementById('lecturerDOB').textContent = lecturerData.dob;
-            document.getElementById('lecturerGender').textContent = lecturerData.gender;
-            document.getElementById('lecturerRole').textContent = lecturerData.role;
-            document.getElementById('lecturerStatus').textContent = lecturerData.status;
-            document.getElementById('lecturerDepartment').textContent = lecturerData.department;
-            document.getElementById('lecturerDesignation').textContent = lecturerData.designation;
-            document.getElementById('lecturerSpecialisation').textContent = lecturerData.specialisation;
-            document.getElementById('lecturerHighestQualification').textContent = lecturerData.highestQualification;
-
-            // Show the modal
-            var myModal = new bootstrap.Modal(document.getElementById('lecturerDetailsModal'));
-            myModal.show();
+    
+            fetch("http://localhost:8080/lecturers", requestOptions)
+                .then(response => response.json())  // Parsing the response to JSON format
+                .then(result => {
+                    populateLecturerTable(result);  // Call function to populate the table
+                })
+                .catch(error => console.log('error', error));  // Error handling
         }
-
-        function deleteLecturer(nic) {
-            if (confirm(`Are you sure you want to delete the lecturer with NIC: ${nic}?`)) {
-                // Implement delete logic
-                alert(`Lecturer with NIC ${nic} deleted`);
+    
+        function populateLecturerTable(lecturers) {
+            const tableBody = document.querySelector("tbody");  // Select the tbody where rows will be inserted
+    
+            // Loop through each lecturer and create a table row
+            lecturers.forEach(lecturer => {
+                const row = document.createElement("tr");
+    
+                row.innerHTML = `
+                    <td>${lecturer.user.nic}</td>
+                    <td>${lecturer.user.firstName} ${lecturer.user.lastName}</td>
+                    <td>${lecturer.user.email}</td>
+                    <td>${lecturer.department.deptName}</td>
+                    <td>${lecturer.designation}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary me-2" onclick="viewDetails(${lecturer.lecturerID})">View Details</button>
+                        <a href="edit-lecturer.html?id=${lecturer.user.nic}" class="btn btn-sm btn-warning me-2">Edit</a>
+                        <button class="btn btn-sm btn-danger" onclick="deleteLecturer(${lecturer.lecturerID})">Delete</button>
+                    </td>
+                `;
+    
+                tableBody.appendChild(row);  // Append the row to the table body
+            });
+        }
+    
+        function viewDetails(lecturerID) {
+            fetch("http://localhost:8080/lecturers/" + lecturerID)
+                .then(response => response.json())
+                .then(lecturer => {
+                    // Populate modal or another section with lecturer details
+                    document.getElementById("lecturerNIC").textContent = lecturer.user.nic;
+                    document.getElementById("lecturerFirstName").textContent = lecturer.user.firstName;
+                    document.getElementById("lecturerLastName").textContent = lecturer.user.lastName;
+                    document.getElementById("lecturerEmail").textContent = lecturer.user.email;
+                    document.getElementById("lecturerPhoneNumber").textContent = lecturer.user.phoneNumber;
+                    document.getElementById("lecturerAddress").textContent = lecturer.user.address;
+                    document.getElementById("lecturerDOB").textContent = lecturer.user.dob;
+                    document.getElementById("lecturerGender").textContent = lecturer.user.gender;
+                    document.getElementById("lecturerRole").textContent = lecturer.user.role;
+                    document.getElementById("lecturerStatus").textContent = lecturer.user.status;
+                    document.getElementById("lecturerDepartment").textContent = lecturer.department.deptName;
+                    document.getElementById("lecturerSpecialisation").textContent = lecturer.specialisation;
+                    document.getElementById("lecturerHighestQualification").textContent = lecturer.highestQualification;
+    
+                    // Show modal
+                    $('#lecturerDetailsModal').modal('show');
+                    console.log(lecturer);
+                })
+                .catch(error => console.log('error', error));
+        }
+    
+        function deleteLecturer(lecturerID) {
+            // Add your delete logic here (confirm, then make DELETE request)
+            if (confirm("Are you sure you want to delete this lecturer?")) {
+                fetch("http://localhost:8080/lecturers/" + lecturerID, {
+                    method: 'DELETE',
+                    redirect: 'follow'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Lecturer deleted successfully!');
+                        location.reload(); // Refresh the page to reflect the changes
+                    } else {
+                        alert('Error deleting lecturer!');
+                    }
+                })
+                .catch(error => console.log('error', error));
             }
         }
     </script>
+    
 </body>
 
 </html>
