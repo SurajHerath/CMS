@@ -152,16 +152,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>567890123V</td>
-                                    <td>Michael Fernando</td>
-                                    <td>michael.fernando@example.com</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary me-2" onclick="viewDetails('567890123V')">View Details</button>
-                                        <a href="edit-student.html?id=567890123V" class="btn btn-sm btn-warning me-2">Edit</a>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteStudent('567890123V')">Delete</button>
-                                    </td>
-                                </tr>
+                               
                                 <!-- Add more rows as needed -->
                             </tbody>
                         </table>
@@ -247,44 +238,75 @@
 
     <!-- Custom Javascript for Student Management -->
     <script>
-        function viewDetails(nic) {
-            // Simulated data fetch (replace with actual API call)
-            const studentData = {
-                nic: "567890123V",
-                firstName: "Michael",
-                lastName: "Fernando",
-                email: "michael.fernando@example.com",
-                phoneNumber: "0765678901",
-                address: "789 College Ave, Galle",
-                dob: "2002-09-10",
-                gender: "Male",
-                role: "Student",
-                status: "Active"
-            };
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchStudents();
+        });
 
-            // Populate modal with student data
-            document.getElementById('studentNIC').textContent = studentData.nic;
-            document.getElementById('studentFirstName').textContent = studentData.firstName;
-            document.getElementById('studentLastName').textContent = studentData.lastName;
-            document.getElementById('studentEmail').textContent = studentData.email;
-            document.getElementById('studentPhoneNumber').textContent = studentData.phoneNumber;
-            document.getElementById('studentAddress').textContent = studentData.address;
-            document.getElementById('studentDOB').textContent = studentData.dob;
-            document.getElementById('studentGender').textContent = studentData.gender;
-            document.getElementById('studentRole').textContent = studentData.role;
-            document.getElementById('studentStatus').textContent = studentData.status;
-
-            // Show the modal
-            var myModal = new bootstrap.Modal(document.getElementById('studentDetailsModal'));
-            myModal.show();
+        function fetchStudents() {
+            fetch("http://localhost:8080/Students")
+                .then(response => response.json())
+                .then(data => populateTable(data))
+                .catch(error => console.error('Error fetching students:', error));
         }
 
-        function deleteStudent(nic) {
-            if (confirm(`Are you sure you want to delete the student with NIC: ${nic}?`)) {
-                // Implement delete logic
-                alert(`Student with NIC ${nic} deleted`);
+        function populateTable(students) {
+            let tableBody = document.querySelector("tbody");
+            tableBody.innerHTML = "";
+
+            students.forEach(student => {
+                let user = student.user; 
+                let row = `<tr>
+                    <td>${user.nic}</td>
+                    <td>${user.firstName} ${user.lastName}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary me-2" onclick="viewDetails(${student.studentID})">View Details</button>
+                        <a href="Edit Student.html?id=${student.studentID}" class="btn btn-sm btn-warning me-2">Edit</a>
+                        <button class="btn btn-sm btn-danger" onclick="deleteStudent(${student.studentID})">Delete</button>
+                    </td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function viewDetails(studentID) {
+            fetch(`http://localhost:8080/Students/${studentID}`)
+                .then(response => response.json())
+                .then(student => {
+                    let user = student.user;
+                    document.getElementById("studentNIC").textContent = user.nic;
+                    document.getElementById("studentFirstName").textContent = user.firstName;
+                    document.getElementById("studentLastName").textContent = user.lastName;
+                    document.getElementById("studentEmail").textContent = user.email;
+                    document.getElementById("studentPhoneNumber").textContent = user.phoneNumber;
+                    document.getElementById("studentAddress").textContent = user.address;
+                    document.getElementById("studentDOB").textContent = user.dob;
+                    document.getElementById("studentGender").textContent = user.gender;
+                    document.getElementById("studentRole").textContent = user.role;
+                    document.getElementById("studentStatus").textContent = user.status;
+
+                    let studentModal = new bootstrap.Modal(document.getElementById('studentDetailsModal'));
+                    studentModal.show();
+                })
+                .catch(error => console.error('Error fetching student details:', error));
+        }
+
+        function deleteStudent(studentID) {
+            if (confirm("Are you sure you want to delete this student?")) {
+                fetch(`http://localhost:8080/Students/${studentID}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Student deleted successfully!");
+                            fetchStudents();
+                        } else {
+                            alert("Failed to delete student.");
+                        }
+                    })
+                    .catch(error => console.error('Error deleting student:', error));
             }
         }
+
     </script>
 </body>
 

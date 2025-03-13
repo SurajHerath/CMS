@@ -90,7 +90,7 @@
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-10 col-md-12 wow fadeInUp" data-wow-delay="0.3s">
-                    <form>
+                    <form id="insertStudent">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -181,6 +181,81 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("insertStudent").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+    
+                // Extract form values
+                const nic = document.getElementById("nic").value;
+                const firstName = document.getElementById("firstName").value;
+                const lastName = document.getElementById("lastName").value;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const phoneNumber = document.getElementById("phoneNumber").value;
+                const address = document.getElementById("address").value;
+                const dob = document.getElementById("dob").value;
+                const gender = document.getElementById("gender").value;
+    
+                // Create user object for POST request
+                const userRaw = JSON.stringify({
+                    nic: nic,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    phoneNumber: phoneNumber,
+                    address: address,
+                    dob: dob,
+                    gender: gender,
+                    role: "Student", 
+                    status: "Active"
+                });
+    
+                const userRequestOptions = {
+                    method: 'POST',
+                    body: userRaw,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    redirect: 'follow'
+                };
+    
+                // Send POST request to create user instance
+                fetch("http://localhost:8080/users", userRequestOptions)
+                    .then(response => response.json()) 
+                    .then(result => {
+                        if (result && result.id) {
+                            const userId = result.id;    
+                            const studentRaw = JSON.stringify({
+                                user: { id: userId }, 
+                            });
+    
+                            const studentRequestOptions = {
+                                method: 'POST',
+                                body: studentRaw,
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                redirect: 'follow'
+                            };
+    
+                            // Send POST request to create admin instance
+                            fetch("http://localhost:8080/Students", studentRequestOptions)
+                                .then(response => response.text())
+                                .then(result => {
+                                    alert("Student registration successful!");
+                                })
+                                .catch(error => alert('Error creating student:', error));
+                        } else {
+                            console.log("Error: User ID not found in the response");
+                        }
+                    })
+                    .catch(error => alert('Error creating user:', error));
+            });
+        });
+    </script>
 </body>
 
 </html>
