@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CMS - Edit Assign Classroom</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .alert {
+            margin-bottom: 20px;
+        }
+        
+        .form-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .form-section h5 {
+            color: #06BBCC;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>CMS</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Courses</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="insert-course.html" class="dropdown-item">Insert Course</a>
+                        <a href="view-all-courses.html" class="dropdown-item">View All Courses</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Classroom</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="insert-classroom-assign.html" class="dropdown-item active">Assign Classroom</a>
+                        <a href="view-classroom-assignments.html" class="dropdown-item">View Assignments</a>
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link">Contact</a>
+            </div>
+            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 page-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white animated slideInDown">Assign Classroom</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Assign Classroom Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">Classroom Management</h6>
+                <h1 class="mb-5">Edit Assign Classroom</h1>
+            </div>
+            
+            <!-- Alert Messages -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-12">
+                    <div id="errorAlert" class="alert alert-danger" style="display: none;">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <span id="errorMessage">Please fill in all required fields.</span>
+                    </div>
+                    <div id="successAlert" class="alert alert-success" style="display: none;">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <span id="successMessage">Classroom assigned successfully!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.3s">
+                    <!-- Assignment Form -->
+                    <form id="assignmentForm">
+                        <div class="form-section">
+                            <h5>Classroom Assignment Details</h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="courseSelect" required>
+                                            <option value="" selected disabled>Select Course</option>
+                                            <option value="1">CS101 - Introduction to Computer Science</option>
+                                            <option value="2">CS201 - Data Structures and Algorithms</option>
+                                            <option value="3">CS301 - Database Systems</option>
+                                            <option value="4">CS401 - Artificial Intelligence</option>
+                                            <option value="5">MATH101 - Calculus I</option>
+                                            <option value="6">MATH201 - Linear Algebra</option>
+                                            <option value="7">ENG101 - English Composition</option>
+                                        </select>
+                                        <label for="courseSelect">Course</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="lecturerSelect" required>
+                                            <option value="" selected disabled>Select Lecturer</option>
+                                            <option value="1">Dr. John Smith - Computer Science</option>
+                                            <option value="2">Prof. Sarah Johnson - Mathematics</option>
+                                            <option value="3">Dr. Michael Brown - Computer Science</option>
+                                            <option value="4">Prof. Emily Davis - English</option>
+                                            <option value="5">Dr. Robert Wilson - Computer Science</option>
+                                            <option value="6">Prof. Jennifer Lee - Mathematics</option>
+                                        </select>
+                                        <label for="lecturerSelect">Lecturer</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="classroomSelect" required>
+                                            <option value="" selected disabled>Select Classroom</option>
+                                            <option value="A101">A101 - Capacity: 50</option>
+                                            <option value="A102">A102 - Capacity: 40</option>
+                                            <option value="B201">B201 - Capacity: 100</option>
+                                            <option value="B202">B202 - Capacity: 80</option>
+                                            <option value="C301">C301 - Capacity: 30</option>
+                                            <option value="C302">C302 - Capacity: 25</option>
+                                            <option value="D401">D401 - Computer Lab - Capacity: 40</option>
+                                        </select>
+                                        <label for="classroomSelect">Classroom</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="daySelect" required>
+                                            <option value="" selected disabled>Select Day</option>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                            <option value="Saturday">Saturday</option>
+                                        </select>
+                                        <label for="daySelect">Day</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="time" class="form-control" id="startTime" required>
+                                        <label for="startTime">Start Time</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="time" class="form-control" id="endTime" required>
+                                        <label for="endTime">End Time</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Assign Classroom</button>
+                            </div>
+                            <div class="col-12 text-center mt-3">
+                                <a href="view-classroom-assignments.html" class="text-primary">View All Classroom Assignments</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Assign Classroom End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Quick Link</h4>
+                    <a class="btn btn-link" href="">About Us</a>
+                    <a class="btn btn-link" href="">Contact Us</a>
+                    <a class="btn btn-link" href="">Privacy Policy</a>
+                    <a class="btn btn-link" href="">Terms & Condition</a>
+                    <a class="btn btn-link" href="">FAQs & Help</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Contact</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Gallery</h4>
+                    <div class="row g-2 pt-2">
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Newsletter</h4>
+                    <p>Subscribe to our newsletter for updates</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">eLEARNING</a>, All Right Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Custom Javascript for Assign Classroom -->
+    <script>
+        // Function to show error message
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorAlert.style.display = 'block';
+            
+            // Hide success message if it's visible
+            document.getElementById('successAlert').style.display = 'none';
+        }
+
+        // Function to show success message
+        function showSuccess(message) {
+            const successAlert = document.getElementById('successAlert');
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = message;
+            successAlert.style.display = 'block';
+            
+            // Hide error message if it's visible
+            document.getElementById('errorAlert').style.display = 'none';
+        }
+
+        // Function to validate time range
+        function validateTimeRange(startTime, endTime) {
+            if (startTime >= endTime) {
+                return false;
+            }
+            return true;
+        }
+
+        // Set default times
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('startTime').value = '09:00';
+            document.getElementById('endTime').value = '10:30';
+            
+            // Hide spinner after page loads
+            setTimeout(function() {
+                document.getElementById('spinner').classList.remove('show');
+            }, 1000);
+        });
+
+        // Handle form submission
+        document.getElementById('assignmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const courseId = document.getElementById('courseSelect').value;
+            const lecturerId = document.getElementById('lecturerSelect').value;
+            const classroom = document.getElementById('classroomSelect').value;
+            const day = document.getElementById('daySelect').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            
+            // Validate form
+            if (!courseId || !lecturerId || !classroom || !day || !startTime || !endTime) {
+                showError('Please fill in all required fields.');
+                return;
+            }
+            
+            // Validate time range
+            if (!validateTimeRange(startTime, endTime)) {
+                showError('End time must be after start time.');
+                return;
+            }
+            
+            // Get course and lecturer text
+            const courseText = document.getElementById('courseSelect').options[document.getElementById('courseSelect').selectedIndex].text;
+            const lecturerText = document.getElementById('lecturerSelect').options[document.getElementById('lecturerSelect').selectedIndex].text;
+            const classroomText = document.getElementById('classroomSelect').options[document.getElementById('classroomSelect').selectedIndex].text;
+            
+            // Create assignment object
+            const newAssignment = {
+                id: Date.now().toString(),
+                courseId: courseId,
+                courseName: courseText,
+                lecturerId: lecturerId,
+                lecturerName: lecturerText,
+                classroom: classroom,
+                classroomName: classroomText,
+                day: day,
+                startTime: startTime,
+                endTime: endTime,
+                created: new Date().toISOString().split('T')[0]
+            };
+            
+            // In a real application, this would be an API call to save the assignment
+            console.log('New classroom assignment:', newAssignment);
+            
+            // Show success message
+            showSuccess('Classroom assigned successfully!');
+            
+            // Reset form
+            document.getElementById('assignmentForm').reset();
+            
+            // Set default times again
+            document.getElementById('startTime').value = '09:00';
+            document.getElementById('endTime').value = '10:30';
+            
+            // Scroll to top to show the success message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Redirect after a short delay
+            setTimeout(() => {
+                window.location.href = 'view-classroom-assignments.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
