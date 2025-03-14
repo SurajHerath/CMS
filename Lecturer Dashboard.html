@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CMS - Lecturer Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .dashboard-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .dashboard-card-header {
+            background-color: #06BBCC;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-card-body {
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .dashboard-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        .timetable-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .timetable-time {
+            min-width: 100px;
+            font-weight: 600;
+            color: #06BBCC;
+        }
+        
+        .timetable-subject {
+            flex-grow: 1;
+        }
+        
+        .timetable-location {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .announcement-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .announcement-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .announcement-date {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .announcement-content {
+            font-size: 0.9rem;
+        }
+        
+        .assignment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .assignment-info {
+            flex-grow: 1;
+        }
+        
+        .assignment-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .assignment-course {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .assignment-due {
+            font-size: 0.8rem;
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .assignment-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #664d03;
+        }
+        
+        .status-published {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        
+        .status-draft {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+        
+        .event-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .event-date {
+            min-width: 60px;
+            text-align: center;
+            padding: 5px;
+            background-color: #06BBCC;
+            color: white;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        
+        .event-day {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .event-month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .event-info {
+            flex-grow: 1;
+        }
+        
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .event-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .event-location {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            border: 3px solid #06BBCC;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info h5 {
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            margin-bottom: 5px;
+            color: #6c757d;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #06BBCC;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(rgba(24, 29, 56, .7), rgba(24, 29, 56, .7)), url('img/carousel-1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-banner h2 {
+            margin-bottom: 10px;
+        }
+        
+        .welcome-banner p {
+            margin-bottom: 0;
+            opacity: 0.9;
+        }
+        
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .quick-action-btn {
+            flex-grow: 1;
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #343a40;
+            min-width: 120px;
+        }
+        
+        .quick-action-btn:hover {
+            background-color: #06BBCC;
+            color: white;
+        }
+        
+        .quick-action-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #06BBCC;
+        }
+        
+        .quick-action-btn:hover .quick-action-icon {
+            color: white;
+        }
+        
+        .quick-action-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .calendar-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-month {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-nav-btn {
+            background-color: #f8f9fa;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .calendar-nav-btn:hover {
+            background-color: #06BBCC;
+            color: white;
+        }
+        
+        .progress-container {
+            margin-bottom: 15px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .progress-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .progress-value {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .attendance-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .attendance-item {
+            text-align: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+        
+        .attendance-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .attendance-present .attendance-value {
+            color: #198754;
+        }
+        
+        .attendance-absent .attendance-value {
+            color: #dc3545;
+        }
+        
+        .attendance-late .attendance-value {
+            color: #fd7e14;
+        }
+        
+        .attendance-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .classroom-request-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .classroom-request-info {
+            flex-grow: 1;
+        }
+        
+        .classroom-request-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .classroom-request-details {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .classroom-request-date {
+            font-size: 0.8rem;
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .classroom-request-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-approved {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        
+        .status-pending-approval {
+            background-color: #fff3cd;
+            color: #664d03;
+        }
+        
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+        
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-title i {
+            color: #06BBCC;
+            font-size: 1.25rem;
+        }
+        
+        /* Remove double blue lines */
+        .section-title:before,
+        .section-title:after {
+            display: none;
+        }
+        
+        .section-action {
+            font-size: 0.9rem;
+            color: #06BBCC;
+            text-decoration: none;
+        }
+        
+        .section-action:hover {
+            text-decoration: underline;
+        }
+        
+        .notification-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .notification-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .notification-menu.show {
+            display: block;
+        }
+        
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+        }
+        
+        .notification-item {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .notification-item.unread {
+            background-color: #f0f9ff;
+        }
+        
+        .notification-content {
+            margin-bottom: 5px;
+        }
+        
+        .notification-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .notification-footer {
+            text-align: center;
+            padding-top: 15px;
+        }
+        
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .user-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .user-menu.show {
+            display: block;
+        }
+        
+        .user-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        
+        .user-avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .user-role {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .user-menu-item {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            color: #343a40;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .user-menu-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .user-menu-icon {
+            margin-right: 10px;
+            color: #6c757d;
+        }
+        
+        .user-menu-footer {
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+            margin-top: 15px;
+        }
+        
+        /* Add carousel styles */
+        .welcome-carousel {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-carousel-item {
+            position: relative;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .welcome-carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(24, 29, 56, .7);
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .welcome-carousel-content {
+            max-width: 800px;
+        }
+        
+        .welcome-carousel-content h5 {
+            color: #06BBCC;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            animation: slideInDown 1s ease forwards;
+        }
+        
+        .welcome-carousel-content h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: slideInDown 1s ease forwards;
+        }
+        
+        .welcome-carousel-content p {
+            color: #fff;
+            margin-bottom: 30px;
+            animation: slideInDown 1s ease forwards;
+        }
+        
+        /* Updated carousel navigation styles */
+        .welcome-carousel .owl-nav {
+            position: absolute;
+            top: 50%;
+            right: 20px; /* Position on right side */
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .welcome-carousel .owl-prev,
+        .welcome-carousel .owl-next {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: none;
+            outline: none;
+            font-size: 22px;
+            transition: .3s;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 !important;
+        }
+
+        .welcome-carousel .owl-prev:hover,
+        .welcome-carousel .owl-next:hover {
+            background: #06BBCC !important;
+            color: #FFFFFF;
+        }
+
+        .welcome-carousel .owl-prev i,
+        .welcome-carousel .owl-next i {
+            font-size: 20px;
+            line-height: 45px;
+        }
+        
+        /* Attendance marking styles */
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .attendance-table th, 
+        .attendance-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .attendance-table th {
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .attendance-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .attendance-actions button {
+            padding: 2px 8px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .btn-present {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        
+        .btn-absent {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+        
+        .btn-late {
+            background-color: #fff3cd;
+            color: #664d03;
+        }
+        
+        .btn-present:hover {
+            background-color: #0f5132;
+            color: white;
+        }
+        
+        .btn-absent:hover {
+            background-color: #842029;
+            color: white;
+        }
+        
+        .btn-late:hover {
+            background-color: #664d03;
+            color: white;
+        }
+        
+        @keyframes slideInDown {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="lecturer-dashboard.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>CMS</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- Navigation Start -->
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="lecturer-dashboard.html" class="nav-item nav-link active">Dashboard</a>
+                <a href="my-courses.html" class="nav-item nav-link">My Courses</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Assignments</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="create-assignment.html" class="dropdown-item">Create Assignment</a>
+                        <a href="manage-assignments.html" class="dropdown-item">Manage Assignments</a>
+                        <a href="grade-assignments.html" class="dropdown-item">Grade Assignments</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-people me-2"></i>Students
+                    </a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="student-list.html" class="dropdown-item">Student List</a>
+                        <a href="mark-attendance.html" class="dropdown-item">Mark Attendance</a>
+                        <a href="student-performance.html" class="dropdown-item">Performance</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Resources</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="upload-materials.html" class="dropdown-item">Upload Materials</a>
+                        <a href="classroom-request.html" class="dropdown-item">Classroom Request</a>
+                        <a href="help-center.html" class="dropdown-item">Help Center</a>
+                    </div>
+                </div>
+                <a href="announcements.html" class="nav-item nav-link">Announcements</a>
+                <a href="events.html" class="nav-item nav-link">Events</a>
+            </div>
+            <!-- Navigation End -->
+            
+            <!-- Notification Dropdown -->
+            <div class="notification-dropdown me-3">
+                <button class="btn btn-light position-relative" id="notificationButton">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="notification-menu" id="notificationMenu">
+                    <div class="notification-header">
+                        <span class="notification-title">Notifications</span>
+                        <a href="#" class="text-primary">Mark all as read</a>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-content">New assignment submission in <strong>Database Management</strong></div>
+                        <div class="notification-time">1 hour ago</div>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-content">Your classroom request for <strong>Room 302</strong> has been approved</div>
+                        <div class="notification-time">3 hours ago</div>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-content">Department meeting scheduled for <strong>Friday, 10:00 AM</strong></div>
+                        <div class="notification-time">Yesterday</div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-content">Reminder: <strong>Grades submission</strong> deadline approaching</div>
+                        <div class="notification-time">2 days ago</div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-content">New course materials uploaded by the department</div>
+                        <div class="notification-time">3 days ago</div>
+                    </div>
+                    <div class="notification-footer">
+                        <a href="notifications.html" class="text-primary">View all notifications</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Dropdown -->
+            <div class="user-dropdown me-4">
+                <button class="btn btn-light d-flex align-items-center" id="userButton">
+                    <div class="user-avatar-small me-2">
+                        <img src="img/lecturer.jpg" alt="User">
+                    </div>
+                    <span class="d-none d-lg-inline">Dr. Sarah Johnson</span>
+                    <i class="bi bi-chevron-down ms-2"></i>
+                </button>
+                <div class="user-menu" id="userMenu">
+                    <div class="user-header">
+                        <div class="user-avatar-small">
+                            <img src="img/lecturer.jpg" alt="User">
+                        </div>
+                        <div>
+                            <div class="user-name">Dr. Sarah Johnson</div>
+                            <div class="user-role">Lecturer</div>
+                        </div>
+                    </div>
+                    <a href="lecturer-profile.html" class="user-menu-item">
+                        <i class="bi bi-person user-menu-icon"></i>
+                        My Profile
+                    </a>
+                    <a href="account-settings.html" class="user-menu-item">
+                        <i class="bi bi-gear user-menu-icon"></i>
+                        Account Settings
+                    </a>
+                    <a href="my-schedule.html" class="user-menu-item">
+                        <i class="bi bi-calendar-week user-menu-icon"></i>
+                        My Schedule
+                    </a>
+                    <a href="support.html" class="user-menu-item">
+                        <i class="bi bi-question-circle user-menu-icon"></i>
+                        Support
+                    </a>
+                    <div class="user-menu-footer">
+                        <a href="logout.html" class="user-menu-item text-danger">
+                            <i class="bi bi-box-arrow-right user-menu-icon"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Dashboard Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <!-- Welcome Banner -->
+            <div class="welcome-carousel owl-carousel">
+                <div class="welcome-carousel-item" style="background-image: url('img/carousel-1.jpg');">
+                    <div class="welcome-carousel-overlay">
+                        <div class="welcome-carousel-content">
+                            <h5 class="text-primary text-uppercase mb-3">Welcome back, Dr. Johnson!</h5>
+                            <h1 class="display-3 text-white">Your Teaching Dashboard</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">You have 2 assignments to grade, 3 upcoming classes, and a department meeting this week.</p>
+                            <a href="my-courses.html" class="btn btn-light py-md-3 px-md-5 me-3">My Courses</a>
+                            <a href="create-assignment.html" class="btn btn-primary py-md-3 px-md-5">Create Assignment</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="welcome-carousel-item" style="background-image: url('img/carousel-2.jpg');">
+                    <div class="welcome-carousel-overlay">
+                        <div class="welcome-carousel-content">
+                            <h5 class="text-primary text-uppercase mb-3">Important Updates</h5>
+                            <h1 class="display-3 text-white">Faculty Meeting This Friday</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">The department is holding a faculty meeting this Friday at 10:00 AM in the Conference Room. Please prepare your semester reports.</p>
+                            <a href="events.html" class="btn btn-light py-md-3 px-md-5 me-3">View Events</a>
+                            <a href="announcements.html" class="btn btn-primary py-md-3 px-md-5">Make Announcement</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="quick-actions wow fadeInUp" data-wow-delay="0.2s">
+                <a href="mark-attendance.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+                    <div class="quick-action-label">Mark Attendance</div>
+                </a>
+                <a href="create-assignment.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-file-earmark-plus"></i>
+                    </div>
+                    <div class="quick-action-label">Create Assignment</div>
+                </a>
+                <a href="grade-assignments.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-check2-square"></i>
+                    </div>
+                    <div class="quick-action-label">Grade Assignments</div>
+                </a>
+                <a href="classroom-request.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <div class="quick-action-label">Request Classroom</div>
+                </a>
+                <a href="announcements.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-megaphone"></i>
+                    </div>
+                    <div class="quick-action-label">Announcements</div>
+                </a>
+                <a href="upload-materials.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-cloud-upload"></i>
+                    </div>
+                    <div class="quick-action-label">Upload Materials</div>
+                </a>
+            </div>
+            
+            <!-- Main Dashboard Content -->
+            <div class="row g-4 mt-3">
+                <!-- Left Column -->
+                <div class="col-lg-8">
+                    <!-- Today's Timetable -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-calendar3 me-2"></i>Today's Timetable
+                            </h4>
+                            <a href="my-schedule.html" class="section-action">View Full Schedule</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-calendar3 dashboard-icon"></i>Monday, September 18, 2023</span>
+                                <div>
+                                    <button class="btn btn-sm btn-light me-2"><i class="bi bi-chevron-left"></i></button>
+                                    <button class="btn btn-sm btn-light"><i class="bi bi-chevron-right"></i></button>
+                                </div>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="timetable-item">
+                                    <div class="timetable-time">09:00 - 10:30</div>
+                                    <div class="timetable-subject">
+                                        <div>Database Management Systems (CS301)</div>
+                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 105, IT Building</div>
+                                    </div>
+                                </div>
+                                <div class="timetable-item">
+                                    <div class="timetable-time">11:00 - 12:30</div>
+                                    <div class="timetable-subject">
+                                        <div>Advanced Database Concepts (CS501)</div>
+                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 201, Computer Science Building</div>
+                                    </div>
+                                </div>
+                                <div class="timetable-item">
+                                    <div class="timetable-time">14:00 - 15:30</div>
+                                    <div class="timetable-subject">
+                                        <div>Office Hours</div>
+                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 302, Faculty Building</div>
+                                    </div>
+                                </div>
+                                <div class="timetable-item" style="border-bottom: none;">
+                                    <div class="timetable-time">16:00 - 17:30</div>
+                                    <div class="timetable-subject">
+                                        <div>Department Meeting</div>
+                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Conference Room, Administration Building</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Classroom Attendance -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-person-check me-2"></i>Classroom Attendance
+                            </h4>
+                            <a href="mark-attendance.html" class="section-action">View All Classes</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-people dashboard-icon"></i>Database Management Systems (CS301)</span>
+                                <div>
+                                    <button class="btn btn-sm btn-primary">Save Attendance</button>
+                                </div>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <table class="attendance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>ST12345</td>
+                                            <td>John Doe</td>
+                                            <td>Present</td>
+                                            <td class="attendance-actions">
+                                                <button class="btn-present">Present</button>
+                                                <button class="btn-absent">Absent</button>
+                                                <button class="btn-late">Late</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ST12346</td>
+                                            <td>Jane Smith</td>
+                                            <td>Present</td>
+                                            <td class="attendance-actions">
+                                                <button class="btn-present">Present</button>
+                                                <button class="btn-absent">Absent</button>
+                                                <button class="btn-late">Late</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ST12347</td>
+                                            <td>Michael Johnson</td>
+                                            <td>Absent</td>
+                                            <td class="attendance-actions">
+                                                <button class="btn-present">Present</button>
+                                                <button class="btn-absent">Absent</button>
+                                                <button class="btn-late">Late</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ST12348</td>
+                                            <td>Emily Davis</td>
+                                            <td>Late</td>
+                                            <td class="attendance-actions">
+                                                <button class="btn-present">Present</button>
+                                                <button class="btn-absent">Absent</button>
+                                                <button class="btn-late">Late</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ST12349</td>
+                                            <td>Robert Wilson</td>
+                                            <td>Present</td>
+                                            <td class="attendance-actions">
+                                                <button class="btn-present">Present</button>
+                                                <button class="btn-absent">Absent</button>
+                                                <button class="btn-late">Late</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Assignment Management -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-file-earmark-text me-2"></i>Assignment Management
+                            </h4>
+                            <a href="create-assignment.html" class="section-action">Create New</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-file-earmark-text dashboard-icon"></i>Recent Assignments</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="assignment-item">
+                                    <div class="assignment-info">
+                                        <div class="assignment-title">Database Design Project</div>
+                                        <div class="assignment-course">Database Management Systems (CS301)</div>
+                                        <div class="assignment-due">Due: Sep 25, 11:59 PM | 15 Submissions</div>
+                                    </div>
+                                    <span class="assignment-status status-published">Published</span>
+                                </div>
+                                <div class="assignment-item">
+                                    <div class="assignment-info">
+                                        <div class="assignment-title">Normalization Exercise</div>
+                                        <div class="assignment-course">Database Management Systems (CS301)</div>
+                                        <div class="assignment-due">Due: Sep 20, 11:59 PM | 12 Submissions</div>
+                                    </div>
+                                    <span class="assignment-status status-published">Published</span>
+                                </div>
+                                <div class="assignment-item">
+                                    <div class="assignment-info">
+                                        <div class="assignment-title">Advanced SQL Queries</div>
+                                        <div class="assignment-course">Advanced Database Concepts (CS501)</div>
+                                        <div class="assignment-due">Due: Sep 22, 11:59 PM | 8 Submissions</div>
+                                    </div>
+                                    <span class="assignment-status status-published">Published</span>
+                                </div>
+                                <div class="assignment-item" style="border-bottom: none;">
+                                    <div class="assignment-info">
+                                        <div class="assignment-title">Database Performance Tuning</div>
+                                        <div class="assignment-course">Advanced Database Concepts (CS501)</div>
+                                        <div class="assignment-due">Not published yet</div>
+                                    </div>
+                                    <span class="assignment-status status-draft">Draft</span>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="grade-assignments.html" class="btn btn-primary">Grade Submissions</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Announcements -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-megaphone me-2"></i>Announcements
+                            </h4>
+                            <a href="create-announcement.html" class="section-action">Create New</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-megaphone dashboard-icon"></i>Recent Announcements</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="announcement-item">
+                                    <div class="announcement-title">Midterm Exam Schedule</div>
+                                    <div class="announcement-date">Posted on: September 15, 2023 | To: All Classes</div>
+                                    <div class="announcement-content">The midterm examination schedule has been released. Database Management Systems (CS301) exam will be held on October 10, 2023, from 9:00 AM to 11:00 AM in Room 105. Advanced Database Concepts (CS501) exam will be held on October 12, 2023, from 9:00 AM to 11:00 AM in Room 201.</div>
+                                </div>
+                                <div class="announcement-item">
+                                    <div class="announcement-title">Office Hours Change</div>
+                                    <div class="announcement-date">Posted on: September 14, 2023 | To: All Classes</div>
+                                    <div class="announcement-content">Please note that my office hours will be changed next week. Instead of Monday 2:00 PM - 3:30 PM, I will be available on Tuesday 10:00 AM - 11:30 AM. If you need to meet outside these hours, please email me to schedule an appointment.</div>
+                                </div>
+                                <div class="announcement-item" style="border-bottom: none;">
+                                    <div class="announcement-title">Guest Lecture: Database Security</div>
+                                    <div class="announcement-date">Posted on: September 12, 2023 | To: Advanced Database Concepts (CS501)</div>
+                                    <div class="announcement-content">We will have a guest lecture on Database Security by Dr. Robert Chen from Cybersecurity Solutions Inc. on September 20, 2023. Attendance is mandatory as the content will be included in the midterm exam.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div class="col-lg-4">
+                    <!-- Profile Summary -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-person dashboard-icon"></i>My Profile</span>
+                                <a href="lecturer-profile.html" class="text-white"><i class="bi bi-pencil-square"></i></a>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="profile-header">
+                                    <div class="profile-avatar">
+                                        <img src="img/lecturer.jpg" alt="Dr. Sarah Johnson">
+                                    </div>
+                                    <div class="profile-info">
+                                        <h5>Dr. Sarah Johnson</h5>
+                                        <p>Faculty ID: FC5678</p>
+                                        <p>Computer Science Department</p>
+                                    </div>
+                                </div>
+                                <div class="profile-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-value">4</div>
+                                        <div class="stat-label">Courses</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">120</div>
+                                        <div class="stat-label">Students</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">15</div>
+                                        <div class="stat-label">Years Exp.</div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <div class="progress-title">Semester Progress</div>
+                                        <div class="progress-value">45%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="lecturer-profile.html" class="btn btn-outline-primary">Edit Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Classroom Requests -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-building me-2"></i>Classroom Requests
+                            </h4>
+                            <a href="classroom-request.html" class="section-action">New Request</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-building dashboard-icon"></i>Recent Requests</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="classroom-request-item">
+                                    <div class="classroom-request-info">
+                                        <div class="classroom-request-title">Computer Lab 3</div>
+                                        <div class="classroom-request-details">Database Management Systems (CS301)</div>
+                                        <div class="classroom-request-date">Sep 22, 2023 | 14:00 - 16:00</div>
+                                    </div>
+                                    <span class="classroom-request-status status-approved">Approved</span>
+                                </div>
+                                <div class="classroom-request-item">
+                                    <div class="classroom-request-info">
+                                        <div class="classroom-request-title">Room 201</div>
+                                        <div class="classroom-request-details">Advanced Database Concepts (CS501)</div>
+                                        <div class="classroom-request-date">Sep 25, 2023 | 09:00 - 11:00</div>
+                                    </div>
+                                    <span class="classroom-request-status status-pending-approval">Pending</span>
+                                </div>
+                                <div class="classroom-request-item" style="border-bottom: none;">
+                                    <div class="classroom-request-info">
+                                        <div class="classroom-request-title">Conference Room</div>
+                                        <div class="classroom-request-details">Guest Lecture: Database Security</div>
+                                        <div class="classroom-request-date">Sep 20, 2023 | 13:00 - 15:00</div>
+                                    </div>
+                                    <span class="classroom-request-status status-approved">Approved</span>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="classroom-request.html" class="btn btn-primary">Request Classroom</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Upcoming Events -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-calendar-event me-2"></i>Upcoming Events
+                            </h4>
+                            <a href="events.html" class="section-action">View All</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span>Events</span>
+                                <div>
+                                    <button class="btn btn-sm btn-light me-2" id="prevEvent"><i class="bi bi-chevron-left"></i></button>
+                                    <button class="btn btn-sm btn-light" id="nextEvent"><i class="bi bi-chevron-right"></i></button>
+                                </div>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">20</div>
+                                        <div class="event-month">SEP</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <div class="event-title">Guest Lecture: Database Security</div>
+                                        <div class="event-time"><i class="bi bi-clock me-1"></i>13:00 - 15:00</div>
+                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Conference Room</div>
+                                    </div>
+                                </div>
+                                <div class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">22</div>
+                                        <div class="event-month">SEP</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <div class="event-title">Faculty Meeting</div>
+                                        <div class="event-time"><i class="bi bi-clock me-1"></i>10:00 - 12:00</div>
+                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Meeting Room 1</div>
+                                    </div>
+                                </div>
+                                <div class="event-item" style="border-bottom: none;">
+                                    <div class="event-date">
+                                        <div class="event-day">25</div>
+                                        <div class="event-month">SEP</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <div class="event-title">Department Workshop</div>
+                                        <div class="event-time"><i class="bi bi-clock me-1"></i>14:00 - 17:00</div>
+                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Computer Lab 1</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Student Performance -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="section-header">
+                            <h4 class="section-title">Student Performance</h4>
+                            <a href="student-performance.html" class="section-action">View Details</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-graph-up dashboard-icon"></i>Course Performance</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <div class="progress-title">Database Management Systems (CS301)</div>
+                                        <div class="progress-value">78%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <div class="progress-title">Advanced Database Concepts (CS501)</div>
+                                        <div class="progress-value">82%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <div class="progress-title">Database Administration (CS401)</div>
+                                        <div class="progress-value">75%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <div class="progress-title">Introduction to SQL (CS201)</div>
+                                        <div class="progress-value">85%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Quick Links</h4>
+                    <a class="btn btn-link" href="lecturer-dashboard.html">Dashboard</a>
+                    <a class="btn btn-link" href="my-courses.html">My Courses</a>
+                    <a class="btn btn-link" href="manage-assignments.html">Assignments</a>
+                    <a class="btn btn-link" href="events.html">Events</a>
+                    <a class="btn btn-link" href="help-center.html">Help Center</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Contact</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="442d2a222b0421282125362a2d2a236a272b29">[email&#160;protected]</a></p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Gallery</h4>
+                    <div class="row g-2 pt-2">
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Newsletter</h4>
+                    <p>Subscribe to our newsletter for updates</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">CMS</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="lecturer-dashboard.html">Home</a>
+                            <a href="cookies.html">Cookies</a>
+                            <a href="help.html">Help</a>
+                            <a href="faqs.html">FAQs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Custom Javascript for Dashboard -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide spinner after page loads
+            setTimeout(function() {
+                document.getElementById('spinner').classList.remove('show');
+            }, 1000);
+            
+            // Notification dropdown toggle
+            const notificationButton = document.getElementById('notificationButton');
+            const notificationMenu = document.getElementById('notificationMenu');
+            
+            notificationButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationMenu.classList.toggle('show');
+                userMenu.classList.remove('show');
+            });
+            
+            // User dropdown toggle
+            const userButton = document.getElementById('userButton');
+            const userMenu = document.getElementById('userMenu');
+            
+            userButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userMenu.classList.toggle('show');
+                notificationMenu.classList.remove('show');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                notificationMenu.classList.remove('show');
+                userMenu.classList.remove('show');
+            });
+            
+            // Prevent dropdown from closing when clicking inside
+            notificationMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            userMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Add this to your existing script section
+            $('.event-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: false,
+                dots: true,
+                items: 1,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true
+            });
+
+            // Event navigation buttons
+            $('#prevEvent').click(function() {
+                $('.event-carousel').trigger('prev.owl.carousel');
+            });
+
+            $('#nextEvent').click(function() {
+                $('.event-carousel').trigger('next.owl.carousel');
+            });
+            
+            // Attendance marking functionality
+            const attendanceButtons = document.querySelectorAll('.attendance-actions button');
+            attendanceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const statusCell = row.querySelector('td:nth-child(3)');
+                    
+                    // Remove all active classes from buttons in this row
+                    const rowButtons = row.querySelectorAll('.attendance-actions button');
+                    rowButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Update status cell
+                    if (this.classList.contains('btn-present')) {
+                        statusCell.textContent = 'Present';
+                    } else if (this.classList.contains('btn-absent')) {
+                        statusCell.textContent = 'Absent';
+                    } else if (this.classList.contains('btn-late')) {
+                        statusCell.textContent = 'Late';
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $(".welcome-carousel").owlCarousel({
+                items: 1,
+                loop: true,
+                nav: true,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                navText: [
+                    '<i class="bi bi-chevron-left"></i>',
+                    '<i class="bi bi-chevron-right"></i>'
+                ],
+                responsive: {
+                    0: {
+                        nav: true
+                    },
+                    768: {
+                        nav: true
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

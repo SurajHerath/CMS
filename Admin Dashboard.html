@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CMS - Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .dashboard-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .dashboard-card-header {
+            background-color: #06BBCC;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-card-body {
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .dashboard-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        .announcement-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .announcement-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .announcement-date {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .announcement-content {
+            font-size: 0.9rem;
+        }
+        
+        .request-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .request-info {
+            flex-grow: 1;
+        }
+        
+        .request-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .request-details {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .request-date {
+            font-size: 0.8rem;
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .request-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #664d03;
+        }
+        
+        .status-approved {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+        
+        .event-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .event-date {
+            min-width: 60px;
+            text-align: center;
+            padding: 5px;
+            background-color: #06BBCC;
+            color: white;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        
+        .event-day {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .event-month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .event-info {
+            flex-grow: 1;
+        }
+        
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .event-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .event-location {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            border: 3px solid #06BBCC;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info h5 {
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            margin-bottom: 5px;
+            color: #6c757d;
+        }
+        
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #06BBCC;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(rgba(24, 29, 56, .7), rgba(24, 29, 56, .7)), url('img/carousel-1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-banner h2 {
+            margin-bottom: 10px;
+        }
+        
+        .welcome-banner p {
+            margin-bottom: 0;
+            opacity: 0.9;
+        }
+        
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .quick-action-btn {
+            flex-grow: 1;
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #343a40;
+            min-width: 120px;
+        }
+        
+        .quick-action-btn:hover {
+            background-color: #06BBCC;
+            color: white;
+        }
+        
+        .quick-action-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #06BBCC;
+        }
+        
+        .quick-action-btn:hover .quick-action-icon {
+            color: white;
+        }
+        
+        .quick-action-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .progress-container {
+            margin-bottom: 15px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .progress-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .progress-value {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-title i {
+            color: #06BBCC;
+            font-size: 1.25rem;
+        }
+        
+        /* Remove double blue lines */
+        .section-title:before,
+        .section-title:after {
+            display: none;
+        }
+        
+        .section-action {
+            font-size: 0.9rem;
+            color: #06BBCC;
+            text-decoration: none;
+        }
+        
+        .section-action:hover {
+            text-decoration: underline;
+        }
+        
+        .notification-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .notification-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .notification-menu.show {
+            display: block;
+        }
+        
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+        }
+        
+        .notification-item {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .notification-item.unread {
+            background-color: #f0f9ff;
+        }
+        
+        .notification-content {
+            margin-bottom: 5px;
+        }
+        
+        .notification-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .notification-footer {
+            text-align: center;
+            padding-top: 15px;
+        }
+        
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .user-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .user-menu.show {
+            display: block;
+        }
+        
+        .user-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        
+        .user-avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .user-role {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .user-menu-item {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            color: #343a40;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .user-menu-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .user-menu-icon {
+            margin-right: 10px;
+            color: #6c757d;
+        }
+        
+        .user-menu-footer {
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+            margin-top: 15px;
+        }
+        
+        /* Add carousel styles */
+        .welcome-carousel {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-carousel-item {
+            position: relative;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .welcome-carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(24, 29, 56, .7);
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .welcome-carousel-content {
+            max-width: 800px;
+        }
+        
+        .welcome-carousel-content h5 {
+            color: #06BBCC;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            animation: slideInDown 1s ease forwards;
+        }
+        
+        .welcome-carousel-content h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: slideInDown 1s ease forwards;
+        }
+        
+        .welcome-carousel-content p {
+            color: #fff;
+            margin-bottom: 30px;
+            animation: slideInDown 1s ease forwards;
+        }
+        
+        /* Updated carousel navigation styles */
+        .welcome-carousel .owl-nav {
+            position: absolute;
+            top: 50%;
+            right: 20px; /* Position on right side */
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .welcome-carousel .owl-prev,
+        .welcome-carousel .owl-next {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: none;
+            outline: none;
+            font-size: 22px;
+            transition: .3s;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 !important;
+        }
+
+        .welcome-carousel .owl-prev:hover,
+        .welcome-carousel .owl-next:hover {
+            background: #06BBCC !important;
+            color: #FFFFFF;
+        }
+
+        .welcome-carousel .owl-prev i,
+        .welcome-carousel .owl-next i {
+            font-size: 20px;
+            line-height: 45px;
+        }
+        
+        /* Chart styles */
+        .chart-container {
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        
+        /* Table styles */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .admin-table th, 
+        .admin-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .admin-table th {
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        .admin-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .btn-action {
+            padding: 2px 8px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .btn-view {
+            background-color: #cff4fc;
+            color: #055160;
+        }
+        
+        .btn-edit {
+            background-color: #fff3cd;
+            color: #664d03;
+        }
+        
+        .btn-delete {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+        
+        .btn-approve {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        
+        .btn-reject {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+        
+        .btn-view:hover {
+            background-color: #055160;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #664d03;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background-color: #842029;
+            color: white;
+        }
+        
+        .btn-approve:hover {
+            background-color: #0f5132;
+            color: white;
+        }
+        
+        .btn-reject:hover {
+            background-color: #842029;
+            color: white;
+        }
+        
+        @keyframes slideInDown {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="admin-dashboard.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>CMS</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- Navigation Start -->
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="admin-dashboard.html" class="nav-item nav-link active">Dashboard</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">User Management</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="admin-registration.html" class="dropdown-item">Admin Registration</a>
+                        <a href="lecturer-registration.html" class="dropdown-item">Lecturer Registration</a>
+                        <a href="student-registration.html" class="dropdown-item">Student Registration</a>
+                        <a href="manage-users.html" class="dropdown-item">Manage Users</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Academic</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="manage-departments.html" class="dropdown-item">Departments</a>
+                        <a href="manage-degrees.html" class="dropdown-item">Degree Programs</a>
+                        <a href="manage-courses.html" class="dropdown-item">Courses</a>
+                        <a href="assign-courses.html" class="dropdown-item">Assign Courses to Degrees</a>
+                        <a href="assign-lecturers.html" class="dropdown-item">Assign Lecturers to Courses</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Student Affairs</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="enroll-students.html" class="dropdown-item">Enroll Students</a>
+                        <a href="student-records.html" class="dropdown-item">Student Records</a>
+                        <a href="student-attendance.html" class="dropdown-item">Attendance Reports</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Facilities</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="manage-classrooms.html" class="dropdown-item">Manage Classrooms</a>
+                        <a href="classroom-requests.html" class="dropdown-item">Classroom Requests</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Communication</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="manage-announcements.html" class="dropdown-item">Announcements</a>
+                        <a href="manage-events.html" class="dropdown-item">Events</a>
+                        <a href="manage-notifications.html" class="dropdown-item">Notifications</a>
+                    </div>
+                </div>
+                <a href="support-tickets.html" class="nav-item nav-link">Support</a>
+            </div>
+            <!-- Navigation End -->
+            
+            <!-- Notification Dropdown -->
+            <div class="notification-dropdown me-3">
+                <button class="btn btn-light position-relative" id="notificationButton">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge">4</span>
+                </button>
+                <div class="notification-menu" id="notificationMenu">
+                    <div class="notification-header">
+                        <span class="notification-title">Notifications</span>
+                        <a href="#" class="text-primary">Mark all as read</a>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-content">New classroom request from <strong>Dr. Sarah Johnson</strong></div>
+                        <div class="notification-time">30 minutes ago</div>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-content">New support ticket: <strong>System access issue</strong></div>
+                        <div class="notification-time">1 hour ago</div>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-content"><strong>5 new students</strong> registered today</div>
+                        <div class="notification-time">3 hours ago</div>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notification-content">Semester registration deadline approaching</div>
+                        <div class="notification-time">5 hours ago</div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-content">System maintenance completed successfully</div>
+                        <div class="notification-time">Yesterday</div>
+                    </div>
+                    <div class="notification-footer">
+                        <a href="manage-notifications.html" class="text-primary">View all notifications</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Dropdown -->
+            <div class="user-dropdown me-4">
+                <button class="btn btn-light d-flex align-items-center" id="userButton">
+                    <div class="user-avatar-small me-2">
+                        <img src="img/admin.jpg" alt="Admin">
+                    </div>
+                    <span class="d-none d-lg-inline">Admin User</span>
+                    <i class="bi bi-chevron-down ms-2"></i>
+                </button>
+                <div class="user-menu" id="userMenu">
+                    <div class="user-header">
+                        <div class="user-avatar-small">
+                            <img src="img/admin.jpg" alt="Admin">
+                        </div>
+                        <div>
+                            <div class="user-name">Admin User</div>
+                            <div class="user-role">System Administrator</div>
+                        </div>
+                    </div>
+                    <a href="admin-profile.html" class="user-menu-item">
+                        <i class="bi bi-person user-menu-icon"></i>
+                        My Profile
+                    </a>
+                    <a href="account-settings.html" class="user-menu-item">
+                        <i class="bi bi-gear user-menu-icon"></i>
+                        Account Settings
+                    </a>
+                    <a href="system-logs.html" class="user-menu-item">
+                        <i class="bi bi-list-check user-menu-icon"></i>
+                        System Logs
+                    </a>
+                    <div class="user-menu-footer">
+                        <a href="logout.html" class="user-menu-item text-danger">
+                            <i class="bi bi-box-arrow-right user-menu-icon"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Dashboard Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <!-- Welcome Banner -->
+            <div class="welcome-carousel owl-carousel">
+                <div class="welcome-carousel-item" style="background-image: url('img/carousel-1.jpg');">
+                    <div class="welcome-carousel-overlay">
+                        <div class="welcome-carousel-content">
+                            <h5 class="text-primary text-uppercase mb-3">Welcome to Admin Dashboard</h5>
+                            <h1 class="display-3 text-white">Course Management System</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">Manage all aspects of the educational institution from a single dashboard. You have 4 pending classroom requests and 5 new support tickets.</p>
+                            <a href="system-overview.html" class="btn btn-light py-md-3 px-md-5 me-3">System Overview</a>
+                            <a href="system-settings.html" class="btn btn-primary py-md-3 px-md-5">System Settings</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="welcome-carousel-item" style="background-image: url('img/carousel-2.jpg');">
+                    <div class="welcome-carousel-overlay">
+                        <div class="welcome-carousel-content">
+                            <h5 class="text-primary text-uppercase mb-3">Important Notice</h5>
+                            <h1 class="display-3 text-white">New Semester Registration</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">The registration for the new semester will begin next week. Please ensure all course assignments and classroom allocations are completed.</p>
+                            <a href="manage-courses.html" class="btn btn-light py-md-3 px-md-5 me-3">Manage Courses</a>
+                            <a href="manage-classrooms.html" class="btn btn-primary py-md-3 px-md-5">Manage Classrooms</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="quick-actions wow fadeInUp" data-wow-delay="0.2s">
+                <a href="admin-registration.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+                    <div class="quick-action-label">Add User</div>
+                </a>
+                <a href="manage-courses.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <div class="quick-action-label">Manage Courses</div>
+                </a>
+                <a href="manage-events.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-calendar-plus"></i>
+                    </div>
+                    <div class="quick-action-label">Add Event</div>
+                </a>
+                <a href="classroom-requests.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <div class="quick-action-label">Classroom Requests</div>
+                </a>
+                <a href="manage-announcements.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-megaphone"></i>
+                    </div>
+                    <div class="quick-action-label">Announcements</div>
+                </a>
+                <a href="support-tickets.html" class="quick-action-btn">
+                    <div class="quick-action-icon">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <div class="quick-action-label">Support</div>
+                </a>
+            </div>
+            
+            <!-- Analytics Overview -->
+            <div class="dashboard-section wow fadeInUp" data-wow-delay="0.3s">
+                <div class="section-header">
+                    <h4 class="section-title">
+                        <i class="bi bi-graph-up me-2"></i>System Analytics
+                    </h4>
+                    <a href="detailed-analytics.html" class="section-action">View Detailed Reports</a>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="stat-value">1,245</div>
+                        <div class="stat-label">Total Students</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <div class="stat-value">87</div>
+                        <div class="stat-label">Lecturers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Active Courses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">Classrooms</div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-bar-chart dashboard-icon"></i>Student Enrollment</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="chart-container" id="enrollmentChart">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-pie-chart dashboard-icon"></i>Department Distribution</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="chart-container" id="departmentChart">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Dashboard Content -->
+            <div class="row g-4 mt-3">
+                <!-- Left Column -->
+                <div class="col-lg-8">
+                    <!-- Classroom Requests -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-building me-2"></i>Pending Classroom Requests
+                            </h4>
+                            <a href="classroom-requests.html" class="section-action">View All</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-building dashboard-icon"></i>Recent Requests</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Requester</th>
+                                            <th>Room</th>
+                                            <th>Purpose</th>
+                                            <th>Date & Time</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Dr. Sarah Johnson</td>
+                                            <td>Computer Lab 3</td>
+                                            <td>Database Practical</td>
+                                            <td>Sep 22, 2023 | 14:00-16:00</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-approve">Approve</button>
+                                                <button class="btn-action btn-reject">Reject</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prof. Michael Brown</td>
+                                            <td>Room 201</td>
+                                            <td>Guest Lecture</td>
+                                            <td>Sep 25, 2023 | 09:00-11:00</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-approve">Approve</button>
+                                                <button class="btn-action btn-reject">Reject</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dr. Emily Davis</td>
+                                            <td>Conference Room</td>
+                                            <td>Department Meeting</td>
+                                            <td>Sep 20, 2023 | 13:00-15:00</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-approve">Approve</button>
+                                                <button class="btn-action btn-reject">Reject</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dr. Robert Wilson</td>
+                                            <td>Auditorium</td>
+                                            <td>Seminar</td>
+                                            <td>Sep 28, 2023 | 10:00-12:00</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-approve">Approve</button>
+                                                <button class="btn-action btn-reject">Reject</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Assignment -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-diagram-3 me-2"></i>Course Assignments
+                            </h4>
+                            <a href="assign-courses.html" class="section-action">Manage Assignments</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-diagram-3 dashboard-icon"></i>Recent Course Assignments</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Course Code</th>
+                                            <th>Course Name</th>
+                                            <th>Degree Program</th>
+                                            <th>Lecturer</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>CS301</td>
+                                            <td>Database Management Systems</td>
+                                            <td>BSc Computer Science</td>
+                                            <td>Dr. Sarah Johnson</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>CS501</td>
+                                            <td>Advanced Database Concepts</td>
+                                            <td>MSc Computer Science</td>
+                                            <td>Dr. Sarah Johnson</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>CS201</td>
+                                            <td>Introduction to Programming</td>
+                                            <td>BSc Computer Science</td>
+                                            <td>Prof. Michael Brown</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>CS401</td>
+                                            <td>Software Engineering</td>
+                                            <td>BSc Software Engineering</td>
+                                            <td>Dr. Emily Davis</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Registrations -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-person-plus me-2"></i>Recent Registrations
+                            </h4>
+                            <a href="manage-users.html" class="section-action">View All Users</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-person-plus dashboard-icon"></i>New Users</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Registration Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>John Doe</td>
+                                            <td>john.doe@example.com</td>
+                                            <td>Student</td>
+                                            <td>Sep 18, 2023</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jane Smith</td>
+                                            <td>jane.smith@example.com</td>
+                                            <td>Student</td>
+                                            <td>Sep 18, 2023</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dr. Thomas Wilson</td>
+                                            <td>thomas.wilson@example.com</td>
+                                            <td>Lecturer</td>
+                                            <td>Sep 17, 2023</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lisa Johnson</td>
+                                            <td>lisa.johnson@example.com</td>
+                                            <td>Admin</td>
+                                            <td>Sep 16, 2023</td>
+                                            <td class="action-buttons">
+                                                <button class="btn-action btn-view">View</button>
+                                                <button class="btn-action btn-edit">Edit</button>
+                                                <button class="btn-action btn-delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div class="col-lg-4">
+                    <!-- Admin Profile -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-person dashboard-icon"></i>Admin Profile</span>
+                                <a href="admin-profile.html" class="text-white"><i class="bi bi-pencil-square"></i></a>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="profile-header">
+                                    <div class="profile-avatar">
+                                        <img src="img/admin.jpg" alt="Admin User">
+                                    </div>
+                                    <div class="profile-info">
+                                        <h5>Admin User</h5>
+                                        <p>Admin ID: AD001</p>
+                                        <p>System Administrator</p>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <div class="progress-title">System Health</div>
+                                        <div class="progress-value">98%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 98%" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <div class="progress-title">Database Usage</div>
+                                        <div class="progress-value">65%</div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="system-settings.html" class="btn btn-outline-primary">System Settings</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Support Tickets -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-headset me-2"></i>Support Tickets
+                            </h4>
+                            <a href="support-tickets.html" class="section-action">View All</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-headset dashboard-icon"></i>Recent Tickets</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="request-item">
+                                    <div class="request-info">
+                                        <div class="request-title">System Access Issue</div>
+                                        <div class="request-details">From: John Doe (Student)</div>
+                                        <div class="request-date">Submitted: 1 hour ago</div>
+                                    </div>
+                                    <span class="request-status status-pending">New</span>
+                                </div>
+                                <div class="request-item">
+                                    <div class="request-info">
+                                        <div class="request-title">Course Registration Problem</div>
+                                        <div class="request-details">From: Jane Smith (Student)</div>
+                                        <div class="request-date">Submitted: 3 hours ago</div>
+                                    </div>
+                                    <span class="request-status status-pending">In Progress</span>
+                                </div>
+                                <div class="request-item">
+                                    <div class="request-info">
+                                        <div class="request-title">Email Configuration</div>
+                                        <div class="request-details">From: Dr. Sarah Johnson (Lecturer)</div>
+                                        <div class="request-date">Submitted: Yesterday</div>
+                                    </div>
+                                    <span class="request-status status-approved">Resolved</span>
+                                </div>
+                                <div class="request-item" style="border-bottom: none;">
+                                    <div class="request-info">
+                                        <div class="request-title">Password Reset</div>
+                                        <div class="request-details">From: Prof. Michael Brown (Lecturer)</div>
+                                        <div class="request-date">Submitted: 2 days ago</div>
+                                    </div>
+                                    <span class="request-status status-approved">Resolved</span>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="support-tickets.html" class="btn btn-primary">Manage Support</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Upcoming Events -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-calendar-event me-2"></i>Upcoming Events
+                            </h4>
+                            <a href="manage-events.html" class="section-action">Add Event</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-calendar-event dashboard-icon"></i>Events</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">20</div>
+                                        <div class="event-month">SEP</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <div class="event-title">Faculty Meeting</div>
+                                        <div class="event-time"><i class="bi bi-clock me-1"></i>10:00 - 12:00</div>
+                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Conference Room</div>
+                                    </div>
+                                </div>
+                                <div class="event-item">
+                                    <div class="event-date">
+                                        <div class="event-day">25</div>
+                                        <div class="event-month">SEP</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <div class="event-title">New Semester Orientation</div>
+                                        <div class="event-time"><i class="bi bi-clock me-1"></i>09:00 - 13:00</div>
+                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Auditorium</div>
+                                    </div>
+                                </div>
+                                <div class="event-item" style="border-bottom: none;">
+                                    <div class="event-date">
+                                        <div class="event-day">30</div>
+                                        <div class="event-month">SEP</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <div class="event-title">IT System Maintenance</div>
+                                        <div class="event-time"><i class="bi bi-clock me-1"></i>22:00 - 02:00</div>
+                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Server Room</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Announcements -->
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="section-header">
+                            <h4 class="section-title">
+                                <i class="bi bi-megaphone me-2"></i>Announcements
+                            </h4>
+                            <a href="manage-announcements.html" class="section-action">Create New</a>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-card-header">
+                                <span><i class="bi bi-megaphone dashboard-icon"></i>Recent Announcements</span>
+                            </div>
+                            <div class="dashboard-card-body">
+                                <div class="announcement-item">
+                                    <div class="announcement-title">System Maintenance Notice</div>
+                                    <div class="announcement-date">Posted on: September 18, 2023</div>
+                                    <div class="announcement-content">The system will undergo maintenance on September 30, 2023, from 22:00 to 02:00. Please save your work and log out before this time.</div>
+                                </div>
+                                <div class="announcement-item">
+                                    <div class="announcement-title">New Semester Registration</div>
+                                    <div class="announcement-date">Posted on: September 15, 2023</div>
+                                    <div class="announcement-content">Registration for the new semester will begin on September 25, 2023. All students are required to complete their registration by October 5, 2023.</div>
+                                </div>
+                                <div class="announcement-item" style="border-bottom: none;">
+                                    <div class="announcement-title">Faculty Meeting</div>
+                                    <div class="announcement-date">Posted on: September 12, 2023</div>
+                                    <div class="announcement-content">All faculty members are required to attend the meeting on September 20, 2023, at 10:00 AM in the Conference Room.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Quick Links</h4>
+                    <a class="btn btn-link" href="admin-dashboard.html">Dashboard</a>
+                    <a class="btn btn-link" href="manage-users.html">User Management</a>
+                    <a class="btn btn-link" href="manage-courses.html">Course Management</a>
+                    <a class="btn btn-link" href="manage-events.html">Events</a>
+                    <a class="btn btn-link" href="support-tickets.html">Support</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Contact</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="442d2a222b0421282125362a2d2a236a272b29">[email&#160;protected]</a></p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Gallery</h4>
+                    <div class="row g-2 pt-2">
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Newsletter</h4>
+                    <p>Subscribe to our newsletter for updates</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">CMS</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="admin-dashboard.html">Home</a>
+                            <a href="cookies.html">Cookies</a>
+                            <a href="help.html">Help</a>
+                            <a href="faqs.html">FAQs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Custom Javascript for Dashboard -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide spinner after page loads
+            setTimeout(function() {
+                document.getElementById('spinner').classList.remove('show');
+            }, 1000);
+            
+            // Notification dropdown toggle
+            const notificationButton = document.getElementById('notificationButton');
+            const notificationMenu = document.getElementById('notificationMenu');
+            
+            notificationButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationMenu.classList.toggle('show');
+                userMenu.classList.remove('show');
+            });
+            
+            // User dropdown toggle
+            const userButton = document.getElementById('userButton');
+            const userMenu = document.getElementById('userMenu');
+            
+            userButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userMenu.classList.toggle('show');
+                notificationMenu.classList.remove('show');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                notificationMenu.classList.remove('show');
+                userMenu.classList.remove('show');
+            });
+            
+            // Prevent dropdown from closing when clicking inside
+            notificationMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            userMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Initialize charts
+            // Enrollment Chart
+            const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+            const enrollmentChart = new Chart(enrollmentCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Computer Science', 'Engineering', 'Business', 'Arts', 'Medicine'],
+                    datasets: [{
+                        label: 'Students Enrolled',
+                        data: [350, 275, 320, 180, 120],
+                        backgroundColor: [
+                            'rgba(6, 187, 204, 0.7)',
+                            'rgba(6, 187, 204, 0.6)',
+                            'rgba(6, 187, 204, 0.5)',
+                            'rgba(6, 187, 204, 0.4)',
+                            'rgba(6, 187, 204, 0.3)'
+                        ],
+                        borderColor: [
+                            'rgba(6, 187, 204, 1)',
+                            'rgba(6, 187, 204, 1)',
+                            'rgba(6, 187, 204, 1)',
+                            'rgba(6, 187, 204, 1)',
+                            'rgba(6, 187, 204, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Department Chart
+            const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+            const departmentChart = new Chart(departmentCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Computer Science', 'Engineering', 'Business', 'Arts', 'Medicine'],
+                    datasets: [{
+                        data: [28, 22, 26, 14, 10],
+                        backgroundColor: [
+                            'rgba(6, 187, 204, 0.7)',
+                            'rgba(25, 135, 84, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(220, 53, 69, 0.7)',
+                            'rgba(13, 110, 253, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(6, 187, 204, 1)',
+                            'rgba(25, 135, 84, 1)',
+                            'rgba(255, 193, 7, 1)',
+                            'rgba(220, 53, 69, 1)',
+                            'rgba(13, 110, 253, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $(".welcome-carousel").owlCarousel({
+                items: 1,
+                loop: true,
+                nav: true,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                navText: [
+                    '<i class="bi bi-chevron-left"></i>',
+                    '<i class="bi bi-chevron-right"></i>'
+                ],
+                responsive: {
+                    0: {
+                        nav: true
+                    },
+                    768: {
+                        nav: true
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
