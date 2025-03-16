@@ -122,32 +122,8 @@
                                     <label for="courseName">Course Name</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <select class="form-select" id="department" required>
-                                        <option value="" selected disabled>Select Department</option>
-                                        <option value="CS">Computer Science</option>
-                                        <option value="ENG">Engineering</option>
-                                        <option value="BUS">Business</option>
-                                        <option value="MATH">Mathematics</option>
-                                        <option value="SCI">Science</option>
-                                    </select>
-                                    <label for="department">Department</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <select class="form-select" id="lecturer" required>
-                                        <option value="" selected disabled>Select Lecturer</option>
-                                        <option value="1">Dr. John Smith</option>
-                                        <option value="2">Prof. Sarah Johnson</option>
-                                        <option value="3">Dr. Michael Brown</option>
-                                        <option value="4">Dr. Emily Davis</option>
-                                        <option value="5">Prof. Robert Wilson</option>
-                                    </select>
-                                    <label for="lecturer">Lecturer</label>
-                                </div>
-                            </div>
+                          
+                         
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="credits" placeholder="Credits" min="1" max="10" required>
@@ -228,63 +204,66 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+
     <!-- Custom Javascript for Edit Course -->
     <script>
-        // Sample course data (would typically come from a database)
-        const coursesData = {
-            'CS101': {
-                id: 'CS101',
-                name: 'Introduction to Programming',
-                lecturer: 'Dr. John Smith',
-                lecturerId: '1',
-                credits: 3,
-                department: 'CS',
-                status: 'Active',
-                description: 'An introductory course to programming concepts using Python. Covers basic syntax, data types, control structures, and simple algorithms.'
-            },
-            'CS201': {
-                id: 'CS201',
-                name: 'Data Structures and Algorithms',
-                lecturer: 'Prof. Sarah Johnson',
-                lecturerId: '2',
-                credits: 4,
-                department: 'CS',
-                status: 'Active',
-                description: 'Advanced course covering various data structures like arrays, linked lists, trees, and graphs, as well as algorithms for searching, sorting, and graph traversal.'
-            },
-            'CS301': {
-                id: 'CS301',
-                name: 'Database Management Systems',
-                lecturer: 'Dr. Michael Brown',
-                lecturerId: '3',
-                credits: 3,
-                department: 'CS',
-                status: 'Active',
-                description: 'Comprehensive study of database concepts, design principles, and SQL programming. Includes normalization, transaction management, and database security.'
-            },
-            'CS401': {
-                id: 'CS401',
-                name: 'Software Engineering',
-                lecturer: 'Dr. Emily Davis',
-                lecturerId: '4',
-                credits: 4,
-                department: 'CS',
-                status: 'Active',
-                description: 'Introduction to software engineering principles, including requirements analysis, design, testing, and project management.'
-            },
-            'CS501': {
-                id: 'CS501',
-                name: 'Artificial Intelligence',
-                lecturer: 'Prof. Robert Wilson',
-                lecturerId: '5',
-                credits: 3,
-                department: 'CS',
-                status: 'Active',
-                description: 'Exploration of artificial intelligence concepts, including search algorithms, knowledge representation, machine learning, and natural language processing.'
-            }
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+    // Get course ID from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get('id');
+    
+    if (courseId) {
+        // Fetch course details from the server
+        fetch(`http://localhost:8080/courses/${courseId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate form fields with the fetched data
+                document.getElementById('courseId').value = data.courseID;
+                document.getElementById('courseName').value = data.courseName;
+                document.getElementById('credits').value = data.credits;
+                document.getElementById('status').value = data.status;
+            })
+            .catch(error => {
+                console.error('Error fetching course data:', error);
+            });
+    }
+});
 
-       
+document.getElementById('editCourseForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Capture form values
+    const courseId = document.getElementById('courseId').value;
+    const courseName = document.getElementById('courseName').value;
+    const credits = document.getElementById('credits').value;
+    const status = document.getElementById('status').value;
+
+    // Prepare the data to send in the request
+    const courseData = {
+        courseName: courseName,
+        credits: parseInt(credits),
+        status:status
+    };
+
+    // Make the PUT request to update the course
+    fetch(`http://localhost:8080/courses/${courseId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(courseData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Course updated successfully!');
+        window.location.href = 'View All Courses.html';
+    })
+    .catch(error => {
+        console.error('Error updating course:', error);
+        alert('There was an error updating the course.');
+    });
+});
+
     </script>
 </body>
 </html>

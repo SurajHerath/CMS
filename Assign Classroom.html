@@ -139,14 +139,7 @@
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <select class="form-select" id="courseSelect" required>
-                                            <option value="" selected disabled>Select Course</option>
-                                            <option value="1">CS101 - Introduction to Computer Science</option>
-                                            <option value="2">CS201 - Data Structures and Algorithms</option>
-                                            <option value="3">CS301 - Database Systems</option>
-                                            <option value="4">CS401 - Artificial Intelligence</option>
-                                            <option value="5">MATH101 - Calculus I</option>
-                                            <option value="6">MATH201 - Linear Algebra</option>
-                                            <option value="7">ENG101 - English Composition</option>
+
                                         </select>
                                         <label for="courseSelect">Course</label>
                                     </div>
@@ -298,6 +291,54 @@
     <script src="js/main.js"></script>
 
     <!-- Custom Javascript for Assign Classroom -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    fetchCourses();
+});
+
+function fetchCourses() {
+    fetch("http://localhost:8080/courses")
+        .then(response => response.json()) // Parse the response as JSON
+        .then(courses => {
+            const courseSelect = document.getElementById("courseSelect");
+            courseSelect.innerHTML = '<option value="" selected disabled>Select Course</option>'; // Default option
+
+            courses.forEach(course => {
+                const option = document.createElement("option");
+                option.value = course.courseID; // Assuming courseID is the key
+                option.textContent = course.courseName; // Assuming courseName is the name of the course
+                courseSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Error fetching courses:", error));
+}
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    fetchLecturers();
+});
+
+function fetchLecturers() {
+    fetch("http://localhost:8080/lecturers")
+        .then(response => response.json()) // Parse the response as JSON
+        .then(lecturers => {
+            const lecturerSelect = document.getElementById("lecturerSelect");
+            lecturerSelect.innerHTML = '<option value="" selected disabled>Select Lecturer</option>'; // Default option
+
+            lecturers.forEach(lecturer => {
+                const option = document.createElement("option");
+                option.value = lecturer.lecturerID;
+                option.textContent = `${lecturer.user.firstName} ${lecturer.user.lastName} - ${lecturer.department.deptName}`; 
+                lecturerSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Error fetching lecturers:", error));
+}
+
+    </script>
     <script>
         // Function to show error message
         function showError(message) {
@@ -341,69 +382,65 @@
         });
 
         // Handle form submission
-        document.getElementById('assignmentForm').addEventListener('submit', function(e) {
+        document.getElementById('assignmentForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
-            // Get form values
-            const courseId = document.getElementById('courseSelect').value;
-            const lecturerId = document.getElementById('lecturerSelect').value;
-            const classroom = document.getElementById('classroomSelect').value;
+
+            // Retrieve user session
+            var userSession = localStorage.getItem("user");
+
+            if (!userSession) {
+                alert("User session not found. Please log in again.");
+                console.log("User session:", userSession);
+                return;
+            }
+
+            userSession = JSON.parse(userSession); 
+            if (!userSession.id) {
+                alert("User session invalid. Please log in again.");
+                console.log("Parsed user session:", userSession);
+                return;
+            }
+
+            const adminId = userSession.id; 
+
+            // Get values from the form
+            const courseID = document.getElementById('courseSelect').value;
+            const lecturerID = document.getElementById('lecturerSelect').value;
             const day = document.getElementById('daySelect').value;
             const startTime = document.getElementById('startTime').value;
             const endTime = document.getElementById('endTime').value;
-            
-            // Validate form
-            if (!courseId || !lecturerId || !classroom || !day || !startTime || !endTime) {
-                showError('Please fill in all required fields.');
-                return;
-            }
-            
-            // Validate time range
-            if (!validateTimeRange(startTime, endTime)) {
-                showError('End time must be after start time.');
-                return;
-            }
-            
-            // Get course and lecturer text
-            const courseText = document.getElementById('courseSelect').options[document.getElementById('courseSelect').selectedIndex].text;
-            const lecturerText = document.getElementById('lecturerSelect').options[document.getElementById('lecturerSelect').selectedIndex].text;
-            const classroomText = document.getElementById('classroomSelect').options[document.getElementById('classroomSelect').selectedIndex].text;
-            
-            // Create assignment object
-            const newAssignment = {
-                id: Date.now().toString(),
-                courseId: courseId,
-                courseName: courseText,
-                lecturerId: lecturerId,
-                lecturerName: lecturerText,
-                classroom: classroom,
-                classroomName: classroomText,
+            const maxStudents = 30; 
+            const status = "Pending";
+
+            // Create JSON data
+            const requestData = {
+                course: { courseID: parseInt(courseID) },
+                lecturer: { lecturerID: parseInt(lecturerID) },
                 day: day,
                 startTime: startTime,
                 endTime: endTime,
-                created: new Date().toISOString().split('T')[0]
+                maxStudents: maxStudents,
+                status: status
             };
-            
-            // In a real application, this would be an API call to save the assignment
-            console.log('New classroom assignment:', newAssignment);
-            
-            // Show success message
-            showSuccess('Classroom assigned successfully!');
-            
-            // Reset form
-            document.getElementById('assignmentForm').reset();
-            
-            // Set default times again
-            document.getElementById('startTime').value = '09:00';
-            document.getElementById('endTime').value = '10:30';
-            
-            // Scroll to top to show the success message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Redirect after a short delay
-            setTimeout(() => {
-                window.location.href = 'view-classroom-assignments.html';
-            }, 2000);
+
+            // Send data to backend
+            fetch('http://localhost:8080/classes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('successAlert').style.display = 'block';
+                document.getElementById('successMessage').textContent = "Classroom assigned successfully!";
+            })
+            .catch(error => {
+                document.getElementById('errorAlert').style.display = 'block';
+                document.getElementById('errorMessage').textContent = "Error assigning classroom. Please try again.";
+                console.error('Error:', error);
+            });
         });
     </script>
 </body>

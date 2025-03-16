@@ -266,14 +266,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="tagInput" placeholder="Add tags">
-                                        <label for="tagInput">Tags (Press Enter to add)</label>
-                                    </div>
-                                    <div id="selectedTags"></div>
-                                    <input type="hidden" id="tagsHidden" name="tags">
-                                </div>
+                            
                             </div>
                         </div>
                         
@@ -287,11 +280,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-12">
-                                    <label class="form-label">Detailed Content</label>
-                                    <div id="editor-container"></div>
-                                    <input type="hidden" id="contentHidden" name="content">
-                                </div>
+                               
                             </div>
                         </div>
                         
@@ -308,19 +297,7 @@
                                     <div id="fileList" class="mt-2"></div>
                                 </div>
                                 
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="url" class="form-control" id="relatedLinkInput" placeholder="Related link">
-                                        <label for="relatedLinkInput">Related Link (Optional)</label>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="relatedArticlesInput" placeholder="Related articles">
-                                        <label for="relatedArticlesInput">Related Articles (Comma separated IDs)</label>
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                         
@@ -410,69 +387,6 @@
 
     <!-- Custom Javascript for Create Help Content -->
     <script>
-        // Initialize Quill rich text editor
-        var quill = new Quill('#editor-container', {
-            modules: {
-                toolbar: [
-                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                    ['bold', 'italic', 'underline', 'strike'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    [{ 'color': [] }, { 'background': [] }],
-                    ['link', 'image'],
-                    ['clean']
-                ]
-            },
-            placeholder: 'Write detailed help content here...',
-            theme: 'snow'
-        });
-        
-        // Tags management
-        const tagInput = document.getElementById('tagInput');
-        const selectedTags = document.getElementById('selectedTags');
-        const tagsHidden = document.getElementById('tagsHidden');
-        let tags = [];
-        
-        tagInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ',') {
-                e.preventDefault();
-                const tag = tagInput.value.trim();
-                if (tag && !tags.includes(tag)) {
-                    addTag(tag);
-                }
-                tagInput.value = '';
-            }
-        });
-        
-        function addTag(tag) {
-            tags.push(tag);
-            updateTagsDisplay();
-        }
-        
-        function removeTag(tag) {
-            tags = tags.filter(t => t !== tag);
-            updateTagsDisplay();
-        }
-        
-        function updateTagsDisplay() {
-            selectedTags.innerHTML = '';
-            tags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'category-tag';
-                tagElement.innerHTML = `${tag} <span class="remove-tag" data-tag="${tag}">&times;</span>`;
-                selectedTags.appendChild(tagElement);
-            });
-            
-            // Update hidden input
-            tagsHidden.value = tags.join(',');
-            
-            // Add event listeners to remove buttons
-            document.querySelectorAll('.remove-tag').forEach(button => {
-                button.addEventListener('click', function() {
-                    removeTag(this.getAttribute('data-tag'));
-                });
-            });
-        }
-        
         // File upload handling
         const fileUpload = document.getElementById('fileUpload');
         const fileUploadText = document.querySelector('.file-upload-text');
@@ -537,58 +451,7 @@
         }
         
         // Form submission
-        document.getElementById('createHelpForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const title = document.getElementById('titleInput').value;
-            const category = document.getElementById('categorySelect').value;
-            const audience = document.getElementById('audienceSelect').value;
-            const summary = document.getElementById('summaryInput').value;
-            const content = quill.root.innerHTML;
-            document.getElementById('contentHidden').value = content;
-            
-            // Validate form
-            if (!title || !category || !audience || !summary || !content) {
-                showError('Please fill in all required fields.');
-                return;
-            }
-            
-            if (summary.length > 200) {
-                showError('Summary should be no more than 200 characters.');
-                return;
-            }
-            
-            // Simulate form submission
-            // In a real application, you would send this data to the server
-            console.log({
-                title,
-                category,
-                audience,
-                tags,
-                summary,
-                content,
-                files,
-                relatedLink: document.getElementById('relatedLinkInput').value,
-                relatedArticles: document.getElementById('relatedArticlesInput').value
-            });
-            
-            // Show success message
-            showSuccess('Help content created successfully!');
-            
-            // Reset form after a delay
-            setTimeout(() => {
-                this.reset();
-                quill.root.innerHTML = '';
-                tags = [];
-                updateTagsDisplay();
-                fileUploadText.textContent = 'No file chosen';
-                fileList.innerHTML = '';
-                files = [];
-                document.getElementById('successAlert').style.display = 'none';
-            }, 3000);
-        });
-        
+       
         // Function to show error message
         function showError(message) {
             const errorAlert = document.getElementById('errorAlert');
@@ -607,7 +470,75 @@
                 errorAlert.style.display = 'none';
             }, 5000);
         }
-        
+
+      
+        document.getElementById("createHelpForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+
+                // Retrieve user session
+            var userSession = localStorage.getItem("user");
+
+            if (!userSession) {
+                alert("User session not found. Please log in again.");
+                console.log("User session:", userSession);
+                return;
+            }
+
+            userSession = JSON.parse(userSession); 
+            if (!userSession.id) {
+                alert("User session invalid. Please log in again.");
+                console.log("Parsed user session:", userSession);
+                return;
+            }
+
+            const userId = parseInt(userSession.id); 
+            const userRole = userSession.role;
+                // Get form values
+                let title = document.getElementById("titleInput").value.trim();
+                let category = document.getElementById("categorySelect").value;
+                let audience = document.getElementById("audienceSelect").value;
+                let message = document.getElementById("summaryInput").value.trim();
+                let files = document.getElementById("fileUpload").files;
+
+                // Validate input fields
+                if (!title || !category || !audience || !message) {
+                    document.getElementById("errorAlert").style.display = "block";
+                    document.getElementById("errorMessage").innerText = "Please fill in all required fields.";
+                    return;
+                } else {
+                    document.getElementById("errorAlert").style.display = "none";
+                }
+
+                // Create a FormData object to include files
+                let formData = new FormData();
+                formData.append('title', title);
+                formData.append('senderType', userRole);  
+                formData.append('senderId', userId); 
+                formData.append('receiverType', audience);
+                formData.append('message', message);
+                formData.append('category', category);
+
+                // Append files
+                for (let i = 0; i < files.length; i++) {
+                    formData.append('files', files[i]);
+                }
+
+                // Make API call to send the message and file
+                fetch("http://localhost:8080/api/support/send", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showSuccess("Help Content Created Successfully!");
+                    document.getElementById("createHelpForm").reset(); // Clear form after submission
+                })
+                .catch(error => {
+                    showError("Error: " + error.message);
+                });
+});
+
+
         // Function to show success message
         function showSuccess(message) {
             const successAlert = document.getElementById('successAlert');
@@ -629,5 +560,8 @@
             }, 1000);
         });
     </script>
+
+
+    
 </body>
 </html>

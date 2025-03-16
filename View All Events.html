@@ -102,7 +102,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 3; 
             -webkit-box-orient: vertical;
         }
         
@@ -251,6 +250,9 @@
                                 <button class="btn btn-outline-secondary btn-sm me-2" id="filterConference">Conference</button>
                                 <button class="btn btn-outline-secondary btn-sm me-2" id="filterWorkshop">Workshop</button>
                                 <button class="btn btn-outline-secondary btn-sm" id="filterSeminar">Seminar</button>
+                                <button class="btn btn-outline-secondary btn-sm" id="filterExhibition">Exhibition</button>
+                                <button class="btn btn-outline-secondary btn-sm" id="filterWebinar">Webinar</button>
+                                <button class="btn btn-outline-secondary btn-sm" id="filterOther">Other</button>
                             </div>
                             <div>
                                 <a href="insert-event.html" class="btn btn-success btn-sm">
@@ -305,110 +307,6 @@
                                 <span class="text-muted">Created: 2023-08-01</span>
                                 <div>
                                     <a href="edit-event.html?id=1" class="btn btn-sm btn-primary">
-                                        <i class="bi bi-pencil-square me-1"></i>Edit
-                                    </a>
-                                    <button class="btn btn-sm btn-danger">
-                                        <i class="bi bi-trash me-1"></i>Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Event Card 2 -->
-                        <div class="event-card">
-                            <div class="event-header d-flex justify-content-between align-items-center">
-                                <h5 class="m-0">Web Development Workshop</h5>
-                                <span class="badge-type badge-workshop">Workshop</span>
-                            </div>
-                            <div class="event-body">
-                                <p class="event-description">Hands-on workshop covering modern web development techniques. Learn about responsive design, JavaScript frameworks, and best practices for building scalable web applications.</p>
-                                
-                                <div class="event-details">
-                                    <div class="event-detail-item">
-                                        <i class="bi bi-calendar-event"></i>
-                                        <span>2023-09-20</span>
-                                    </div>
-                                    <div class="event-detail-item">
-                                        <i class="bi bi-clock"></i>
-                                        <span>13:00 - 16:00</span>
-                                    </div>
-                                    <div class="event-detail-item">
-                                        <i class="bi bi-person"></i>
-                                        <span>Organizer: Web Dev Academy</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="registration-info">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span><i class="bi bi-people-fill me-1"></i> Maximum Capacity:</span>
-                                        <span>50 attendees</span>
-                                    </div>
-                                    <div class="capacity-indicator">
-                                        <div class="capacity-fill" style="width: 90%;"></div>
-                                    </div>
-                                    <div class="capacity-text">45/50 registered</div>
-                                    
-                                    <div class="mt-2">
-                                        <span class="deadline-warning"><i class="bi bi-exclamation-triangle me-1"></i> Registration Deadline: 2023-09-15</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="event-footer d-flex justify-content-between align-items-center">
-                                <span class="text-muted">Created: 2023-08-05</span>
-                                <div>
-                                    <a href="edit-event.html?id=2" class="btn btn-sm btn-primary">
-                                        <i class="bi bi-pencil-square me-1"></i>Edit
-                                    </a>
-                                    <button class="btn btn-sm btn-danger">
-                                        <i class="bi bi-trash me-1"></i>Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Event Card 3 -->
-                        <div class="event-card">
-                            <div class="event-header d-flex justify-content-between align-items-center">
-                                <h5 class="m-0">Data Science Seminar</h5>
-                                <span class="badge-type badge-seminar">Seminar</span>
-                            </div>
-                            <div class="event-body">
-                                <p class="event-description">Explore the world of data science with industry experts. Learn about machine learning algorithms, data visualization techniques, and how to extract meaningful insights from large datasets.</p>
-                                
-                                <div class="event-details">
-                                    <div class="event-detail-item">
-                                        <i class="bi bi-calendar-event"></i>
-                                        <span>2023-11-05</span>
-                                    </div>
-                                    <div class="event-detail-item">
-                                        <i class="bi bi-clock"></i>
-                                        <span>10:00 - 12:30</span>
-                                    </div>
-                                    <div class="event-detail-item">
-                                        <i class="bi bi-person"></i>
-                                        <span>Organizer: Data Science Institute</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="registration-info">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span><i class="bi bi-people-fill me-1"></i> Maximum Capacity:</span>
-                                        <span>100 attendees</span>
-                                    </div>
-                                    <div class="capacity-indicator">
-                                        <div class="capacity-fill" style="width: 35%;"></div>
-                                    </div>
-                                    <div class="capacity-text">35/100 registered</div>
-                                    
-                                    <div class="mt-2">
-                                        <span class="deadline-safe"><i class="bi bi-check-circle me-1"></i> Registration Deadline: 2023-10-25</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="event-footer d-flex justify-content-between align-items-center">
-                                <span class="text-muted">Created: 2023-08-10</span>
-                                <div>
-                                    <a href="edit-event.html?id=3" class="btn btn-sm btn-primary">
                                         <i class="bi bi-pencil-square me-1"></i>Edit
                                     </a>
                                     <button class="btn btn-sm btn-danger">
@@ -494,55 +392,7 @@
 
     <!-- Custom Javascript for View Events -->
     <script>
-        // Sample event data (would typically come from a database)
-        const eventsData = {
-            '1': {
-                id: '1',
-                name: 'Annual Tech Conference 2023',
-                description: 'Join us for our annual technology conference featuring keynote speakers, workshops, and networking opportunities. Learn about the latest trends in AI, blockchain, and cloud computing.',
-                date: '2023-10-15',
-                startTime: '09:00',
-                endTime: '17:00',
-                type: 'Conference',
-                organizer: 'Tech Association',
-                maxCapacity: 200,
-                currentRegistrations: 130,
-                registerDeadline: '2023-10-01',
-                created: '2023-08-01',
-                updated: '2023-08-01'
-            },
-            '2': {
-                id: '2',
-                name: 'Web Development Workshop',
-                description: 'Hands-on workshop covering modern web development techniques. Learn about responsive design, JavaScript frameworks, and best practices for building scalable web applications.',
-                date: '2023-09-20',
-                startTime: '13:00',
-                endTime: '16:00',
-                type: 'Workshop',
-                organizer: 'Web Dev Academy',
-                maxCapacity: 50,
-                currentRegistrations: 45,
-                registerDeadline: '2023-09-15',
-                created: '2023-08-05',
-                updated: '2023-08-05'
-            },
-            '3': {
-                id: '3',
-                name: 'Data Science Seminar',
-                description: 'Explore the world of data science with industry experts. Learn about machine learning algorithms, data visualization techniques, and how to extract meaningful insights from large datasets.',
-                date: '2023-11-05',
-                startTime: '10:00',
-                endTime: '12:30',
-                type: 'Seminar',
-                organizer: 'Data Science Institute',
-                maxCapacity: 100,
-                currentRegistrations: 35,
-                registerDeadline: '2023-10-25',
-                created: '2023-08-10',
-                updated: '2023-08-10'
-            }
-        };
-
+        
         // Simple search functionality
         document.getElementById('searchButton').addEventListener('click', function() {
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
@@ -567,34 +417,33 @@
         
         // Filter buttons
         const filterButtons = document.querySelectorAll('.btn-outline-secondary');
+filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Set active class
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
         
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Set active class
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filterType = this.textContent.trim().toLowerCase();
-                const eventCards = document.querySelectorAll('.event-card');
-                
-                eventCards.forEach(card => {
-                    const eventType = card.querySelector('.badge-type').textContent.toLowerCase();
-                    const eventDate = card.querySelector('.bi-calendar-event').nextElementSibling.textContent.trim();
-                    const today = new Date().toISOString().split('T')[0];
-                    
-                    if (filterType === 'all') {
-                        card.style.display = 'block';
-                    } else if (filterType === 'upcoming' && eventDate >= today) {
-                        card.style.display = 'block';
-                    } else if (eventType === filterType) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
+        const filterType = this.textContent.trim().toLowerCase();
+        const eventCards = document.querySelectorAll('.event-card');
+        const today = new Date().toISOString().split('T')[0];
+        
+        eventCards.forEach(card => {
+            const eventType = card.querySelector('.badge-type').textContent.toLowerCase();
+            const eventDate = card.querySelector('.bi-calendar-event').nextElementSibling.textContent.trim();
+            
+            if (filterType === 'all') {
+                card.style.display = 'block';
+            } else if (filterType === 'upcoming' && eventDate >= today) {
+                card.style.display = 'block';
+            } else if (eventType === filterType) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
         });
-        
+    });
+});
+
         // Delete button functionality (just for demonstration)
         const deleteButtons = document.querySelectorAll('.btn-danger');
         
@@ -614,6 +463,162 @@
             setTimeout(function() {
                 document.getElementById('spinner').classList.remove('show');
             }, 1000);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fetch event data from the API
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/events", requestOptions)
+  .then(response => response.json())  // Parse JSON response
+  .then(events => {
+    const eventsList = document.getElementById('eventsList');
+    
+    // Clear the events list before populating
+    eventsList.innerHTML = '';
+
+    // Loop through the events and create event cards
+    events.forEach(event => {
+      const eventCard = document.createElement('div');
+      eventCard.classList.add('event-card');
+
+      // Add event header
+      const eventHeader = document.createElement('div');
+      eventHeader.classList.add('event-header', 'd-flex', 'justify-content-between', 'align-items-center');
+      const eventTitle = document.createElement('h5');
+      eventTitle.classList.add('m-0');
+      eventTitle.textContent = event.name;
+      const eventBadge = document.createElement('span');
+      eventBadge.classList.add('badge-type', `badge-${event.eventType.toLowerCase()}`);
+      eventBadge.textContent = event.eventType;
+
+      eventHeader.appendChild(eventTitle);
+      eventHeader.appendChild(eventBadge);
+      
+      // Add event body
+      const eventBody = document.createElement('div');
+      eventBody.classList.add('event-body');
+      
+      const eventDescription = document.createElement('p');
+      eventDescription.classList.add('event-description');
+      eventDescription.textContent = event.description;
+
+      const eventDetails = document.createElement('div');
+      eventDetails.classList.add('event-details');
+
+      const eventDateItem = document.createElement('div');
+      eventDateItem.classList.add('event-detail-item');
+      const eventDateIcon = document.createElement('i');
+      eventDateIcon.classList.add('bi', 'bi-calendar-event');
+      const eventDateText = document.createElement('span');
+      eventDateText.textContent = event.date;
+
+      eventDateItem.appendChild(eventDateIcon);
+      eventDateItem.appendChild(eventDateText);
+
+      const eventTimeItem = document.createElement('div');
+      eventTimeItem.classList.add('event-detail-item');
+      const eventTimeIcon = document.createElement('i');
+      eventTimeIcon.classList.add('bi', 'bi-clock');
+      const eventTimeText = document.createElement('span');
+      eventTimeText.textContent = `${event.startTime} - ${event.endTime}`;
+
+      eventTimeItem.appendChild(eventTimeIcon);
+      eventTimeItem.appendChild(eventTimeText);
+
+      const eventOrganizerItem = document.createElement('div');
+      eventOrganizerItem.classList.add('event-detail-item');
+      const eventOrganizerIcon = document.createElement('i');
+      eventOrganizerIcon.classList.add('bi', 'bi-person');
+      const eventOrganizerText = document.createElement('span');
+      eventOrganizerText.textContent = `Organizer: ${event.organizer}`;
+
+      eventOrganizerItem.appendChild(eventOrganizerIcon);
+      eventOrganizerItem.appendChild(eventOrganizerText);
+
+      eventDetails.appendChild(eventDateItem);
+      eventDetails.appendChild(eventTimeItem);
+      eventDetails.appendChild(eventOrganizerItem);
+
+      // Add registration info
+      const registrationInfo = document.createElement('div');
+      registrationInfo.classList.add('registration-info');
+      
+      const capacityInfo = document.createElement('div');
+      capacityInfo.classList.add('d-flex', 'justify-content-between', 'align-items-center');
+      const capacityLabel = document.createElement('span');
+      capacityLabel.innerHTML = `<i class="bi bi-people-fill me-1"></i> Maximum Capacity:`;
+      const capacityValue = document.createElement('span');
+      capacityValue.textContent = event.maxCapacity + " attendees";
+
+      capacityInfo.appendChild(capacityLabel);
+      capacityInfo.appendChild(capacityValue);
+
+      const capacityIndicator = document.createElement('div');
+      capacityIndicator.classList.add('capacity-indicator');
+      const capacityFill = document.createElement('div');
+      capacityFill.classList.add('capacity-fill');
+      const capacityPercent = Math.min(100, (Math.random() * 100).toFixed(2)); // Just simulating a random fill percentage for demo
+      capacityFill.style.width = `${capacityPercent}%`;
+      capacityIndicator.appendChild(capacityFill);
+
+      const capacityText = document.createElement('div');
+      capacityText.classList.add('capacity-text');
+      capacityText.textContent = `${Math.floor(capacityPercent * event.maxCapacity / 100)} / ${event.maxCapacity} registered`;
+
+      const registrationDeadline = document.createElement('div');
+      registrationDeadline.classList.add('mt-2');
+      const deadlineText = document.createElement('span');
+      deadlineText.classList.add('deadline-upcoming');
+      deadlineText.innerHTML = `<i class="bi bi-exclamation-circle me-1"></i> Registration Deadline: ${event.registerDeadline}`;
+
+      registrationInfo.appendChild(capacityInfo);
+      registrationInfo.appendChild(capacityIndicator);
+      registrationInfo.appendChild(capacityText);
+      registrationInfo.appendChild(registrationDeadline);
+
+      // Append everything to the event body
+      eventBody.appendChild(eventDescription);
+      eventBody.appendChild(eventDetails);
+      eventBody.appendChild(registrationInfo);
+
+      // Add event footer
+      const eventFooter = document.createElement('div');
+      eventFooter.classList.add('event-footer', 'd-flex', 'justify-content-between', 'align-items-center');
+      const createdDate = document.createElement('span');
+      createdDate.classList.add('text-muted');
+      createdDate.textContent = `Created: ${new Date().toLocaleDateString()}`;
+
+      const footerActions = document.createElement('div');
+      const editButton = document.createElement('a');
+      editButton.classList.add('btn', 'btn-sm', 'btn-primary');
+      editButton.setAttribute('href', `edit-event.html?id=${event.eventID}`);
+      editButton.innerHTML = `<i class="bi bi-pencil-square me-1"></i>Edit`;
+
+      const deleteButton = document.createElement('button');
+      deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
+      deleteButton.innerHTML = `<i class="bi bi-trash me-1"></i>Delete`;
+
+      footerActions.appendChild(editButton);
+      footerActions.appendChild(deleteButton);
+
+      eventFooter.appendChild(createdDate);
+      eventFooter.appendChild(footerActions);
+
+      // Append event header, body, and footer to the event card
+      eventCard.appendChild(eventHeader);
+      eventCard.appendChild(eventBody);
+      eventCard.appendChild(eventFooter);
+
+      // Add the event card to the events list
+      eventsList.appendChild(eventCard);
+    });
+  })
+  .catch(error => console.log('error', error));
+
         });
     </script>
 </body>

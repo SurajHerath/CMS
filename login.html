@@ -221,18 +221,30 @@
                     if (!response.ok) {
                         throw new Error("Invalid credentials");
                     }
-                    return response.text();
+                    return response.json(); // Parse response as JSON
                 })
-                .then(result => {
-                    alert("Success! Logged in.");
-                    console.log(result);
+                .then(user => {
+                    // Store user session
+                    localStorage.setItem("user", JSON.stringify(user));
+    
+                    // Redirect based on role
+                    if (user.role === "Admin") {
+                        window.location.href = "Admin Dashboard.html";
+                    } else if (user.role === "Student") {
+                        window.location.href = "Student Index.html";
+                    } else if (user.role === "Lecturer") {
+                        window.location.href = "Lecturer Dashboard.html";
+                    } else {
+                        alert("Unknown role. Contact support.");
+                    }
                 })
                 .catch(error => {
                     alert("Invalid credentials. Please try again.");
-                    console.log('error', error);
+                    console.error('Error:', error);
                 });
         });
     </script>
+    
     
 </body>
 

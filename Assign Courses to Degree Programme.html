@@ -131,12 +131,6 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                     <select class="form-select" id="degreeProgram" required>
-                                        <option value="" selected disabled>Select Degree Programme</option>
-                                        <option value="CS-BSC">BSc in Computer Science</option>
-                                        <option value="SE-BSC">BSc in Software Engineering</option>
-                                        <option value="DS-BSC">BSc in Data Science</option>
-                                        <option value="CS-MSC">MSc in Computer Science</option>
-                                        <option value="AI-MSC">MSc in Artificial Intelligence</option>
                                     </select>
                                     <label for="degreeProgram">Degree Programme</label>
                                 </div>
@@ -149,12 +143,7 @@
                                     <div class="course-entry">
                                         <div class="form-floating">
                                             <select class="form-select course-select" required>
-                                                <option value="" selected disabled>Select Course</option>
-                                                <option value="CS101">CS101 - Introduction to Programming</option>
-                                                <option value="CS201">CS201 - Data Structures and Algorithms</option>
-                                                <option value="CS301">CS301 - Database Management Systems</option>
-                                                <option value="CS401">CS401 - Software Engineering</option>
-                                                <option value="CS501">CS501 - Artificial Intelligence</option>
+                                    
                                             </select>
                                             <label>Course</label>
                                         </div>
@@ -200,27 +189,55 @@
 
     <!-- Custom Javascript for Course Assignment -->
     <script>
+
+function fetchCourses() {
+    fetch("http://localhost:8080/courses")
+        .then(response => response.json())
+        .then(courses => {
+            const courseSelects = document.querySelectorAll(".course-select");
+            courseSelects.forEach(select => {
+                select.innerHTML = '<option value="" selected disabled>Select Course</option>';
+                courses.forEach(course => {
+                    select.innerHTML += `<option value="${course.courseID}">${course.courseName}</option>`;
+                });
+            });
+        })
+        .catch(error => console.error("Error fetching courses:", error));
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchCourses();
+});
+
         // Function to add a new course entry
         function addCourse() {
+    fetch("http://localhost:8080/courses")
+        .then(response => response.json())
+        .then(courses => {
             const coursesContainer = document.getElementById('coursesContainer');
             const courseEntry = document.createElement('div');
             courseEntry.className = 'course-entry';
+
+            let options = '<option value="" selected disabled>Select Course</option>';
+            courses.forEach(course => {
+                options += `<option value="${course.courseID}">${course.courseName}</option>`;
+            });
+
             courseEntry.innerHTML = `
                 <div class="form-floating">
                     <select class="form-select course-select" required>
-                        <option value="" selected disabled>Select Course</option>
-                        <option value="CS101">CS101 - Introduction to Programming</option>
-                        <option value="CS201">CS201 - Data Structures and Algorithms</option>
-                        <option value="CS301">CS301 - Database Management Systems</option>
-                        <option value="CS401">CS401 - Software Engineering</option>
-                        <option value="CS501">CS501 - Artificial Intelligence</option>
+                        ${options}
                     </select>
                     <label>Course</label>
                 </div>
                 <i class="bi bi-x-circle remove-course" onclick="removeCourse(this)"></i>
             `;
+
             coursesContainer.appendChild(courseEntry);
-        }
+        })
+        .catch(error => console.error('Error fetching courses:', error));
+}
+
 
         // Function to remove a course entry
         function removeCourse(element) {
@@ -233,51 +250,72 @@
             } else {
                 alert('At least one course must be assigned.');
             }
-        }
+        } 
+    </script>
 
-        // Handle form submission
-        document.getElementById('assignCoursesForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get selected degree programme
-            const degreeProgram = document.getElementById('degreeProgram');
-            const degreeProgramValue = degreeProgram.value;
-            const degreeProgramText = degreeProgram.options[degreeProgram.selectedIndex].text;
-            
-            // Get all selected courses
-            const courseSelects = document.querySelectorAll('.course-select');
-            const selectedCourses = [];
-            
-            courseSelects.forEach(select => {
-                if (select.value) {
-                    selectedCourses.push({
-                        id: select.value,
-                        name: select.options[select.selectedIndex].text
-                    });
-                }
-            });
-            
-            // Validate that at least one course is selected
-            if (selectedCourses.length === 0) {
-                alert('Please select at least one course to assign.');
-                return;
-            }
-            
-            // Implement assignment logic (this would typically be an API call)
-            console.log('Assignment data:', {
-                degreeProgram: {
-                    id: degreeProgramValue,
-                    name: degreeProgramText
-                },
-                courses: selectedCourses
-            });
-            
-            // Show success message
-            alert('Courses assigned to degree programme successfully');
-            
-            // Redirect to view all assignments page
-            window.location.href = 'view-all-assignments.html';
+    <script>
+        document.getElementById("assignCoursesForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form from reloading the page
+
+    const degreeProgram = document.getElementById("degreeProgram").value;
+    if (!degreeProgram) {
+        alert("Please select a degree program.");
+        return;
+    }
+
+    const courseSelects = document.querySelectorAll(".course-select");
+    let selectedCourses = [];
+
+    courseSelects.forEach(select => {
+        if (select.value) {
+            selectedCourses.push(parseInt(select.value));
+        }
+    });
+
+    if (selectedCourses.length === 0) {
+        alert("Please select at least one course.");
+        return;
+    }
+
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(selectedCourses),
+        redirect: "follow",
+    };
+
+    fetch(`http://localhost:8080/degreeProgrammes/${degreeProgram}/courses`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            console.log(result);
+            alert("Courses successfully assigned!");
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Failed to assign courses. Please try again.");
         });
+});
+
+    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("http://localhost:8080/degreeProgrammes")
+            .then(response => response.json())
+            .then(data => {
+                const programmeSelect= document.getElementById("degreeProgram");
+                programmeSelect.innerHTML = '<option value="">Select Degree Program</option>';
+    
+                data.forEach(programme => {
+                    const option = document.createElement("option");
+                    option.value = programme.programID;
+                    option.textContent = programme.program_name;
+                    programmeSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching departments:", error));
+    });
     </script>
 </body>
 

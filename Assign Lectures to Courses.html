@@ -185,13 +185,7 @@
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <select class="form-select" id="lecturerSelect" required>
-                                            <option value="" selected disabled>Select Lecturer</option>
-                                            <option value="1">Dr. John Smith - Computer Science</option>
-                                            <option value="2">Prof. Sarah Johnson - Mathematics</option>
-                                            <option value="3">Dr. Michael Brown - Computer Science</option>
-                                            <option value="4">Prof. Emily Davis - English</option>
-                                            <option value="5">Dr. Robert Wilson - Computer Science</option>
-                                            <option value="6">Prof. Jennifer Lee - Mathematics</option>
+                                     
                                         </select>
                                         <label for="lecturerSelect">Lecturer</label>
                                     </div>
@@ -244,47 +238,21 @@
                                         <div class="col-12">
                                             <div class="form-floating">
                                                 <select class="form-select" id="classroomSelect-1" required>
-                                                    <option value="" selected disabled>Select Classroom</option>
-                                                    <option value="A101">A101 - Capacity: 50</option>
-                                                    <option value="A102">A102 - Capacity: 40</option>
-                                                    <option value="B201">B201 - Capacity: 100</option>
-                                                    <option value="B202">B202 - Capacity: 80</option>
-                                                    <option value="C301">C301 - Capacity: 30</option>
-                                                    <option value="C302">C302 - Capacity: 25</option>
-                                                    <option value="D401">D401 - Computer Lab - Capacity: 40</option>
+                                              
                                                 </select>
                                                 <label for="classroomSelect-1">Classroom</label>
                                             </div>
                                         </div>
                                         
-                                        <div class="col-12">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="lectureType-1" placeholder="e.g., Lecture, Lab, Tutorial" required>
-                                                <label for="lectureType-1">Lecture Type</label>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="text-center mt-3">
-                                <button type="button" class="btn btn-outline-primary" id="addTimeSlotBtn">
-                                    <i class="bi bi-plus-circle me-2"></i>Add Another Time Slot
-                                </button>
-                            </div>
+                         
                         </div>
                         
-                        <div class="form-section">
-                            <h5>Additional Information</h5>
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="notesTextarea" style="height: 100px"></textarea>
-                                        <label for="notesTextarea">Notes (Optional)</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      
                         
                         <div class="row g-3 mt-3">
                             <div class="col-12">
@@ -368,89 +336,6 @@
 
     <!-- Custom Javascript for Assign Lectures -->
     <script>
-        // Counter for time slots
-        let slotCounter = 1;
-        
-        // Function to add a new time slot
-        document.getElementById('addTimeSlotBtn').addEventListener('click', function() {
-            slotCounter++;
-            const newSlotId = `slot-${slotCounter}`;
-            
-            const newSlot = document.createElement('div');
-            newSlot.className = 'time-slot';
-            newSlot.id = newSlotId;
-            
-            newSlot.innerHTML = `
-                <span class="remove-slot" onclick="removeTimeSlot('${newSlotId}')"><i class="bi bi-x-circle"></i></span>
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <select class="form-select" id="daySelect-${slotCounter}" required>
-                                <option value="" selected disabled>Select Day</option>
-                                <option value="Monday">Monday</option>
-                                <option value="Tuesday">Tuesday</option>
-                                <option value="Wednesday">Wednesday</option>
-                                <option value="Thursday">Thursday</option>
-                                <option value="Friday">Friday</option>
-                                <option value="Saturday">Saturday</option>
-                            </select>
-                            <label for="daySelect-${slotCounter}">Day</label>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="time" class="form-control" id="startTime-${slotCounter}" required>
-                            <label for="startTime-${slotCounter}">Start Time</label>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="time" class="form-control" id="endTime-${slotCounter}" required>
-                            <label for="endTime-${slotCounter}">End Time</label>
-                        </div>
-                    </div>
-                    
-                    <div class="col-12">
-                        <div class="form-floating">
-                            <select class="form-select" id="classroomSelect-${slotCounter}" required>
-                                <option value="" selected disabled>Select Classroom</option>
-                                <option value="A101">A101 - Capacity: 50</option>
-                                <option value="A102">A102 - Capacity: 40</option>
-                                <option value="B201">B201 - Capacity: 100</option>
-                                <option value="B202">B202 - Capacity: 80</option>
-                                <option value="C301">C301 - Capacity: 30</option>
-                                <option value="C302">C302 - Capacity: 25</option>
-                                <option value="D401">D401 - Computer Lab - Capacity: 40</option>
-                            </select>
-                            <label for="classroomSelect-${slotCounter}">Classroom</label>
-                        </div>
-                    </div>
-                    
-                    <div class="col-12">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="lectureType-${slotCounter}" placeholder="e.g., Lecture, Lab, Tutorial" required>
-                            <label for="lectureType-${slotCounter}">Lecture Type</label>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('timeSlots').appendChild(newSlot);
-        });
-        
-        // Function to remove a time slot
-        function removeTimeSlot(slotId) {
-            const slot = document.getElementById(slotId);
-            if (slot && document.querySelectorAll('.time-slot').length > 1) {
-                slot.remove();
-            } else {
-                showError('At least one time slot is required.');
-            }
-        }
-        
-        // Function to show error message
         function showError(message) {
             const errorAlert = document.getElementById('errorAlert');
             const errorMessage = document.getElementById('errorMessage');
@@ -486,148 +371,148 @@
             return true;
         }
         
-        // Handle form submission
-        document.getElementById('assignLectureForm').addEventListener('submit', function(e) {
+        document.getElementById('assignLectureForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
+        
             // Get form values
             const courseId = document.getElementById('courseSelect').value;
             const lecturerId = document.getElementById('lecturerSelect').value;
+            const day = document.getElementById('daySelect-1').value;
+            const startTime = document.getElementById('startTime-1').value;
+            const endTime = document.getElementById('endTime-1').value;
             const semester = document.getElementById('semesterInput').value;
-            
-            // Validate form
-            if (!courseId || !lecturerId || !semester) {
-                showError('Please fill in all required fields in the Course and Lecturer Information section.');
-                return;
-            }
-            
-            // Validate time slots
-            const timeSlots = document.querySelectorAll('.time-slot');
-            const scheduleData = [];
-            
-            for (let i = 0; i < timeSlots.length; i++) {
-                const slotId = timeSlots[i].id;
-                const slotNumber = slotId.split('-')[1];
-                
-                const day = document.getElementById(`daySelect-${slotNumber}`).value;
-                const startTime = document.getElementById(`startTime-${slotNumber}`).value;
-                const endTime = document.getElementById(`endTime-${slotNumber}`).value;
-                const classroom = document.getElementById(`classroomSelect-${slotNumber}`).value;
-                const lectureType = document.getElementById(`lectureType-${slotNumber}`).value;
-                
-                if (!day || !startTime || !endTime || !classroom || !lectureType) {
-                    showError(`Please fill in all required fields in time slot ${i + 1}.`);
-                    return;
-                }
-                
-                if (!validateTimeRange(startTime, endTime)) {
-                    showError(`End time must be after start time in time slot ${i + 1}.`);
-                    return;
-                }
-                
-                scheduleData.push({
-                    day,
-                    startTime,
-                    endTime,
-                    classroom,
-                    lectureType
-                });
-            }
-            
-            // Get additional information
-            const notes = document.getElementById('notesTextarea').value;
-            
-            // Create assignment data object
-            const assignmentData = {
-                courseId,
-                lecturerId,
-                semester,
-                schedule: scheduleData,
-                notes
+            const room = document.getElementById('classroomSelect-1').value;
+
+            console.log(room);
+            // Construct request payload for checking availability
+            const availabilityData = {
+                resourceId: parseInt(room),
+                date: day, // Set the appropriate date
+                startTime: startTime,
+                endTime: endTime
             };
-            
-            // In a real application, you would send this data to the server
-            console.log('Assignment Data:', assignmentData);
-            
-            // Show success message
-            showSuccess('Lecture assignment created successfully!');
-            
-            // Reset form after successful submission
-            setTimeout(() => {
-                document.getElementById('assignLectureForm').reset();
-                
-                // Reset time slots to just one
-                const timeSlotContainer = document.getElementById('timeSlots');
-                timeSlotContainer.innerHTML = `
-                    <div class="time-slot" id="slot-1">
-                        <span class="remove-slot" onclick="removeTimeSlot('slot-1')"><i class="bi bi-x-circle"></i></span>
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <div class="form-floating">
-                                    <select class="form-select" id="daySelect-1" required>
-                                        <option value="" selected disabled>Select Day</option>
-                                        <option value="Monday">Monday</option>
-                                        <option value="Tuesday">Tuesday</option>
-                                        <option value="Wednesday">Wednesday</option>
-                                        <option value="Thursday">Thursday</option>
-                                        <option value="Friday">Friday</option>
-                                        <option value="Saturday">Saturday</option>
-                                    </select>
-                                    <label for="daySelect-1">Day</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-4">
-                                <div class="form-floating">
-                                    <input type="time" class="form-control" id="startTime-1" required>
-                                    <label for="startTime-1">Start Time</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-4">
-                                <div class="form-floating">
-                                    <input type="time" class="form-control" id="endTime-1" required>
-                                    <label for="endTime-1">End Time</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <select class="form-select" id="classroomSelect-1" required>
-                                        <option value="" selected disabled>Select Classroom</option>
-                                        <option value="A101">A101 - Capacity: 50</option>
-                                        <option value="A102">A102 - Capacity: 40</option>
-                                        <option value="B201">B201 - Capacity: 100</option>
-                                        <option value="B202">B202 - Capacity: 80</option>
-                                        <option value="C301">C301 - Capacity: 30</option>
-                                        <option value="C302">C302 - Capacity: 25</option>
-                                        <option value="D401">D401 - Computer Lab - Capacity: 40</option>
-                                    </select>
-                                    <label for="classroomSelect-1">Classroom</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="lectureType-1" placeholder="e.g., Lecture, Lab, Tutorial" required>
-                                    <label for="lectureType-1">Lecture Type</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                slotCounter = 1;
-            }, 2000);
-        });
+
+            console.log(JSON.stringify(availabilityData));
         
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide spinner after page loads
-            setTimeout(function() {
-                document.getElementById('spinner').classList.remove('show');
-            }, 1000);
+            // First, check availability
+            fetch('http://localhost:8080/reservations/check-availability', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(availabilityData)
+            })
+                .then(response => response.json())
+                .then(availability => {
+                    if (availability) {
+                        const classData = {
+                            courseID: parseInt(courseId),
+                            lecturerID: parseInt(lecturerId),
+                            day: day,
+                            startTime: startTime, 
+                            endTime: endTime, 
+                            semester: parseInt(semester),
+                            status: "Pending"
+                        };
+    
+                        return fetch('http://localhost:8080/classes', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(classData)
+                        });
+                    } else {
+                        // If not available, show error message
+                        showError('The time slot is not available.');
+                        throw new Error('Availability check failed');
+                    }
+                })
+                .then(response => response.json())
+                .then(classData => {
+                    // Proceed to reserve the class using the created class ID
+                    console.log(classData);
+                    const reservationData = {
+                        assignedClass: {
+                            classID: classData.classID
+                        },
+                        resource: {
+                            resourceID: parseInt(room)
+                        },
+                        reservationDate: day,
+                        startTime: startTime,
+                        endTime: endTime, 
+                        status: "Pending"
+                    };
+    
+                    return fetch('http://localhost:8080/reservations/class', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(reservationData)
+                    });
+                })
+                .then(response => response.json())
+                .then(reservationData => {
+                    // Show success message after reservation is made
+                    console.log(JSON.stringify(reservationData))
+                    showSuccess('Class reserved and created successfully!');
+                })
+                .catch(error => {
+                    if (error.message !== 'Availability check failed') {
+                        showError('An error occurred. Please try again.');
+                    }
+
+                });
         });
+    </script>
+    
+
+
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("http://localhost:8080/courses")
+            .then(response => response.json())
+            .then(data => {
+                const courseSelect = document.getElementById("courseSelect");
+                courseSelect.innerHTML = '<option value="">Select Course</option>';
+    
+                data.forEach(course => {
+                    const option = document.createElement("option");
+                    option.value = course.courseID;
+                    option.textContent = course.courseName;
+                    courseSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching departments:", error));
+
+        fetch("http://localhost:8080/lecturers")
+            .then(response => response.json())
+            .then(data => {
+                const lecturerSelect = document.getElementById("lecturerSelect");
+                lecturerSelect.innerHTML = '<option value="">Select Lecturer</option>';
+    
+                data.forEach(lecturer => {
+                    const option = document.createElement("option");
+                    option.value = lecturer.lecturerID;
+                    option.textContent = lecturer.user.firstName + " " + lecturer.user.lastName;
+                    lecturerSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching departments:", error));
+
+
+        fetch("http://localhost:8080/resources/available")
+            .then(response => response.json())
+            .then(data => {
+                const resourceSelect = document.getElementById("classroomSelect-1");
+                resourceSelect.innerHTML = '<option value="">Select Class Room</option>';
+    
+                data.forEach(room => {
+                    const option = document.createElement("option");
+                    option.value = room.resourceID;
+                    option.textContent = room.name + " - " + room.type;
+                    resourceSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching rooms:", error));
+    });
     </script>
 </body>
 </html>

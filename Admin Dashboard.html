@@ -774,7 +774,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Facilities</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="manage-classrooms.html" class="dropdown-item">Manage Classrooms</a>
+                        <a href="Insert Resource.html" class="dropdown-item">Manage Resources</a>
                         <a href="classroom-requests.html" class="dropdown-item">Classroom Requests</a>
                     </div>
                 </div>
@@ -859,11 +859,23 @@
                         System Logs
                     </a>
                     <div class="user-menu-footer">
-                        <a href="logout.html" class="user-menu-item text-danger">
+                        <a href="#" class="user-menu-item text-danger" onclick="logoutUser()">
                             <i class="bi bi-box-arrow-right user-menu-icon"></i>
                             Logout
                         </a>
                     </div>
+                    
+                    <script>
+                        function logoutUser() {
+                            // Clear session storage and local storage
+                            localStorage.removeItem("user");
+                            sessionStorage.clear();
+                    
+                            // Redirect to login page
+                            window.location.href = "login.html";
+                        }
+                    </script>
+                    
                 </div>
             </div>
         </div>
@@ -1032,51 +1044,8 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Dr. Sarah Johnson</td>
-                                            <td>Computer Lab 3</td>
-                                            <td>Database Practical</td>
-                                            <td>Sep 22, 2023 | 14:00-16:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prof. Michael Brown</td>
-                                            <td>Room 201</td>
-                                            <td>Guest Lecture</td>
-                                            <td>Sep 25, 2023 | 09:00-11:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dr. Emily Davis</td>
-                                            <td>Conference Room</td>
-                                            <td>Department Meeting</td>
-                                            <td>Sep 20, 2023 | 13:00-15:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dr. Robert Wilson</td>
-                                            <td>Auditorium</td>
-                                            <td>Seminar</td>
-                                            <td>Sep 28, 2023 | 10:00-12:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
+                                    <tbody  id="reservationBody">
+                                 
                                     </tbody>
                                 </table>
                             </div>
@@ -1508,6 +1477,76 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <script>
+        // Fetch data from the API
+        fetch('http://localhost:8080/reservations/class')
+            .then(response => response.json())
+            .then(data => {
+                const reservationBody = document.getElementById('reservationBody');
+                data.forEach(reservation => {
+                    // Extract necessary details from the response
+                    const requesterName = reservation.lecturerName;
+                    const roomName = reservation.roomName;
+                    const purpose = reservation.courseName;
+                    const dateTime = `${reservation.day} | ${reservation.startTime}-${reservation.endTime}`;
+                    const reservationId = reservation.reservationID;  
+                    const row = document.createElement('tr');
+                    // Add cells to the row
+                    row.innerHTML = `
+                        <td>${requesterName}</td>
+                        <td>${roomName}</td>
+                        <td>${purpose}</td>
+                        <td>${dateTime}</td>
+                        <td class="action-buttons">
+                            <button class="btn-action btn-view">View</button>
+                            <button class="btn-action btn-approve" onclick="updateStatus(${reservationId}, 'Approved')">Approve</button>
+                            <button class="btn-action btn-reject" onclick="updateStatus(${reservationId}, 'Rejected')">Reject</button>
+                        </td>
+                    `;
+    
+                    // Append the row to the table body
+                    reservationBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching reservation data:', error);
+            });
+    
+        function updateStatus(reservationId, newStatus) {
+            // Create the request body with the new status
+            const requestData = JSON.stringify(newStatus);
+    
+            // Make the PUT request
+            fetch(`http://localhost:8080/reservations/class/${reservationId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: requestData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Status updated successfully
+                    alert('Status updated to ' + newStatus);
+                    // Optionally, you can reload the page or update the UI
+                    location.reload();  // Reload the page to see the updated status
+                } else {
+                    // Handle error response
+                    return response.json();
+                }
+            })
+            .then(error => {
+                if (error) {
+                    alert('Error: ' + error.message);
+                }
+            })
+            .catch(error => {
+                // Handle network or other errors
+                console.error('Error updating status:', error);
+            });
+        }
+    </script>
+    
     <!-- Custom Javascript for Dashboard -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

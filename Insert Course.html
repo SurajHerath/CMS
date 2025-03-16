@@ -103,19 +103,7 @@
                                     <label for="courseName">Course Name</label>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <select class="form-select" id="lecturer" required>
-                                        <option value="" selected disabled>Select Lecturer</option>
-                                        <option value="1">Dr. John Smith</option>
-                                        <option value="2">Prof. Sarah Johnson</option>
-                                        <option value="3">Dr. Michael Brown</option>
-                                        <option value="4">Dr. Emily Davis</option>
-                                        <option value="5">Prof. Robert Wilson</option>
-                                    </select>
-                                    <label for="lecturer">Lecturer</label>
-                                </div>
-                            </div>
+                            
                             <div class="col-12">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="credits" placeholder="Credits" min="1" max="10" required>
@@ -155,24 +143,55 @@
 
     <!-- Custom Javascript for Insert Course -->
     <script>
-        document.getElementById('insertCourseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const courseName = document.getElementById('courseName').value;
-            const lecturer = document.getElementById('lecturer').options[document.getElementById('lecturer').selectedIndex].text;
-            const credits = document.getElementById('credits').value;
-            
-            // Implement insert logic here (this would typically be an API call)
-            console.log('Course to insert:', { courseName, lecturer, credits });
-            
-            // Show success message
-            alert('Course inserted successfully');
-            
-            // Redirect to view all courses page
-            window.location.href = 'view-all-courses.html';
+        document.getElementById("insertCourseForm").addEventListener("submit", function (event) {
+    event.preventDefault(); 
+
+    // Get form values
+    var courseName = document.getElementById("courseName").value;
+    var credits = document.getElementById("credits").value;
+
+    // Validate that all fields are filled
+    if (!courseName || !credits) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Create JSON payload
+    var raw = JSON.stringify({
+        courseName: courseName,
+        credits: parseInt(credits),
+        status: "Active"
+    });
+
+    // Define request options
+    var requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: raw,
+        redirect: "follow"
+    };
+
+    // Send the request
+    fetch("http://localhost:8080/courses", requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(result => {
+            console.log(result);
+            alert("Course inserted successfully!");
+            document.getElementById("insertCourseForm").reset(); 
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Failed to insert course.");
         });
+});
+
     </script>
+
 </body>
 
 </html>
