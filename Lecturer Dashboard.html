@@ -856,7 +856,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Assignments</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="create-assignment.html" class="dropdown-item">Create Assignment</a>
+                        <a href="Upload Assignment.html" class="dropdown-item">Create Assignment</a>
                         <a href="manage-assignments.html" class="dropdown-item">Manage Assignments</a>
                         <a href="grade-assignments.html" class="dropdown-item">Grade Assignments</a>
                     </div>
@@ -957,11 +957,22 @@
                         Support
                     </a>
                     <div class="user-menu-footer">
-                        <a href="logout.html" class="user-menu-item text-danger">
+                        <a href="#" onclick="logoutUser()" class="user-menu-item text-danger">
                             <i class="bi bi-box-arrow-right user-menu-icon"></i>
                             Logout
                         </a>
                     </div>
+
+                    <script>
+                        function logoutUser() {
+                            // Clear session storage and local storage
+                            localStorage.removeItem("user");
+                            sessionStorage.clear();
+                    
+                            // Redirect to login page
+                            window.location.href = "login.html";
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -980,7 +991,7 @@
                             <h1 class="display-3 text-white">Your Teaching Dashboard</h1>
                             <p class="fs-5 text-white mb-4 pb-2">You have 2 assignments to grade, 3 upcoming classes, and a department meeting this week.</p>
                             <a href="my-courses.html" class="btn btn-light py-md-3 px-md-5 me-3">My Courses</a>
-                            <a href="create-assignment.html" class="btn btn-primary py-md-3 px-md-5">Create Assignment</a>
+                            <a href="Upload Assignment.html" class="btn btn-primary py-md-3 px-md-5">Create Assignment</a>
                         </div>
                     </div>
                 </div>
@@ -1051,41 +1062,14 @@
                         </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
-                                <span><i class="bi bi-calendar3 dashboard-icon"></i>Monday, September 18, 2023</span>
+                                <span id="todayDate"><i class="bi bi-calendar3 dashboard-icon"></i>Monday, September 18, 2023</span>
                                 <div>
                                     <button class="btn btn-sm btn-light me-2"><i class="bi bi-chevron-left"></i></button>
                                     <button class="btn btn-sm btn-light"><i class="bi bi-chevron-right"></i></button>
                                 </div>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="timetable-item">
-                                    <div class="timetable-time">09:00 - 10:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Database Management Systems (CS301)</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 105, IT Building</div>
-                                    </div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="timetable-time">11:00 - 12:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Advanced Database Concepts (CS501)</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 201, Computer Science Building</div>
-                                    </div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="timetable-time">14:00 - 15:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Office Hours</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 302, Faculty Building</div>
-                                    </div>
-                                </div>
-                                <div class="timetable-item" style="border-bottom: none;">
-                                    <div class="timetable-time">16:00 - 17:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Department Meeting</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Conference Room, Administration Building</div>
-                                    </div>
-                                </div>
+                            <div class="dashboard-card-body" id="timetable-body">
+                                <!-- Timetable items will be dynamically inserted here -->
                             </div>
                         </div>
                     </div>
@@ -1136,36 +1120,7 @@
                                                 <button class="btn-late">Late</button>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>ST12347</td>
-                                            <td>Michael Johnson</td>
-                                            <td>Absent</td>
-                                            <td class="attendance-actions">
-                                                <button class="btn-present">Present</button>
-                                                <button class="btn-absent">Absent</button>
-                                                <button class="btn-late">Late</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>ST12348</td>
-                                            <td>Emily Davis</td>
-                                            <td>Late</td>
-                                            <td class="attendance-actions">
-                                                <button class="btn-present">Present</button>
-                                                <button class="btn-absent">Absent</button>
-                                                <button class="btn-late">Late</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>ST12349</td>
-                                            <td>Robert Wilson</td>
-                                            <td>Present</td>
-                                            <td class="attendance-actions">
-                                                <button class="btn-present">Present</button>
-                                                <button class="btn-absent">Absent</button>
-                                                <button class="btn-late">Late</button>
-                                            </td>
-                                        </tr>
+                                    
                                     </tbody>
                                 </table>
                             </div>
@@ -1182,44 +1137,10 @@
                         </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
-                                <span><i class="bi bi-file-earmark-text dashboard-icon"></i>Recent Assignments</span>
+                                <span><i class="bi bi-file-earmark-text dashboard-icon"></i>Assignments Due Soon</span>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="assignment-item">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">Database Design Project</div>
-                                        <div class="assignment-course">Database Management Systems (CS301)</div>
-                                        <div class="assignment-due">Due: Sep 25, 11:59 PM | 15 Submissions</div>
-                                    </div>
-                                    <span class="assignment-status status-published">Published</span>
-                                </div>
-                                <div class="assignment-item">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">Normalization Exercise</div>
-                                        <div class="assignment-course">Database Management Systems (CS301)</div>
-                                        <div class="assignment-due">Due: Sep 20, 11:59 PM | 12 Submissions</div>
-                                    </div>
-                                    <span class="assignment-status status-published">Published</span>
-                                </div>
-                                <div class="assignment-item">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">Advanced SQL Queries</div>
-                                        <div class="assignment-course">Advanced Database Concepts (CS501)</div>
-                                        <div class="assignment-due">Due: Sep 22, 11:59 PM | 8 Submissions</div>
-                                    </div>
-                                    <span class="assignment-status status-published">Published</span>
-                                </div>
-                                <div class="assignment-item" style="border-bottom: none;">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">Database Performance Tuning</div>
-                                        <div class="assignment-course">Advanced Database Concepts (CS501)</div>
-                                        <div class="assignment-due">Not published yet</div>
-                                    </div>
-                                    <span class="assignment-status status-draft">Draft</span>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <a href="grade-assignments.html" class="btn btn-primary">Grade Submissions</a>
-                                </div>
+                            <div class="dashboard-card-body" id="assignments-body">
+                                <!-- Assignment items will be dynamically inserted here -->
                             </div>
                         </div>
                     </div>
@@ -1368,42 +1289,13 @@
                                 </div>
                             </div>
                             <div class="dashboard-card-body">
-                                <div class="event-item">
-                                    <div class="event-date">
-                                        <div class="event-day">20</div>
-                                        <div class="event-month">SEP</div>
-                                    </div>
-                                    <div class="event-info">
-                                        <div class="event-title">Guest Lecture: Database Security</div>
-                                        <div class="event-time"><i class="bi bi-clock me-1"></i>13:00 - 15:00</div>
-                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Conference Room</div>
-                                    </div>
-                                </div>
-                                <div class="event-item">
-                                    <div class="event-date">
-                                        <div class="event-day">22</div>
-                                        <div class="event-month">SEP</div>
-                                    </div>
-                                    <div class="event-info">
-                                        <div class="event-title">Faculty Meeting</div>
-                                        <div class="event-time"><i class="bi bi-clock me-1"></i>10:00 - 12:00</div>
-                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Meeting Room 1</div>
-                                    </div>
-                                </div>
-                                <div class="event-item" style="border-bottom: none;">
-                                    <div class="event-date">
-                                        <div class="event-day">25</div>
-                                        <div class="event-month">SEP</div>
-                                    </div>
-                                    <div class="event-info">
-                                        <div class="event-title">Department Workshop</div>
-                                        <div class="event-time"><i class="bi bi-clock me-1"></i>14:00 - 17:00</div>
-                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Computer Lab 1</div>
-                                    </div>
+                                <div class="event-carousel"> <!-- Event carousel will be dynamically filled here -->
+                                    <!-- Dynamically populated event items will go here -->
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                     
                     <!-- Student Performance -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
@@ -1668,5 +1560,209 @@
             });
         });
     </script>
+
+
+<script>
+    var today = new Date();
+    var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var dayName = daysOfWeek[today.getDay()];
+
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var todayFormatted = today.toLocaleDateString('en-US', options);
+    document.getElementById("todayDate").textContent = todayFormatted;
+
+    function populateTimetable() {
+        fetch(`http://localhost:8080/reservations/class/date/${dayName}`)
+            .then(response => response.json())
+            .then(data => {
+                const timetableBody = document.getElementById("timetable-body");
+                timetableBody.innerHTML = ''; 
+
+                data.forEach(reservation => {
+                    const timetableItem = document.createElement('div');
+                    timetableItem.classList.add('timetable-item');
+                    
+                    // Add time slot
+                    const timeDiv = document.createElement('div');
+                    timeDiv.classList.add('timetable-time');
+                    timeDiv.textContent = `${reservation.startTime} - ${reservation.endTime}`;
+                    
+                    // Add subject and location details
+                    const subjectDiv = document.createElement('div');
+                    subjectDiv.classList.add('timetable-subject');
+
+                    const subjectNameDiv = document.createElement('div');
+                    subjectNameDiv.textContent = reservation.courseName;
+
+                    const locationDiv = document.createElement('div');
+                    locationDiv.classList.add('timetable-location');
+                    locationDiv.innerHTML = `<i class="bi bi-geo-alt me-1"></i>${reservation.roomName}`;
+
+                    // Append elements to timetable item
+                    subjectDiv.appendChild(subjectNameDiv);
+                    subjectDiv.appendChild(locationDiv);
+                    timetableItem.appendChild(timeDiv);
+                    timetableItem.appendChild(subjectDiv);
+
+                    // Append the item to the body
+                    timetableBody.appendChild(timetableItem);
+                });
+            })
+            .catch(error => console.error('Error fetching timetable:', error));
+    }
+
+    // Call the function to populate the timetable on page load
+    populateTimetable();
+</script>
+
+
+<script>
+    // Function to fetch assignment data from API and populate the assignments section
+    async function fetchAssignments() {
+        try {
+            // Make an API request to fetch tasks (assignments)
+            const response = await fetch("http://localhost:8080/api/tasks");
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch assignments");
+            }
+
+            // Parse the response to JSON
+            const assignments = await response.json();
+
+            console.log("Assignments" + assignments);
+            // Get the container where assignments will be populated
+            const assignmentList = document.querySelector('#assignments-body');
+
+            // Clear the current content
+            assignmentList.innerHTML = "";
+
+            // Loop through the assignments and add them to the dashboard
+            assignments.forEach(assignment => {
+                const assignmentItem = document.createElement('div');
+                assignmentItem.classList.add('assignment-item');
+
+                // Add assignment details
+                assignmentItem.innerHTML = `
+                    <div class="assignment-info">
+                        <div class="assignment-title">${assignment.title}</div>
+                        <div class="assignment-course">${assignment.type} Assignment</div>
+                        <div class="assignment-due">Due: ${formatDueDate(assignment.dueDate)} ${assignment.dueTime}</div>
+                    </div>
+                    <span class="assignment-status ${assignment.status === 'Active' ? 'status-pending' : 'status-completed'}">${assignment.status}</span>
+                `;
+
+                // Append the item to the list
+                assignmentList.appendChild(assignmentItem);
+            });
+        } catch (error) {
+            console.error('Error fetching assignments:', error);
+        }
+    }
+
+    // Function to format the due date (e.g., "2025-03-06" to "March 6, 2025")
+    function formatDueDate(dueDate) {
+        const date = new Date(dueDate);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString(undefined, options);
+    }
+
+       // Function to fetch user data and update the profile section
+    async function fetchUserProfile(userId) {
+        try {
+            // Make an API request to fetch user data
+            const response = await fetch(`http://localhost:8080/users/${userId}`);
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch user data");
+            }
+
+            // Parse the response to JSON
+            const user = await response.json();
+
+            document.getElementById('profile-name').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('student-id').textContent = `Student ID: ${user.id}`;
+            document.getElementById('course-info').textContent = `${user.role}, Year 2`; // Update as needed
+
+            const gpa = 3.8; 
+            const attendance = '92%'; 
+            const courses = 8;
+            document.querySelectorAll('.stat-item')[0].querySelector('.stat-value').textContent = courses;
+            document.querySelectorAll('.stat-item')[1].querySelector('.stat-value').textContent = gpa;
+            document.querySelectorAll('.stat-item')[2].querySelector('.stat-value').textContent = attendance;
+
+            const semesterProgress = 45; // Use actual progress data if available
+            document.querySelector('.progress-bar').style.width = `${semesterProgress}%`;
+            document.querySelector('.progress-value').textContent = `${semesterProgress}%`;
+
+        } catch (error) {
+            console.error("Error fetching user profile:", error);
+        }
+    }
+
+
+    // Fetch assignments when the page loads
+    window.onload = fetchAssignments();
+    window.onload = fetchUserProfile(4);
+</script>
+
+
+<script>
+    // Function to fetch event data and populate the events section
+    async function fetchEvents() {
+        try {
+            // Fetch events from the API
+            const response = await fetch('http://localhost:8080/events');
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch events');
+            }
+
+            // Parse the response JSON
+            const events = await response.json();
+            const eventCarousel = document.querySelector('.event-carousel');
+            
+            // Clear any existing events in the carousel
+            eventCarousel.innerHTML = '';
+
+            // Loop through the events and create HTML for each event
+            events.forEach(event => {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('event-item');
+                eventItem.innerHTML = `
+                    <div class="event-card">
+                        <div class="event-card-header">
+                            <h5>${event.name}</h5>
+                            <span>${event.eventType}</span>
+                        </div>
+                        <div class="event-card-body">
+                            <p>${event.description}</p>
+                            <p><strong>Organizer:</strong> ${event.organizer}</p>
+                            <p><strong>Date:</strong> ${event.date}</p>
+                            <p><strong>Time:</strong> ${event.startTime} - ${event.endTime}</p>
+                            <p><strong>Register By:</strong> ${event.registerDeadline}</p>
+                            <p><strong>Status:</strong> ${event.status}</p>
+                        </div>
+                    </div>
+                `;
+                eventCarousel.appendChild(eventItem);
+            });
+
+            $('.owl-carousel').owlCarousel({
+                items: 1,  // Show 1 event at a time
+                loop: true,
+                nav: true,
+                dots: true,
+            });
+        } catch (error) {
+            console.error('Error fetching events:', error);
+        }
+    }
+
+    // Fetch and display events when the page loads
+    window.onload = function () {
+        fetchEvents();
+    };
+</script>
 </body>
 </html>

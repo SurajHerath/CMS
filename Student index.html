@@ -1427,11 +1427,21 @@
                         Support
                     </a>
                     <div class="user-menu-footer">
-                        <a href="logout.html" class="user-menu-item text-danger">
+                        <a href="#"  onclick="logoutUser()" class="user-menu-item text-danger">
                             <i class="bi bi-box-arrow-right user-menu-icon"></i>
                             Logout
                         </a>
                     </div>
+                    <script>
+                        function logoutUser() {
+                            // Clear session storage and local storage
+                            localStorage.removeItem("user");
+                            sessionStorage.clear();
+                    
+                            // Redirect to login page
+                            window.location.href = "login.html";
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -1519,45 +1529,20 @@
                             </h4>
                             <a href="timetable.html" class="section-action">View Full Schedule</a>
                         </div>
+                        
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
-                                <span><i class="bi bi-calendar3 dashboard-icon"></i>Monday, September 18, 2023</span>
+                                <span id="todayDate"><i class="bi bi-calendar3 dashboard-icon"></i>Monday, September 18, 2023</span>
                                 <div>
                                     <button class="btn btn-sm btn-light me-2"><i class="bi bi-chevron-left"></i></button>
                                     <button class="btn btn-sm btn-light"><i class="bi bi-chevron-right"></i></button>
                                 </div>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="timetable-item">
-                                    <div class="timetable-time">09:00 - 10:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Data Structures and Algorithms</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 201, Computer Science Building</div>
-                                    </div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="timetable-time">11:00 - 12:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Database Management Systems</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 105, IT Building</div>
-                                    </div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="timetable-time">14:00 - 15:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Web Development</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Lab 3, Computer Science Building</div>
-                                    </div>
-                                </div>
-                                <div class="timetable-item" style="border-bottom: none;">
-                                    <div class="timetable-time">16:00 - 17:30</div>
-                                    <div class="timetable-subject">
-                                        <div>Software Engineering Principles</div>
-                                        <div class="timetable-location"><i class="bi bi-geo-alt me-1"></i>Room 302, Engineering Building</div>
-                                    </div>
-                                </div>
+                            <div class="dashboard-card-body" id="timetable-body">
+                                <!-- Timetable items will be dynamically inserted here -->
                             </div>
                         </div>
+                        
                     </div>
                     
                     <!-- Assignments -->
@@ -1570,42 +1555,8 @@
                             <div class="dashboard-card-header">
                                 <span><i class="bi bi-file-earmark-text dashboard-icon"></i>Assignments Due Soon</span>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="assignment-item">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">Database Design Project</div>
-                                        <div class="assignment-course">Database Management Systems</div>
-                                        <div class="assignment-due">Due: Tomorrow, 11:59 PM</div>
-                                    </div>
-                                    <span class="assignment-status status-pending">Pending</span>
-                                </div>
-                                <div class="assignment-item">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">Algorithm Analysis Report</div>
-                                        <div class="assignment-course">Data Structures and Algorithms</div>
-                                        <div class="assignment-due">Due: Sep 20, 11:59 PM</div>
-                                    </div>
-                                    <span class="assignment-status status-pending">Pending</span>
-                                </div>
-                                <div class="assignment-item">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">Responsive Website Development</div>
-                                        <div class="assignment-course">Web Development</div>
-                                        <div class="assignment-due">Due: Sep 22, 11:59 PM</div>
-                                    </div>
-                                    <span class="assignment-status status-pending">Pending</span>
-                                </div>
-                                <div class="assignment-item" style="border-bottom: none;">
-                                    <div class="assignment-info">
-                                        <div class="assignment-title">UML Diagrams for Banking System</div>
-                                        <div class="assignment-course">Software Engineering Principles</div>
-                                        <div class="assignment-due">Due: Sep 25, 11:59 PM</div>
-                                    </div>
-                                    <span class="assignment-status status-pending">Pending</span>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <a href="submit-assignment.html" class="btn btn-primary">Submit Assignment</a>
-                                </div>
+                            <div class="dashboard-card-body" id="assignments-body">
+                                <!-- Assignment items will be dynamically inserted here -->
                             </div>
                         </div>
                     </div>
@@ -1664,104 +1615,29 @@
                             <div class="dashboard-card-body">
                                 <!-- My Groups Tab -->
                                 <div class="group-content active" id="my-groups-content">
-                                    <div class="group-list">
+                                    <div class="group-container">
                                         <div class="group-card-small" data-group-id="1">
                                             <div class="group-card-header-small">Database Project Team</div>
                                             <div class="group-card-body-small">
                                                 <p class="mb-1 text-muted small">CS301 - Database Management Systems</p>
                                                 <div class="group-members-small">
                                                     <div class="group-member-small">
-                                                        <img src="img/user.jpg" alt="John Doe">
+                                                        <img src="img/profile.png" alt="John Doe">
                                                     </div>
                                                     <div class="group-member-small">
-                                                        <img src="img/student-1.jpg" alt="Alice Johnson">
+                                                        <img src="img/profile.png" alt="Alice Johnson">
                                                     </div>
                                                     <div class="group-member-small">
-                                                        <img src="img/student-2.jpg" alt="Bob Smith">
+                                                        <img src="img/profile.png" alt="Bob Smith">
                                                     </div>
                                                     <div class="group-member-count-small">+3</div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="group-card-small" data-group-id="2">
-                                            <div class="group-card-header-small">Algorithms Study Group</div>
-                                            <div class="group-card-body-small">
-                                                <p class="mb-1 text-muted small">CS201 - Data Structures and Algorithms</p>
-                                                <div class="group-members-small">
-                                                    <div class="group-member-small">
-                                                        <img src="img/user.jpg" alt="John Doe">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/student-3.jpg" alt="Carol Williams">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/student-4.jpg" alt="David Brown">
-                                                    </div>
-                                                    <div class="group-member-count-small">+2</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="group-card-small" data-group-id="3">
-                                            <div class="group-card-header-small">Web Development Club</div>
-                                            <div class="group-card-body-small">
-                                                <p class="mb-1 text-muted small">CS401 - Web Development</p>
-                                                <div class="group-members-small">
-                                                    <div class="group-member-small">
-                                                        <img src="img/user.jpg" alt="John Doe">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/student-5.jpg" alt="Emma Davis">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/student-6.jpg" alt="Frank Miller">
-                                                    </div>
-                                                    <div class="group-member-count-small">+5</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="group-card-small" data-group-id="4">
-                                            <div class="group-card-header-small">Software Engineering Discussion</div>
-                                            <div class="group-card-body-small">
-                                                <p class="mb-1 text-muted small">CS501 - Software Engineering Principles</p>
-                                                <div class="group-members-small">
-                                                    <div class="group-member-small">
-                                                        <img src="img/user.jpg" alt="John Doe">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/student-7.jpg" alt="Grace Wilson">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/student-1.jpg" alt="Alice Johnson">
-                                                    </div>
-                                                    <div class="group-member-count-small">+8</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
+                                     
                                     </div>
-                                    <div class="discussion-item">
-                                        <div class="discussion-header">
-                                            <div class="discussion-title">Best practices for database normalization?</div>
-                                            <div class="discussion-replies">15 replies</div>
-                                        </div>
-                                        <div class="discussion-course">Database Management Systems</div>
-                                        <div class="discussion-preview">I'm working on the database design project and I'm having trouble understanding when to use 3NF vs BCNF. Can anyone explain the practical differences?</div>
-                                    </div>
-                                    <div class="discussion-item">
-                                        <div class="discussion-header">
-                                            <div class="discussion-title">React vs Angular for front-end development</div>
-                                            <div class="discussion-replies">23 replies</div>
-                                        </div>
-                                        <div class="discussion-course">Web Development</div>
-                                        <div class="discussion-preview">For our final project, we need to choose a front-end framework. I'm torn between React and Angular. What are the pros and cons of each?</div>
-                                    </div>
-                                    <div class="discussion-item" style="border-bottom: none;">
-                                        <div class="discussion-header">
-                                            <div class="discussion-title">Study group for midterm exams</div>
-                                            <div class="discussion-replies">8 replies</div>
-                                        </div>
-                                        <div class="discussion-course">General</div>
-                                        <div class="discussion-preview">I'm organizing a study group for the upcoming midterm exams. We'll be meeting in the library on weekends. Anyone interested in joining?</div>
-                                    </div>
+                           
                                 </div>
                                 
                                 <!-- Group Chat Tab -->
@@ -1883,37 +1759,13 @@
                                     <div class="group-form">
                                         <h5 class="mb-3">Create New Group</h5>
                                         <div class="row g-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-floating">
                                                     <input type="text" class="form-control" id="groupName" placeholder="Group Name">
                                                     <label for="groupName">Group Name</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating">
-                                                    <select class="form-select" id="groupType">
-                                                        <option value="" selected disabled>Select Group Type</option>
-                                                        <option value="Course">Course Related</option>
-                                                        <option value="Project">Project Team</option>
-                                                        <option value="Study">Study Group</option>
-                                                        <option value="Interest">Interest Group</option>
-                                                    </select>
-                                                    <label for="groupType">Group Type</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-floating">
-                                                    <select class="form-select" id="relatedCourse">
-                                                        <option value="" selected>None (Not course related)</option>
-                                                        <option value="CS101">CS101 - Introduction to Programming</option>
-                                                        <option value="CS201">CS201 - Data Structures and Algorithms</option>
-                                                        <option value="CS301">CS301 - Database Management Systems</option>
-                                                        <option value="CS401">CS401 - Web Development</option>
-                                                        <option value="CS501">CS501 - Software Engineering Principles</option>
-                                                    </select>
-                                                    <label for="relatedCourse">Related Course (Optional)</label>
-                                                </div>
-                                            </div>
+                            
                                             <div class="col-md-12">
                                                 <div class="form-floating">
                                                     <textarea class="form-control" placeholder="Description" id="description" style="height: 100px"></textarea>
@@ -1924,46 +1776,7 @@
                                         
                                         <h5 class="mt-4 mb-3">Add Students to Group</h5>
                                         <div class="student-list">
-                                            <div class="student-item" data-id="1">
-                                                <div class="student-avatar">
-                                                    <img src="img/student-1.jpg" alt="Student">
-                                                </div>
-                                                <div class="student-info">
-                                                    <h6 class="student-name">Alice Johnson</h6>
-                                                    <div class="student-course">Computer Science, Year 2</div>
-                                                </div>
-                                                <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
-                                            </div>
-                                            <div class="student-item" data-id="2">
-                                                <div class="student-avatar">
-                                                    <img src="img/student-2.jpg" alt="Student">
-                                                </div>
-                                                <div class="student-info">
-                                                    <h6 class="student-name">Bob Smith</h6>
-                                                    <div class="student-course">Computer Science, Year 2</div>
-                                                </div>
-                                                <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
-                                            </div>
-                                            <div class="student-item" data-id="3">
-                                                <div class="student-avatar">
-                                                    <img src="img/student-3.jpg" alt="Student">
-                                                </div>
-                                                <div class="student-info">
-                                                    <h6 class="student-name">Carol Williams</h6>
-                                                    <div class="student-course">Computer Science, Year 3</div>
-                                                </div>
-                                                <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
-                                            </div>
-                                            <div class="student-item" data-id="4">
-                                                <div class="student-avatar">
-                                                    <img src="img/student-4.jpg" alt="Student">
-                                                </div>
-                                                <div class="student-info">
-                                                    <h6 class="student-name">David Brown</h6>
-                                                    <div class="student-course">Computer Science, Year 2</div>
-                                                </div>
-                                                <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
-                                            </div>
+                                  
                                         </div>
                                         
                                         <h6 class="mt-3 mb-2">Selected Students</h6>
@@ -1986,51 +1799,51 @@
                 <div class="col-lg-4">
                     <!-- Profile Summary -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-person dashboard-icon"></i>My Profile</span>
-                                <a href="student-profile.html" class="text-white"><i class="bi bi-pencil-square"></i></a>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <div class="profile-header">
-                                    <div class="profile-avatar">
-                                        <img src="img/user.jpg" alt="John Doe">
-                                    </div>
-                                    <div class="profile-info">
-                                        <h5>John Doe</h5>
-                                        <p>Student ID: ST12345</p>
-                                        <p>Computer Science, Year 2</p>
-                                    </div>
-                                </div>
-                                <div class="profile-stats">
-                                    <div class="stat-item">
-                                        <div class="stat-value">8</div>
-                                        <div class="stat-label">Courses</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-value">3.8</div>
-                                        <div class="stat-label">GPA</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-value">92%</div>
-                                        <div class="stat-label">Attendance</div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Semester Progress</div>
-                                        <div class="progress-value">45%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <a href="student-profile.html" class="btn btn-outline-primary">View Full Profile</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <span><i class="bi bi-person dashboard-icon"></i>My Profile</span>
+            <a href="student-profile.html" class="text-white"><i class="bi bi-pencil-square"></i></a>
+        </div>
+        <div class="dashboard-card-body">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img id="profile-avatar" src="img/profile.png" alt="User Profile">
+                </div>
+                <div class="profile-info">
+                    <h5 id="profile-name">John Doe</h5>
+                    <p id="student-id">Student ID: ST12345</p>
+                    <p id="course-info">Computer Science, Year 2</p>
+                </div>
+            </div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Courses</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3.8</div>
+                    <div class="stat-label">GPA</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Attendance</div>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-label">
+                    <div class="progress-title">Semester Progress</div>
+                    <div class="progress-value">45%</div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <a href="student-profile.html" class="btn btn-outline-primary">View Full Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
                     
                     <!-- Upcoming Events -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.4s">
@@ -2050,7 +1863,7 @@
                             </div>
                             <div class="dashboard-card-body">
                                 <div class="owl-carousel event-carousel">
-                                    <!-- Event items will be here -->
+                                    <!-- Event items will be dynamically inserted here -->
                                 </div>
                             </div>
                         </div>
@@ -2173,7 +1986,7 @@
                     <div class="student-list">
                         <div class="student-item" data-id="5">
                             <div class="student-avatar">
-                                <img src="img/student-5.jpg" alt="Student">
+                                <img src="img/profile.png" alt="Student">
                             </div>
                             <div class="student-info">
                                 <h6 class="student-name">Emma Davis</h6>
@@ -2181,26 +1994,7 @@
                             </div>
                             <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
                         </div>
-                        <div class="student-item" data-id="6">
-                            <div class="student-avatar">
-                                <img src="img/student-6.jpg" alt="Student">
-                            </div>
-                            <div class="student-info">
-                                <h6 class="student-name">Frank Miller</h6>
-                                <div class="student-course">Computer Science, Year 3</div>
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
-                        </div>
-                        <div class="student-item" data-id="7">
-                            <div class="student-avatar">
-                                <img src="img/student-7.jpg" alt="Student">
-                            </div>
-                            <div class="student-info">
-                                <h6 class="student-name">Grace Wilson</h6>
-                                <div class="student-course">Computer Science, Year 2</div>
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
-                        </div>
+                      
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -2302,6 +2096,115 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            const studentListContainer = document.querySelector(".student-list");
+            const selectedStudentsContainer = document.getElementById("selectedStudents");
+            const saveGroupBtn = document.getElementById("saveGroupBtn");
+            let studentList = []; // Store selected student IDs
+        
+            // Fetch students from API and display them
+            fetch("http://localhost:8080/Students")
+                .then(response => response.json())
+                .then(students => {
+                    studentListContainer.innerHTML = ""; // Clear existing content
+                    students.forEach(student => {
+                        const studentItem = document.createElement("div");
+                        studentItem.classList.add("student-item");
+                        studentItem.setAttribute("data-id", student.studentID);
+        
+                        studentItem.innerHTML = `
+                            <div class="student-avatar">
+                                <img src="img/profile.png" alt="Student">
+                            </div>
+                            <div class="student-info">
+                                <h6 class="student-name">${student.firstName} ${student.lastName}</h6>
+                                <div class="student-course">${getDegreeDetails(student)}</div>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary add-student-btn">Add</button>
+                        `;
+        
+                        studentListContainer.appendChild(studentItem);
+        
+                        // Add student selection event
+                        studentItem.querySelector(".add-student-btn").addEventListener("click", function () {
+                            if (!studentList.includes(student.studentID)) {
+                                studentList.push(student.studentID); // Add student ID to the list
+        
+                                // Display selected student
+                                const selectedStudentDiv = document.createElement("div");
+                                selectedStudentDiv.classList.add("selected-student");
+                                selectedStudentDiv.innerHTML = `
+                                    ${student.firstName} ${student.lastName} 
+                                    <button class="btn btn-sm btn-danger remove-student-btn" data-id="${student.studentID}">Remove</button>
+                                `;
+                                selectedStudentsContainer.appendChild(selectedStudentDiv);
+        
+                                // Remove student from selected list
+                                selectedStudentDiv.querySelector(".remove-student-btn").addEventListener("click", function () {
+                                    const studentIdToRemove = parseInt(this.getAttribute("data-id"));
+                                    studentList = studentList.filter(id => id !== studentIdToRemove); // Remove from list
+                                    this.parentElement.remove(); // Remove from UI
+                                });
+                            } else {
+                                alert(`Student ${student.firstName} is already added.`);
+                            }
+                        });
+                    });
+                })
+                .catch(error => console.error("Error fetching students:", error));
+        
+            // Handle Create Group button click
+            saveGroupBtn.addEventListener("click", function () {
+                const groupName = document.getElementById("groupName").value.trim();
+                const description = document.getElementById("description").value.trim();
+        
+                if (groupName === "" || studentList.length === 0) {
+                    alert("Please enter a group name and add at least one student.");
+                    return;
+                }
+        
+                const groupData = {
+                    groupName: groupName,
+                    description: description,
+                    memberIds: studentList
+                };
+        
+                fetch("http://localhost:8080/api/groups/create", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(groupData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert("Group created successfully!");
+                    console.log("Created Group:", data);
+                    // Optionally clear fields after successful creation
+                    document.getElementById("groupName").value = "";
+                    document.getElementById("description").value = "";
+                    studentList = [];
+                    selectedStudentsContainer.innerHTML = ""; // Clear selected students
+                })
+                .catch(error => {
+                    console.error("Error creating group:", error);
+                    alert("Failed to create group. Please try again.");
+                });
+            });
+        
+            function getDegreeDetails(student) {
+                if (student.studentDegrees && student.studentDegrees.length > 0) {
+                    return student.studentDegrees.map(degree => `${degree.programName}, ${degree.level}`).join(" | ");
+                }
+                return "No degree information";
+            }
+        });
+        </script>
+        
+        
     <!-- Custom Javascript for Dashboard -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -2398,6 +2301,7 @@
                 // Scroll to the section
                 document.getElementById('discussionsSection').scrollIntoView({ behavior: 'smooth' });
             });
+            
             
             // Quick action button for discussions
             document.getElementById('discussionsQuickAction').addEventListener('click', function(e) {
@@ -2679,5 +2583,307 @@
             });
         });
     </script>
+
+<script>
+    var today = new Date();
+    var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var dayName = daysOfWeek[today.getDay()];
+
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var todayFormatted = today.toLocaleDateString('en-US', options);
+    document.getElementById("todayDate").textContent = todayFormatted;
+
+    function populateTimetable() {
+        fetch(`http://localhost:8080/reservations/class/date/${dayName}`)
+            .then(response => response.json())
+            .then(data => {
+                const timetableBody = document.getElementById("timetable-body");
+                timetableBody.innerHTML = ''; 
+
+                data.forEach(reservation => {
+                    const timetableItem = document.createElement('div');
+                    timetableItem.classList.add('timetable-item');
+                    
+                    // Add time slot
+                    const timeDiv = document.createElement('div');
+                    timeDiv.classList.add('timetable-time');
+                    timeDiv.textContent = `${reservation.startTime} - ${reservation.endTime}`;
+                    
+                    // Add subject and location details
+                    const subjectDiv = document.createElement('div');
+                    subjectDiv.classList.add('timetable-subject');
+
+                    const subjectNameDiv = document.createElement('div');
+                    subjectNameDiv.textContent = reservation.courseName;
+
+                    const locationDiv = document.createElement('div');
+                    locationDiv.classList.add('timetable-location');
+                    locationDiv.innerHTML = `<i class="bi bi-geo-alt me-1"></i>${reservation.roomName}`;
+
+                    // Append elements to timetable item
+                    subjectDiv.appendChild(subjectNameDiv);
+                    subjectDiv.appendChild(locationDiv);
+                    timetableItem.appendChild(timeDiv);
+                    timetableItem.appendChild(subjectDiv);
+
+                    // Append the item to the body
+                    timetableBody.appendChild(timetableItem);
+                });
+            })
+            .catch(error => console.error('Error fetching timetable:', error));
+    }
+
+    // Call the function to populate the timetable on page load
+    populateTimetable();
+</script>
+
+<script>
+    // Function to fetch assignment data from API and populate the assignments section
+    async function fetchAssignments() {
+        try {
+            // Make an API request to fetch tasks (assignments)
+            const response = await fetch("http://localhost:8080/api/tasks");
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch assignments");
+            }
+
+            // Parse the response to JSON
+            const assignments = await response.json();
+
+            console.log("Assignments" + assignments);
+            // Get the container where assignments will be populated
+            const assignmentList = document.querySelector('#assignments-body');
+
+            // Clear the current content
+            assignmentList.innerHTML = "";
+
+            // Loop through the assignments and add them to the dashboard
+            assignments.forEach(assignment => {
+                const assignmentItem = document.createElement('div');
+                assignmentItem.classList.add('assignment-item');
+
+                // Add assignment details
+                assignmentItem.innerHTML = `
+                    <div class="assignment-info">
+                        <div class="assignment-title">${assignment.title}</div>
+                        <div class="assignment-course">${assignment.type} Assignment</div>
+                        <div class="assignment-due">Due: ${formatDueDate(assignment.dueDate)} ${assignment.dueTime}</div>
+                    </div>
+                    <span class="assignment-status ${assignment.status === 'Active' ? 'status-pending' : 'status-completed'}">${assignment.status}</span>
+                `;
+
+                // Append the item to the list
+                assignmentList.appendChild(assignmentItem);
+            });
+        } catch (error) {
+            console.error('Error fetching assignments:', error);
+        }
+    }
+
+    // Function to format the due date (e.g., "2025-03-06" to "March 6, 2025")
+    function formatDueDate(dueDate) {
+        const date = new Date(dueDate);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString(undefined, options);
+    }
+
+       // Function to fetch user data and update the profile section
+    async function fetchUserProfile(userId) {
+        try {
+            // Make an API request to fetch user data
+            const response = await fetch(`http://localhost:8080/users/${userId}`);
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch user data");
+            }
+
+            // Parse the response to JSON
+            const user = await response.json();
+
+            document.getElementById('profile-name').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('student-id').textContent = `Student ID: ${user.id}`;
+            document.getElementById('course-info').textContent = `${user.role}, Year 2`; // Update as needed
+
+            const gpa = 3.8; 
+            const attendance = '92%'; 
+            const courses = 8;
+            document.querySelectorAll('.stat-item')[0].querySelector('.stat-value').textContent = courses;
+            document.querySelectorAll('.stat-item')[1].querySelector('.stat-value').textContent = gpa;
+            document.querySelectorAll('.stat-item')[2].querySelector('.stat-value').textContent = attendance;
+
+            const semesterProgress = 45; // Use actual progress data if available
+            document.querySelector('.progress-bar').style.width = `${semesterProgress}%`;
+            document.querySelector('.progress-value').textContent = `${semesterProgress}%`;
+
+        } catch (error) {
+            console.error("Error fetching user profile:", error);
+        }
+    }
+
+
+    // Fetch assignments when the page loads
+    window.onload = fetchAssignments();
+    window.onload = fetchUserProfile(4);
+</script>
+
+
+<script>
+    // Function to fetch event data and populate the events section
+    async function fetchEvents() {
+        try {
+            // Fetch events from the API
+            const response = await fetch('http://localhost:8080/events');
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch events');
+            }
+
+            // Parse the response JSON
+            const events = await response.json();
+            const eventCarousel = document.querySelector('.event-carousel');
+            
+            // Clear any existing events in the carousel
+            eventCarousel.innerHTML = '';
+
+            // Loop through the events and create HTML for each event
+            events.forEach(event => {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('event-item');
+                eventItem.innerHTML = `
+                    <div class="event-card">
+                        <div class="event-card-header">
+                            <h5>${event.name}</h5>
+                            <span>${event.eventType}</span>
+                        </div>
+                        <div class="event-card-body">
+                            <p>${event.description}</p>
+                            <p><strong>Organizer:</strong> ${event.organizer}</p>
+                            <p><strong>Date:</strong> ${event.date}</p>
+                            <p><strong>Time:</strong> ${event.startTime} - ${event.endTime}</p>
+                            <p><strong>Register By:</strong> ${event.registerDeadline}</p>
+                            <p><strong>Status:</strong> ${event.status}</p>
+                        </div>
+                    </div>
+                `;
+                eventCarousel.appendChild(eventItem);
+            });
+
+            $('.owl-carousel').owlCarousel({
+                items: 1,  // Show 1 event at a time
+                loop: true,
+                nav: true,
+                dots: true,
+            });
+        } catch (error) {
+            console.error('Error fetching events:', error);
+        }
+    }
+
+    // Fetch and display events when the page loads
+    window.onload = function () {
+        fetchEvents();
+    };
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const user = localStorage.getItem("user");
+
+    if (user) {
+        const userData = JSON.parse(user); // Parse the stored JSON string to an object
+        console.log("Stored User Session:", userData);
+        
+        const userId = userData.id; // Access the id property of the user
+        console.log("User ID:", userId);
+        
+        fetch(`http://localhost:8080/Students/byUser/${userId}`)
+            .then(response => response.json())
+            .then(studentData => {
+                // Log the relevant student details, specifically the studentID
+                const studentId = studentData.studentID;
+                console.log("Student Data:", studentData);
+                console.log("Student ID:", studentId); // Extract studentID from the response
+
+                // Now fetch the groups associated with the studentId
+                return fetch(`http://localhost:8080/api/groups/student/${studentId}`);
+            })
+            .then(response => response.json())
+            .then(groups => {
+                console.log("Groups Data:", groups);
+                
+                // Create a container to append the group cards
+                const groupContainer = document.querySelector('.group-container'); // Ensure you have a div with this class in your HTML
+
+                // Clear any existing content in the container
+                groupContainer.innerHTML = '';
+
+                // Iterate through the groups and create the cards
+                groups.forEach(group => {
+                    // Create the group card
+                    const groupCard = document.createElement('div');
+                    groupCard.classList.add('group-card-small');
+                    groupCard.setAttribute('data-group-id', group.groupId);
+
+                    // Create the header of the group card (Group Name)
+                    const groupHeader = document.createElement('div');
+                    groupHeader.classList.add('group-card-header-small');
+                    groupHeader.textContent = group.groupName;
+
+                    // Create the body of the group card
+                    const groupBody = document.createElement('div');
+                    groupBody.classList.add('group-card-body-small');
+
+                    // Add the description of the group
+                    const groupDescription = document.createElement('p');
+                    groupDescription.classList.add('mb-1', 'text-muted', 'small');
+                    groupDescription.textContent = group.description;
+                    groupBody.appendChild(groupDescription);
+
+                    // Create the container for group members
+                    const groupMembers = document.createElement('div');
+                    groupMembers.classList.add('group-members-small');
+
+                    // Add members to the group card
+                    group.members.forEach(member => {
+                        const memberDiv = document.createElement('div');
+                        memberDiv.classList.add('group-member-small');
+
+                        const memberImg = document.createElement('img');
+                        memberImg.src = "img/profile.png"; // Replace with the actual profile image if available
+                        memberImg.alt = `${member.user.firstName} ${member.user.lastName}`;
+                        memberDiv.appendChild(memberImg);
+
+                        groupMembers.appendChild(memberDiv);
+                    });
+
+                    // Add the member count
+                    const memberCount = document.createElement('div');
+                    memberCount.classList.add('group-member-count-small');
+                    memberCount.textContent = `+${group.members.length}`;
+                    groupMembers.appendChild(memberCount);
+
+                    // Append all elements to the group card body
+                    groupBody.appendChild(groupMembers);
+                    
+                    // Append the header and body to the group card
+                    groupCard.appendChild(groupHeader);
+                    groupCard.appendChild(groupBody);
+
+                    // Finally, append the group card to the container
+                    groupContainer.appendChild(groupCard);
+                });
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    } else {
+        console.log("No user session found.");
+    }
+});
+
+</script>
+
 </body>
 </html>
