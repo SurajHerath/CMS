@@ -298,44 +298,7 @@
 
     <!-- Custom Javascript for Student Enrollment -->
     <script>
-        // Sample student data (would typically come from a database)
-        const studentsData = {
-            'S1001': {
-                id: 'S1001',
-                name: 'John Smith',
-                email: 'john.smith@example.com',
-                enrollments: [
-                    { programId: 'CS-BSC', programName: 'BSc in Computer Science', year: 2021 }
-                ]
-            },
-            'S1002': {
-                id: 'S1002',
-                name: 'Emily Johnson',
-                email: 'emily.johnson@example.com',
-                enrollments: [
-                    { programId: 'SE-BSC', programName: 'BSc in Software Engineering', year: 2022 }
-                ]
-            },
-            'S1003': {
-                id: 'S1003',
-                name: 'Michael Brown',
-                email: 'michael.brown@example.com',
-                enrollments: [
-                    { programId: 'DS-BSC', programName: 'BSc in Data Science', year: 2021 },
-                    { programId: 'AI-MSC', programName: 'MSc in Artificial Intelligence', year: 2023 }
-                ]
-            }
-        };
-
-        // Sample degree program data
-        const degreeProgramsData = {
-            'CS-BSC': { id: 'CS-BSC', name: 'BSc in Computer Science' },
-            'SE-BSC': { id: 'SE-BSC', name: 'BSc in Software Engineering' },
-            'DS-BSC': { id: 'DS-BSC', name: 'BSc in Data Science' },
-            'CS-MSC': { id: 'CS-MSC', name: 'MSc in Computer Science' },
-            'AI-MSC': { id: 'AI-MSC', name: 'MSc in Artificial Intelligence' }
-        };
-
+      
         // Function to show error message
         function showError(message) {
             const errorAlert = document.getElementById('errorAlert');
@@ -358,172 +321,179 @@
             document.getElementById('errorAlert').style.display = 'none';
         }
 
-        // Function to search for students
-        function searchStudents(query) {
-            query = query.toLowerCase();
-            const results = [];
-            
-            for (const studentId in studentsData) {
-                const student = studentsData[studentId];
-                if (student.id.toLowerCase().includes(query) || student.name.toLowerCase().includes(query)) {
-                    results.push(student);
-                }
-            }
-            
-            return results;
-        }
+            // Function to search for students
+            async function searchStudents(query) {
+                query = query.toLowerCase();
+                let result = [];
 
-        // Function to display search results
-        function displaySearchResults(results) {
-            const searchResults = document.getElementById('searchResults');
-            searchResults.innerHTML = '';
-            
-            if (results.length === 0) {
-                searchResults.innerHTML = '<div class="p-3 text-center">No students found</div>';
+                try {
+                    const response = await fetch("http://localhost:8080/Students");
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch students data");
+                    }
+                    
+                    const studentsData = await response.json();
+                    result = studentsData.filter(student => 
+                        student.studentID.toString().includes(query) ||
+                        student.firstName.toLowerCase().includes(query) ||
+                        student.lastName.toLowerCase().includes(query)
+                    );
+                    console.log(result);
+
+                } catch (error) {
+                    console.error("Error fetching student data:", error);
+                }
+                return result;
+            }
+
+
+            // Function to display search results
+            function displaySearchResults(results) {
+                console.log(results);
+                const searchResults = document.getElementById('searchResults');
+                searchResults.innerHTML = '';
+
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<div class="p-3 text-center">No students found</div>';
+                    searchResults.style.display = 'block';
+                    return;
+                }
+
+                results.forEach(student => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.innerHTML = `<strong>${student.studentID}</strong> - ${student.firstName} ${student.lastName}`;
+                    resultItem.addEventListener('click', () => selectStudent(student.studentID));
+                    searchResults.appendChild(resultItem);
+                });
+
                 searchResults.style.display = 'block';
-                return;
             }
-            
-            results.forEach(student => {
-                const resultItem = document.createElement('div');
-                resultItem.className = 'search-result-item';
-                resultItem.innerHTML = `<strong>${student.id}</strong> - ${student.name}`;
-                resultItem.addEventListener('click', () => selectStudent(student.id));
-                searchResults.appendChild(resultItem);
-            });
-            
-            searchResults.style.display = 'block';
-        }
 
-        // Function to select a student
-        function selectStudent(studentId) {
-            const student = studentsData[studentId];
-            
-            if (!student) {
-                showError('Student not found.');
-                return;
-            }
-            
-            // Set student info
-            document.getElementById('studentId').value = student.id;
-            document.getElementById('studentIdDisplay').textContent = student.id;
-            document.getElementById('studentNameDisplay').textContent = student.name;
-            document.getElementById('studentEmailDisplay').textContent = student.email;
-            document.getElementById('studentEnrollmentsDisplay').textContent = student.enrollments.length;
-            
-            // Show student info and enrollment form
-            document.getElementById('studentInfo').style.display = 'block';
-            document.getElementById('enrollmentForm').style.display = 'block';
-            
-            // Hide search results
-            document.getElementById('searchResults').style.display = 'none';
-            
-            // Clear any previous alerts
-            document.getElementById('errorAlert').style.display = 'none';
-            document.getElementById('successAlert').style.display = 'none';
-            
-            // Filter out already enrolled programs from dropdown
-            const enrolledProgramIds = student.enrollments.map(enrollment => enrollment.programId);
-            const degreeProgramSelect = document.getElementById('degreeProgram');
-            
-            // Reset dropdown
-            degreeProgramSelect.innerHTML = '<option value="" selected disabled>Select Degree Programme</option>';
-            
-            // Add available programs
-            for (const programId in degreeProgramsData) {
-                if (!enrolledProgramIds.includes(programId)) {
-                    const program = degreeProgramsData[programId];
-                    const option = document.createElement('option');
-                    option.value = program.id;
-                    option.textContent = program.name;
-                    degreeProgramSelect.appendChild(option);
+           // Function to select a student
+            async function selectStudent(studentId) {
+                try {
+                    // Fetch student data using the provided studentId
+                    const response = await fetch(`http://localhost:8080/Students/${studentId}`);
+                    if (!response.ok) {
+                        throw new Error('Student not found');
+                    }
+                    const student = await response.json();
+
+                    console.log(student);
+
+                    // Set student info
+                    document.getElementById('studentId').value = student.studentID;
+                    document.getElementById('studentIdDisplay').textContent = student.studentID;
+                    document.getElementById('studentNameDisplay').textContent = `${student.firstName} ${student.lastName}`;
+                    document.getElementById('studentEmailDisplay').textContent = student.email;
+                    document.getElementById('studentEnrollmentsDisplay').textContent = student.studentDegrees.length;
+
+                    // Show student info and enrollment form
+                    document.getElementById('studentInfo').style.display = 'block';
+                    document.getElementById('enrollmentForm').style.display = 'block';
+
+                    // Hide search results
+                    document.getElementById('searchResults').style.display = 'none';
+
+                    // Clear any previous alerts
+                    document.getElementById('errorAlert').style.display = 'none';
+                    document.getElementById('successAlert').style.display = 'none';
+
+                    // Filter out already enrolled programs from dropdown
+                    const enrolledProgramIds = student.studentDegrees.map(degree => degree.programID);
+                    const degreeProgramSelect = document.getElementById('degreeProgram');
+
+                    // Reset dropdown
+                    degreeProgramSelect.innerHTML = '<option value="" selected disabled>Select Degree Programme</option>';
+
+                    // Fetch data from the API
+                    fetch('http://localhost:8080/degreeProgrammes')
+                    .then(response => response.json()) // Parse the response as JSON
+                    .then(degreeProgrammes => {
+                        // Loop through the degreeProgrammes array and create an option element for each
+                        degreeProgrammes.forEach(degree => {
+                        const option = document.createElement('option');
+                        option.value = degree.programID;
+                        option.textContent = degree.programName;
+                        degreeProgramSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching degree programmes:', error);
+                    });
+
+
+                    // Set current year as default
+                    document.getElementById('enrollmentYear').value = new Date().getFullYear();
+                } catch (error) {
+                    console.error("Error fetching student data:", error);
+                    showError('Student not found.');
                 }
             }
-            
-            // Set current year as default
-            document.getElementById('enrollmentYear').value = new Date().getFullYear();
-        }
 
-        // Event listener for search button
-        document.getElementById('searchButton').addEventListener('click', function() {
-            const query = document.getElementById('studentSearch').value.trim();
-            
-            if (query.length < 2) {
-                showError('Please enter at least 2 characters to search.');
-                return;
-            }
-            
-            const results = searchStudents(query);
-            displaySearchResults(results);
-        });
+            // Event listener for search button
+            document.getElementById('searchButton').addEventListener('click', async function() {
+                const query = document.getElementById('studentSearch').value.trim();
+                
+                if (query.length < 2) {
+                    showError('Please enter at least 2 characters to search.');
+                    return;
+                }
+                
+                const results = await searchStudents(query); // Await the promise
+                displaySearchResults(results);
+            });
 
-        // Event listener for search input (for Enter key)
-        document.getElementById('studentSearch').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('searchButton').click();
-            }
-        });
+            // Event listener for search input (for Enter key)
+            document.getElementById('studentSearch').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('searchButton').click();
+                }
+            });
+// Handle form submission
+document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const studentId = document.getElementById('studentId').value;
+    const programId = document.getElementById('degreeProgram').value;
+    const enrollmentYear = document.getElementById('enrollmentYear').value;
+    
+    // Validate form
+    if (!studentId || !programId || !enrollmentYear) {
+        showError('Please fill in all required fields.');
+        return;
+    }
 
-        // Handle form submission
-        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const studentId = document.getElementById('studentId').value;
-            const programId = document.getElementById('degreeProgram').value;
-            const enrollmentYear = document.getElementById('enrollmentYear').value;
-            
-            // Validate form
-            if (!studentId || !programId || !enrollmentYear) {
-                showError('Please fill in all required fields.');
-                return;
-            }
-            
-            // Get student and program
-            const student = studentsData[studentId];
-            const program = degreeProgramsData[programId];
-            
-            if (!student) {
-                showError('Student not found.');
-                return;
-            }
-            
-            if (!program) {
-                showError('Degree programme not found.');
-                return;
-            }
-            
-            // Check if student is already enrolled in this program
-            const alreadyEnrolled = student.enrollments.some(enrollment => enrollment.programId === programId);
-            
-            if (alreadyEnrolled) {
-                showError('Student is already enrolled in this degree programme.');
-                return;
-            }
-            
-            // Create new enrollment
-            const newEnrollment = {
-                programId: programId,
-                programName: program.name,
-                year: parseInt(enrollmentYear)
-            };
-            
-            // Add enrollment to student
-            student.enrollments.push(newEnrollment);
-            
-            // Update student info display
-            document.getElementById('studentEnrollmentsDisplay').textContent = student.enrollments.length;
-            
-            // Show success message
-            showSuccess(`Student successfully enrolled in ${program.name}.`);
-            
-            // Reset form
-            document.getElementById('degreeProgram').value = '';
-            document.getElementById('enrollmentYear').value = new Date().getFullYear();
-            
-            // Scroll to top to show the success message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+    // Create the payload to send to the backend
+    const enrollmentData = {
+        studentId: parseInt(studentId),
+        programID: parseInt(programId),
+        enrollmentYear: parseInt(enrollmentYear),
+        status: 'Active',
+        grade: 'Not Assigned' 
+    };
+
+    console.log(JSON.stringify(enrollmentData));
+    // Send POST request to enroll student
+    fetch('http://localhost:8080/student-degree/enroll', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(enrollmentData)
+    })
+    .then(response => response.text())  // Use .text() for plain text response
+    .then(data => {
+    // Show success or error message
+    if (data === "Student successfully enrolled in degree program.") {
+        showSuccess(data);
+    } else {
+        showError('Enrollment failed. Please try again.');
+    }
+})
+});
 
         // Initialize WOW.js (for animations)
         document.addEventListener('DOMContentLoaded', function() {

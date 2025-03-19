@@ -56,7 +56,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Users</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="view-all-students.html" class="dropdown-item">View All Students</a>
+                        <a href="ViewAllStudents.html" class="dropdown-item">View All Students</a>
                         <a href="view-all-admins.html" class="dropdown-item">View All Admins</a>
                         <a href="view-all-lecturers.html" class="dropdown-item">View All Lecturers</a>
                     </div>
@@ -192,31 +192,98 @@
     <script src="js/main.js"></script>
 
     <!-- Custom Javascript for Edit Student -->
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const studentID = urlParams.get('id');
+
+    if (studentID) {
+        fetch(`http://localhost:8080/Students/${studentID}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.user) {
+                    document.getElementById('nic').value = data.user.nic;
+                    document.getElementById('firstName').value = data.user.firstName;
+                    document.getElementById('lastName').value = data.user.lastName;
+                    document.getElementById('email').value = data.user.email;
+                    document.getElementById('phoneNumber').value = data.user.phoneNumber;
+                    document.getElementById('address').value = data.user.address;
+                    document.getElementById('dob').value = data.user.dob;
+                    document.getElementById('gender').value = data.user.gender;
+                    document.getElementById('status').value = data.user.status;
+                } else {
+                    alert('Student data not found.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching student data:', error);
+                alert('Error fetching student details.');
+            });
+    } else {
+        alert('Student ID not provided.');
+    }
+});
+
+document.getElementById('editStudentForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    alert('Student updated successfully');
+    window.location.href = 'ViewAllStudents.html';
+});
+   </script>
+
+   <script>
+    document.getElementById('editStudentForm').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const studentID = urlParams.get('id');
+
+    const updatedStudent = {
+        studentID: studentID, 
+        user: {
+            nic: document.getElementById('nic').value,
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value, // Ensure secure handling
+            phoneNumber: document.getElementById('phoneNumber').value,
+            address: document.getElementById('address').value,
+            dob: document.getElementById('dob').value,
+            gender: document.getElementById('gender').value,
+            role: "Student",
+            status: document.getElementById('status').value
+        }
+    };
+
+    // Send the updated student data to the backend
+    fetch(`http://localhost:8080/Students/${studentID}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedStudent)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Student updated successfully:", data);
+        alert("Student updated successfully!");
+        window.location.href = "ViewAllStudents.html"; 
+    })
+    .catch(error => {
+        console.error("Error updating student:", error);
+        alert("Failed to update student.");
+    });
+});
+
+   </script>
+
     <script>
-        // Get student ID from URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const studentNIC = urlParams.get('id');
-
-        // Fetch student data and populate form (simulated here)
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('nic').value = studentNIC;
-            document.getElementById('firstName').value = "Michael";
-            document.getElementById('lastName').value = "Fernando";
-            document.getElementById('email').value = "michael.fernando@example.com";
-            document.getElementById('phoneNumber').value = "0765678901";
-            document.getElementById('address').value = "789 College Ave, Galle";
-            document.getElementById('dob').value = "2002-09-10";
-            document.getElementById('gender').value = "Male";
-            document.getElementById('status').value = "Active";
-        });
-
-        document.getElementById('editStudentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Implement update logic here
-            alert('Student updated successfully');
-            // Redirect to view all students page
-            window.location.href = 'view-all-students.html';
-        });
+        
     </script>
 </body>
 

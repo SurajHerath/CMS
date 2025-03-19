@@ -191,6 +191,13 @@
                                         <label for="eventType">Event Type</label>
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="maxCapacity" placeholder="Maximum Capacity" min="1" required>
+                                        <label for="maxCapacity">Maximum Capacity</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
@@ -205,19 +212,24 @@
                                     </div>
                                 </div>
                                 
+                                
+                         
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="maxCapacity" placeholder="Maximum Capacity" min="1" required>
-                                        <label for="maxCapacity">Maximum Capacity</label>
+                                        <select class="form-select" id="eventType" required>
+                                            <option value="" selected disabled>Select Room</option>
+                                            <option value="Conference">Room B3</option>
+                                        </select>
+                                        <label for="eventType">Room</label>
                                     </div>
                                 </div>
-                                
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="date" class="form-control" id="registerDeadline" required>
                                         <label for="registerDeadline">Registration Deadline</label>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         
@@ -316,7 +328,7 @@
             // Hide success message if it's visible
             document.getElementById('successAlert').style.display = 'none';
         }
-
+    
         // Function to show success message
         function showSuccess(message) {
             const successAlert = document.getElementById('successAlert');
@@ -327,55 +339,38 @@
             // Hide error message if it's visible
             document.getElementById('errorAlert').style.display = 'none';
         }
-
+    
         // Function to validate time range
         function validateTimeRange(startTime, endTime) {
-            if (startTime >= endTime) {
-                return false;
-            }
-            return true;
+            const start = new Date("1970-01-01T" + startTime + "Z"); // Convert to Date object for comparison
+            const end = new Date("1970-01-01T" + endTime + "Z"); // Convert to Date object for comparison
+            
+            return start < end; // End time should be after start time
         }
-        
+    
         // Function to validate date range
         function validateDateRange(eventDate, registerDeadline) {
-            const eventDateObj = new Date(eventDate);
-            const registerDeadlineObj = new Date(registerDeadline);
+            const eventDateObj = new Date(eventDate);  // Convert date to Date object
+            const registerDeadlineObj = new Date(registerDeadline); // Convert to Date object
             
-            if (registerDeadlineObj >= eventDateObj) {
-                return false;
-            }
-            return true;
+            return registerDeadlineObj < eventDateObj;  // Registration deadline should be before event date
         }
-
-        // Set default dates
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('eventDate').value = today;
-            document.getElementById('eventDate').min = today;
-            
-            document.getElementById('registerDeadline').value = today;
-            document.getElementById('registerDeadline').min = today;
-            
-            // Hide spinner after page loads
-            setTimeout(function() {
-                document.getElementById('spinner').classList.remove('show');
-            }, 1000);
-        });
-
+    
+      
         // Handle form submission
         document.getElementById('eventForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+    
             // Get form values
             const eventName = document.getElementById('eventName').value.trim();
             const eventDescription = document.getElementById('eventDescription').value.trim();
-            const eventDate = document.getElementById('eventDate').value;
-            const startTime = document.getElementById('startTime').value;
-            const endTime = document.getElementById('endTime').value;
+            const eventDate = document.getElementById('eventDate').value;  // LocalDate
+            const startTime = document.getElementById('startTime').value;  // LocalTime
+            const endTime = document.getElementById('endTime').value;  // LocalTime
             const eventType = document.getElementById('eventType').value;
             const organizer = document.getElementById('organizer').value.trim();
             const maxCapacity = document.getElementById('maxCapacity').value;
-            const registerDeadline = document.getElementById('registerDeadline').value;
+            const registerDeadline = document.getElementById('registerDeadline').value;  // LocalDate
             
             // Validate form
             if (!eventName || !eventDescription || !eventDate || !startTime || !endTime || !eventType || 
@@ -389,50 +384,62 @@
                 showError('End time must be after start time.');
                 return;
             }
-            
+    
             // Validate date range
             if (!validateDateRange(eventDate, registerDeadline)) {
                 showError('Registration deadline must be before the event date.');
                 return;
             }
-            
+    
             // Create event object
             const newEvent = {
-                id: Date.now().toString(),
                 name: eventName,
                 description: eventDescription,
-                date: eventDate,
-                startTime: startTime,
-                endTime: endTime,
-                type: eventType,
+                date: eventDate,  
+                startTime: startTime, 
+                endTime: endTime,  
+                eventType: eventType,
                 organizer: organizer,
                 maxCapacity: maxCapacity,
                 registerDeadline: registerDeadline,
-                created: new Date().toISOString().split('T')[0]
+                status: "Open"
             };
-            
-            // In a real application, this would be an API call to save the event
-            console.log('New event:', newEvent);
-            
-            // Show success message
-            showSuccess('Event added successfully!');
-            
-            // Reset form
-            document.getElementById('eventForm').reset();
-            
-            // Set default dates again
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('eventDate').value = today;
-            document.getElementById('registerDeadline').value = today;
-            
-            // Scroll to top to show the success message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Redirect after a short delay
-            setTimeout(() => {
-                window.location.href = 'view-events.html';
-            }, 2000);
+    
+            // Send event data to the server using fetch API
+            var raw = JSON.stringify(newEvent);
+    
+            var requestOptions = {
+                method: 'POST',
+                body: raw,
+                redirect: 'follow',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+    
+            fetch("http://localhost:8080/events", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result);
+                    showSuccess('Event added successfully!');
+                    
+                    // Reset form and set default dates again
+                    document.getElementById('eventForm').reset();   
+                    // Scroll to top to show the success message
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+                    // Redirect after a short delay
+                    setTimeout(() => {
+                        window.location.href = 'View Events.html';
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    showError('Failed to add event. Please try again.');
+                });
         });
     </script>
+    
+    
 </body>
 </html>

@@ -50,20 +50,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="Student index.html" class="nav-item nav-link">Home</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Courses</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-course.html" class="dropdown-item active">Insert Course</a>
-                        <a href="view-all-courses.html" class="dropdown-item">View All Courses</a>
+                        <a href="Insert Course.html" class="dropdown-item active">Insert Course</a>
+                        <a href="View All Courses.html" class="dropdown-item">View All Courses</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Degree Programmes</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-degree-programme.html" class="dropdown-item">Insert Degree Programme</a>
-                        <a href="view-all-degree-programmes.html" class="dropdown-item">View All Degree Programmes</a>
+                        <a href="Insert Degree Programme.html" class="dropdown-item">Insert Degree Programme</a>
+                        <a href="View All Degree Programmes.html" class="dropdown-item">View All Degree Programmes</a>
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -103,19 +102,7 @@
                                     <label for="courseName">Course Name</label>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <select class="form-select" id="lecturer" required>
-                                        <option value="" selected disabled>Select Lecturer</option>
-                                        <option value="1">Dr. John Smith</option>
-                                        <option value="2">Prof. Sarah Johnson</option>
-                                        <option value="3">Dr. Michael Brown</option>
-                                        <option value="4">Dr. Emily Davis</option>
-                                        <option value="5">Prof. Robert Wilson</option>
-                                    </select>
-                                    <label for="lecturer">Lecturer</label>
-                                </div>
-                            </div>
+                            
                             <div class="col-12">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="credits" placeholder="Credits" min="1" max="10" required>
@@ -155,24 +142,55 @@
 
     <!-- Custom Javascript for Insert Course -->
     <script>
-        document.getElementById('insertCourseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const courseName = document.getElementById('courseName').value;
-            const lecturer = document.getElementById('lecturer').options[document.getElementById('lecturer').selectedIndex].text;
-            const credits = document.getElementById('credits').value;
-            
-            // Implement insert logic here (this would typically be an API call)
-            console.log('Course to insert:', { courseName, lecturer, credits });
-            
-            // Show success message
-            alert('Course inserted successfully');
-            
-            // Redirect to view all courses page
-            window.location.href = 'view-all-courses.html';
+        document.getElementById("insertCourseForm").addEventListener("submit", function (event) {
+    event.preventDefault(); 
+
+    // Get form values
+    var courseName = document.getElementById("courseName").value;
+    var credits = document.getElementById("credits").value;
+
+    // Validate that all fields are filled
+    if (!courseName || !credits) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Create JSON payload
+    var raw = JSON.stringify({
+        courseName: courseName,
+        credits: parseInt(credits),
+        status: "Active"
+    });
+
+    // Define request options
+    var requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: raw,
+        redirect: "follow"
+    };
+
+    // Send the request
+    fetch("http://localhost:8080/courses", requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(result => {
+            console.log(result);
+            alert("Course inserted successfully!");
+            document.getElementById("insertCourseForm").reset(); 
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Failed to insert course.");
         });
+});
+
     </script>
+
 </body>
 
 </html>

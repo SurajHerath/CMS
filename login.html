@@ -94,7 +94,7 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-6 col-md-10 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="bg-light rounded p-5">
-                        <form>
+                        <form id="loginForm">
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating">
@@ -197,6 +197,55 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+    
+            var raw = JSON.stringify({
+                email: email,
+                password: password
+            });
+    
+            var requestOptions = {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: raw,
+                redirect: 'follow'
+            };
+    
+            fetch("http://localhost:8080/auth/login", requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Invalid credentials");
+                    }
+                    return response.json(); // Parse response as JSON
+                })
+                .then(user => {
+                    // Store user session
+                    localStorage.setItem("user", JSON.stringify(user));
+    
+                    // Redirect based on role
+                    if (user.role === "Admin") {
+                        window.location.href = "Admin Dashboard.html";
+                    } else if (user.role === "Student") {
+                        window.location.href = "Student Index.html";
+                    } else if (user.role === "Lecturer") {
+                        window.location.href = "Lecturer Dashboard.html";
+                    } else {
+                        alert("Unknown role. Contact support.");
+                    }
+                })
+                .catch(error => {
+                    alert("Invalid credentials. Please try again.");
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+    
+    
 </body>
 
 </html>

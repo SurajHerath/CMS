@@ -324,16 +324,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <label class="form-label">Announcement Image (Optional)</label>
-                                    <input class="form-control" type="file" id="announcementImage" accept="image/*">
-                                    <div class="image-preview" id="imagePreview">
-                                        <span class="image-preview-text">Image preview will appear here</span>
-                                    </div>
-                                </div>
+                              
                                 <div class="col-12 text-center">
                                     <button class="btn btn-primary py-3 px-5 mt-3" type="submit">Create Announcement</button>
-                                    <a href="view-announcements.html" class="btn btn-outline-secondary py-3 px-5 mt-3 ms-2">Cancel</a>
+                                    <a href="View Announcements.html" class="btn btn-outline-secondary py-3 px-5 mt-3 ms-2">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -436,6 +430,58 @@
     <script src="js/main.js"></script>
 
     <!-- Custom Javascript -->
+    <script>
+        document.getElementById('announcementForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+    
+            // Get form data
+            const announcementDate = document.getElementById('announcementDate').value;
+            const closingDate = document.getElementById('closingDate').value;
+            const message = document.getElementById('message').value;
+            const userTypeAll = document.getElementById('userTypeAll').checked;
+            const userTypeStudents = document.getElementById('userTypeStudents').checked;
+            const userTypeLecturers = document.getElementById('userTypeLecturers').checked;
+            const userTypeAdmins = document.getElementById('userTypeAdmins').checked;
+    
+            // Determine target user type (combine checked values)
+            let type = [];
+            if (userTypeStudents) type.push("Students");
+            if (userTypeLecturers) type.push("Lecturers");
+            if (userTypeAdmins) type.push("Admins");
+            if (userTypeAll) type.push("All");
+    
+            const announcementData = {
+                date: announcementDate,
+                closingDate: closingDate,
+                message: message,
+                type: type.length > 0 ? type.join(', ') : "All", // If no types selected, set to "All"
+                adminId: 1  // Assuming adminId is 1, you can fetch it dynamically if needed
+            };
+    
+            // Make the POST request
+            try {
+                const response = await fetch('http://localhost:8080/api/announcements/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(announcementData)
+                });
+    
+                if (response.ok) {
+                    alert('Announcement created successfully!');
+                    // Optionally, you can redirect or clear the form
+                } else {
+                    alert('Failed to create the announcement.');
+                }
+            } catch (error) {
+                console.error("Error creating announcement:", error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    </script>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Hide spinner after page loads

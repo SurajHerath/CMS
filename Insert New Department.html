@@ -171,6 +171,45 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector("form").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                // Get the form details
+                let departmentName = document.getElementById("departmentName").value.trim();
+                if (departmentName === "") {
+                    alert("Please enter a department name.");
+                    return;
+                }
+    
+                // Assign form details to json format - refer the Postman Doc
+                let requestData = {
+                    deptName: departmentName
+                };
+    
+                let requestOptions = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(requestData)
+                };
+    
+                fetch("http://localhost:8080/departments", requestOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log(result);
+                        alert("Department added successfully!");
+                        document.getElementById("departmentName").value = "";
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("Failed to add department.");
+                    });
+            });
+        });
+    </script>
+    
+
 </body>
 
 </html>

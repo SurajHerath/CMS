@@ -233,16 +233,9 @@
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <select class="form-select" id="courseSelect" required>
-                                            <option value="" selected disabled>Select Course</option>
-                                            <option value="1">CS101 - Introduction to Computer Science</option>
-                                            <option value="2">CS201 - Data Structures and Algorithms</option>
-                                            <option value="3">CS301 - Database Systems</option>
-                                            <option value="4">CS401 - Artificial Intelligence</option>
-                                            <option value="5">MATH101 - Calculus I</option>
-                                            <option value="6">MATH201 - Linear Algebra</option>
-                                            <option value="7">ENG101 - English Composition</option>
+                                            <option value="" selected disabled>Select Class</option>
                                         </select>
-                                        <label for="courseSelect">Course</label>
+                                        <label for="courseSelect">Class</label>
                                     </div>
                                 </div>
                                 
@@ -280,13 +273,7 @@
                                         <label for="assignmentType">Assignment Type</label>
                                     </div>
                                 </div>
-                                
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="number" class="form-control" id="totalMarks" placeholder="Total Marks" min="1" required>
-                                        <label for="totalMarks">Total Marks</label>
-                                    </div>
-                                </div>
+                                                     
                             </div>
                         </div>
                         
@@ -302,56 +289,20 @@
                             </div>
                         </div>
                         
-                        <div class="form-section">
-                            <h5>Upload Files</h5>
+                    <div class="form-section">
+                            <h5>Attachments & Related Resources</h5>
                             <div class="row g-3">
                                 <div class="col-12">
-                                    <label class="form-label">Assignment Document (PDF, DOC, DOCX)</label>
-                                    <div class="file-upload">
-                                        <div class="file-upload-btn">
-                                            <i class="bi bi-file-earmark-text"></i>
-                                            <p>Drag and drop a file here or click to browse</p>
-                                            <small>Max file size: 10MB</small>
-                                        </div>
-                                        <input type="file" class="file-upload-input" id="assignmentFile" accept=".pdf,.doc,.docx" required>
+                                    <label class="form-label">Attach Files (Optional)</label>
+                                    <div class="file-upload mb-3">
+                                        <input type="file" class="file-upload-input" id="fileUpload" multiple>
+                                        <div class="file-upload-text">No file chosen</div>
+                                        <button type="button" class="file-upload-btn">Browse Files</button>
                                     </div>
-                                    <div class="file-info" id="assignmentFileInfo">
-                                        <span class="file-name" id="assignmentFileName"></span>
-                                        <span class="file-remove" onclick="removeFile('assignmentFile')"><i class="bi bi-x-circle"></i></span>
-                                        <div class="mt-1">
-                                            <span class="file-size" id="assignmentFileSize"></span>
-                                            <span class="mx-2">|</span>
-                                            <span class="file-type" id="assignmentFileType"></span>
-                                        </div>
-                                    </div>
-                                    <div class="progress" id="assignmentFileProgress">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%"></div>
-                                    </div>
+                                    <div id="fileList" class="mt-2"></div>
                                 </div>
                                 
-                                <div class="col-12 mt-4">
-                                    <label class="form-label">Additional Resources (ZIP, RAR) - Optional</label>
-                                    <div class="file-upload">
-                                        <div class="file-upload-btn">
-                                            <i class="bi bi-file-earmark-zip"></i>
-                                            <p>Drag and drop a file here or click to browse</p>
-                                            <small>Max file size: 50MB</small>
-                                        </div>
-                                        <input type="file" class="file-upload-input" id="resourcesFile" accept=".zip,.rar">
-                                    </div>
-                                    <div class="file-info" id="resourcesFileInfo">
-                                        <span class="file-name" id="resourcesFileName"></span>
-                                        <span class="file-remove" onclick="removeFile('resourcesFile')"><i class="bi bi-x-circle"></i></span>
-                                        <div class="mt-1">
-                                            <span class="file-size" id="resourcesFileSize"></span>
-                                            <span class="mx-2">|</span>
-                                            <span class="file-type" id="resourcesFileType"></span>
-                                        </div>
-                                    </div>
-                                    <div class="progress" id="resourcesFileProgress">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%"></div>
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                         
@@ -437,7 +388,13 @@
 
     <!-- Custom Javascript for Upload Assignment -->
     <script>
-        // Function to format file size
+
+         // File upload handling
+        const fileUpload = document.getElementById('fileUpload');
+        const fileUploadText = document.querySelector('.file-upload-text');
+        const fileList = document.getElementById('fileList');
+        let files = [];
+        
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
@@ -445,51 +402,139 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
-        
-        // Function to handle file selection
-        function handleFileSelect(fileInputId) {
-            const fileInput = document.getElementById(fileInputId);
-            const fileInfo = document.getElementById(`${fileInputId}Info`);
-            const fileName = document.getElementById(`${fileInputId}Name`);
-            const fileSize = document.getElementById(`${fileInputId}Size`);
-            const fileType = document.getElementById(`${fileInputId}Type`);
-            
-            fileInput.addEventListener('change', function() {
-                if (this.files.length > 0) {
-                    const file = this.files[0];
+                
+
+
+        fileUpload.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                fileUploadText.textContent = this.files.length > 1 ? 
+                    `${this.files.length} files selected` : 
+                    this.files[0].name;
+                
+                // Display file list
+                fileList.innerHTML = '';
+                for (let i = 0; i < this.files.length; i++) {
+                    const file = this.files[i];
+                    files.push(file); // Pushing files into the global array
                     
-                    // Check file size
-                    const maxSize = fileInputId === 'assignmentFile' ? 10 * 1024 * 1024 : 50 * 1024 * 1024; // 10MB or 50MB
-                    if (file.size > maxSize) {
-                        showError(`File size exceeds the maximum limit (${formatFileSize(maxSize)}).`);
-                        this.value = ''; // Clear the file input
-                        fileInfo.style.display = 'none';
-                        return;
-                    }
-                    
-                    // Display file info
-                    fileName.textContent = file.name;
-                    fileSize.textContent = formatFileSize(file.size);
-                    fileType.textContent = file.type || 'Unknown';
-                    fileInfo.style.display = 'block';
-                } else {
-                    fileInfo.style.display = 'none';
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'alert alert-info d-flex justify-content-between align-items-center mb-2';
+                    fileItem.innerHTML = `
+                        <div>
+                            <i class="bi bi-file-earmark me-2"></i>
+                            <span>${file.name}</span>
+                            <small class="ms-2 text-muted">(${formatFileSize(file.size)})</small>
+                        </div>
+                        <button type="button" class="btn-close" data-index="${i}"></button>
+                    `;
+                    fileList.appendChild(fileItem);
                 }
-            });
-        }
-        
-        // Function to remove a file
-        function removeFile(fileInputId) {
-            const fileInput = document.getElementById(fileInputId);
-            const fileInfo = document.getElementById(`${fileInputId}Info`);
-            const fileProgress = document.getElementById(`${fileInputId}Progress`);
-            
-            fileInput.value = ''; // Clear the file input
-            fileInfo.style.display = 'none';
-            fileProgress.style.display = 'none';
-            fileProgress.querySelector('.progress-bar').style.width = '0%';
-        }
-        
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('#fileList .btn-close').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        files.splice(index, 1); // Removing the file from the global array
+                        this.closest('.alert').remove();
+                        
+                        // Update file input text
+                        if (files.length === 0) {
+                            fileUploadText.textContent = 'No file chosen';
+                        } else {
+                            fileUploadText.textContent = files.length > 1 ? 
+                                `${files.length} files selected` : 
+                                files[0].name;
+                        }
+                    });
+                });
+            } else {
+                fileUploadText.textContent = 'No file chosen';
+                fileList.innerHTML = '';
+                files = []; // Resetting the files array
+            }
+        });
+
+        document.getElementById("uploadAssignmentForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    // Retrieve user session
+    var userSession = localStorage.getItem("user");
+
+    if (!userSession) {
+        alert("User session not found. Please log in again.");
+        console.log("User session:", userSession);
+        return;
+    }
+
+    userSession = JSON.parse(userSession); 
+    if (!userSession.id) {
+        alert("User session invalid. Please log in again.");
+        console.log("Parsed user session:", userSession);
+        return;
+    }
+
+    const userId = parseInt(userSession.id); 
+    const userRole = userSession.role;
+
+    // Get form values
+    const courseId = document.getElementById('courseSelect').value;
+    const title = document.getElementById('assignmentTitle').value;
+    const dueDate = document.getElementById('dueDate').value;
+    const dueTime = document.getElementById('dueTime').value;
+    const assignmentType = document.getElementById('assignmentType').value;
+    const description = document.getElementById('assignmentDescription').value;
+
+    // Use the global 'files' array here to get the selected files
+    const formFiles = [...files]; // Make a copy of the 'files' array
+
+    console.log(formFiles); // First log: the selected files
+
+    // Validate input fields
+    if (!courseId || !title || !dueDate || !dueTime || !assignmentType || !description) {
+        document.getElementById("errorAlert").style.display = "block";
+        document.getElementById("errorMessage").innerText = "Please fill in all required fields.";
+        return;
+    } else {
+        document.getElementById("errorAlert").style.display = "none";
+    }
+
+    // Create a FormData object to include files
+    let formData = new FormData();
+    formData.append('title', title);
+    formData.append('dueTime', dueTime);
+    formData.append('dueDate', dueDate);
+    formData.append('type', assignmentType);
+    formData.append('description', description);
+    formData.append('status', "Active");
+    formData.append('classID', courseId);  
+    formData.append('lecturerId', userId);
+
+    // Append files
+    for (let i = 0; i < formFiles.length; i++) {
+        formData.append('docUrl', formFiles[i]);
+        console.log('File appended to FormData:', formFiles[i]); // Log each file appended to FormData
+    }
+
+    // Log all FormData entries (this will show the files as well)
+    for (let pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]);
+    }
+
+    // Make API call to send the message and file
+    fetch("http://localhost:8080/api/tasks", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        showSuccess("Assignment Updated Successfully!");
+        document.getElementById("uploadAssignmentForm").reset(); 
+    })
+    .catch(error => {
+        showError("Error: " + error.message);
+    });
+});
+
         // Function to show error message
         function showError(message) {
             const errorAlert = document.getElementById('errorAlert');
@@ -518,126 +563,32 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // Function to simulate file upload
-        function simulateUpload(fileInputId) {
-            const fileInput = document.getElementById(fileInputId);
-            const fileProgress = document.getElementById(`${fileInputId}Progress`);
-            const progressBar = fileProgress.querySelector('.progress-bar');
-            
-            if (fileInput.files.length > 0) {
-                fileProgress.style.display = 'block';
-                let progress = 0;
-                
-                const interval = setInterval(() => {
-                    progress += 5;
-                    progressBar.style.width = `${progress}%`;
-                    
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                    }
-                }, 100);
-            }
-        }
-        
-        // Handle form submission
-        document.getElementById('uploadAssignmentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const courseId = document.getElementById('courseSelect').value;
-            const title = document.getElementById('assignmentTitle').value;
-            const dueDate = document.getElementById('dueDate').value;
-            const dueTime = document.getElementById('dueTime').value;
-            const assignmentType = document.getElementById('assignmentType').value;
-            const totalMarks = document.getElementById('totalMarks').value;
-            const description = document.getElementById('assignmentDescription').value;
-            const assignmentFile = document.getElementById('assignmentFile').files[0];
-            
-            // Validate form
-            if (!courseId || !title || !dueDate || !dueTime || !assignmentType || !totalMarks || !description || !assignmentFile) {
-                showError('Please fill in all required fields and upload the assignment document.');
-                return;
-            }
-            
-            // Simulate file upload
-            simulateUpload('assignmentFile');
-            
-            // Check if resources file is selected
-            const resourcesFile = document.getElementById('resourcesFile').files[0];
-            if (resourcesFile) {
-                simulateUpload('resourcesFile');
-            }
-            
-            // In a real application, you would send the form data to the server
-            console.log('Assignment Data:', {
-                courseId,
-                title,
-                dueDate,
-                dueTime,
-                assignmentType,
-                totalMarks,
-                description,
-                assignmentFile: assignmentFile ? assignmentFile.name : null,
-                resourcesFile: resourcesFile ? resourcesFile.name : null
-            });
-            
-            // Show success message after a delay to simulate upload completion
-            setTimeout(() => {
-                showSuccess('Assignment uploaded successfully!');
-                
-                // Reset form after successful submission
-                setTimeout(() => {
-                    document.getElementById('uploadAssignmentForm').reset();
-                    document.getElementById('assignmentFileInfo').style.display = 'none';
-                    document.getElementById('resourcesFileInfo').style.display = 'none';
-                    document.getElementById('assignmentFileProgress').style.display = 'none';
-                    document.getElementById('resourcesFileProgress').style.display = 'none';
-                }, 2000);
-            }, 3000);
-        });
-        
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set up file input handlers
-            handleFileSelect('assignmentFile');
-            handleFileSelect('resourcesFile');
-            
-            // Add drag and drop functionality
-            const fileUploadBtns = document.querySelectorAll('.file-upload-btn');
-            fileUploadBtns.forEach(btn => {
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    btn.addEventListener(eventName, preventDefaults, false);
-                });
-                
-                function preventDefaults(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                
-                ['dragenter', 'dragover'].forEach(eventName => {
-                    btn.addEventListener(eventName, highlight, false);
-                });
-                
-                ['dragleave', 'drop'].forEach(eventName => {
-                    btn.addEventListener(eventName, unhighlight, false);
-                });
-                
-                function highlight() {
-                    btn.style.backgroundColor = '#e9ecef';
-                    btn.style.borderColor = '#06BBCC';
-                }
-                
-                function unhighlight() {
-                    btn.style.backgroundColor = '#f8f9fa';
-                    btn.style.borderColor = '#dee2e6';
-                }
-            });
-            
-            // Hide spinner after page loads
+     
+    
+document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 document.getElementById('spinner').classList.remove('show');
             }, 1000);
         });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("http://localhost:8080/classes")
+            .then(response => response.json())
+            .then(data => {
+                const clazzSelect = document.getElementById("courseSelect");
+                clazzSelect.innerHTML = '<option value="">Select Class</option>';
+    
+                data.forEach(clazz => {
+                    const option = document.createElement("option");
+                    option.value = clazz.classID;
+                    option.textContent = clazz.courseName + " - " + clazz.day;
+                    clazzSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching departments:", error));
+    });
     </script>
 </body>
 </html>

@@ -90,7 +90,7 @@
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-10 col-md-12 wow fadeInUp" data-wow-delay="0.3s">
-                    <form>
+                    <form id="insertLecturer">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -154,10 +154,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <select class="form-select" id="department">
-                                        <option value="">Select Department</option>
-                                        <option value="Computer Science">Computer Science</option>
-                                        <option value="Mathematics">Mathematics</option>
-                                        <option value="Physics">Physics</option>
+                                        
                                     </select>
                                     <label for="department">Department</label>
                                 </div>
@@ -210,6 +207,115 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("insertLecturer").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+    
+                // Extract form values
+                const nic = document.getElementById("nic").value;
+                const firstName = document.getElementById("firstName").value;
+                const lastName = document.getElementById("lastName").value;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const phoneNumber = document.getElementById("phoneNumber").value;
+                const address = document.getElementById("address").value;
+                const dob = document.getElementById("dob").value;
+                const gender = document.getElementById("gender").value;
+                const department = document.getElementById("department").value;
+
+                const designation = document.getElementById("designation").value;
+                const specialisation = document.getElementById("specialisation").value;
+                const highestQualification = document.getElementById("highestQualification").value;
+
+
+    
+                // Create user object for POST request
+                const userRaw = JSON.stringify({
+                    nic: nic,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    phoneNumber: phoneNumber,
+                    address: address,
+                    dob: dob,
+                    gender: gender,
+                    role: "Lecturer", 
+                    status: "Active"
+                });
+    
+                const userRequestOptions = {
+                    method: 'POST',
+                    body: userRaw,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    redirect: 'follow'
+                };
+    
+                // Send POST request to create user instance
+                fetch("http://localhost:8080/users", userRequestOptions)
+                    .then(response => response.json()) 
+                    .then(result => {
+                        console.log(result); 
+                        if (result && result.id) {
+                            const userId = result.id;
+                            console.log("Created User ID:", userId);
+    
+                            const lecturerRaw = JSON.stringify({
+                                user: { id: userId }, 
+                                department: { deptId: department },
+                                designation: designation,
+                                specialisation: specialisation,
+                                highestQualification: highestQualification
+                            });
+    
+                            const lecturerRequestOptions = {
+                                method: 'POST',
+                                body: lecturerRaw,
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                redirect: 'follow'
+                            };
+    
+                            // Send POST request to create admin instance
+                            fetch("http://localhost:8080/lecturers", lecturerRequestOptions)
+                                .then(response => response.text())
+                                .then(result => {
+                                    console.log(result);
+                                    alert("Lecturer registration successful!");
+                                })
+                                .catch(error => console.log('Error creating lecturer:', error));
+                        } else {
+                            console.log("Error: User ID not found in the response");
+                        }
+                    })
+                    .catch(error => console.log('Error creating user:', error));
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("http://localhost:8080/departments")
+                .then(response => response.json())
+                .then(data => {
+                    const departmentSelect = document.getElementById("department");
+                    departmentSelect.innerHTML = '<option value="">Select Department</option>';
+        
+                    data.forEach(department => {
+                        const option = document.createElement("option");
+                        option.value = department.deptId;
+                        option.textContent = department.deptName;
+                        departmentSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching departments:", error));
+        });
+        </script>
 </body>
 
 </html>

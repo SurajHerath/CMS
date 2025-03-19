@@ -102,26 +102,40 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Courses</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-course.html" class="dropdown-item">Insert Course</a>
-                        <a href="view-all-courses.html" class="dropdown-item active">View All Courses</a>
+                
+                <div id="adminMenu" style="display: none;">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Courses</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="Insert Course.html" class="dropdown-item">Insert Course</a>
+                            <a href="View All Courses.html" class="dropdown-item active">View All Courses</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Degree Programmes</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="Insert Degree Programme.html" class="dropdown-item">Insert Degree Programme</a>
+                            <a href="View All Degree Programmes.html" class="dropdown-item">View All Degree Programmes</a>
+                        </div>
                     </div>
                 </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Degree Programmes</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-degree-programme.html" class="dropdown-item">Insert Degree Programme</a>
-                        <a href="view-all-degree-programmes.html" class="dropdown-item">View All Degree Programmes</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+    
             </div>
             <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve user data from session storage (or local storage)
+            const userData = JSON.parse(sessionStorage.getItem("user"));
+    
+            if (userData && userData.role === "Admin") {
+                document.getElementById("adminMenu").style.display = "block";
+            }
+        });
+    </script>
+    
     <!-- Navbar End -->
 
     <!-- Header Start -->
@@ -152,7 +166,6 @@
                                 <tr>
                                     <th>Course ID</th>
                                     <th>Course Name</th>
-                                    <th>Lecturer</th>
                                     <th>Credits</th>
                                     <th>Actions</th>
                                 </tr>
@@ -198,7 +211,13 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="text-center">
+                <a href="Insert Course.html">Create Courses</a>
+            </div>
+        </div>
     </div>
+
     <!-- Courses List End -->
 
     <!-- Course Details Modal -->
@@ -218,22 +237,13 @@
                         <div class="detail-label">Course Name</div>
                         <div class="detail-value" id="courseName"></div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Lecturer</div>
-                        <div class="detail-value" id="courseLecturer"></div>
-                    </div>
+                 
                     <div class="detail-item">
                         <div class="detail-label">Credits</div>
                         <div class="detail-value" id="courseCredits"></div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Department</div>
-                        <div class="detail-value" id="courseDepartment"></div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Description</div>
-                        <div class="detail-value" id="courseDescription"></div>
-                    </div>
+           
+                
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-close-modal" data-bs-dismiss="modal">Close</button>
@@ -264,63 +274,82 @@
 
     <!-- Custom Javascript for Course Management -->
     <script>
+        // Fetch data from the courses endpoint and populate the table
+    function fetchCourses() {
+        fetch('http://localhost:8080/courses')
+            .then(response => response.json())
+            .then(data => {
+                // Dynamically generate table rows
+                const coursesTableBody = document.querySelector('table tbody');
+                coursesTableBody.innerHTML = '';  // Clear any existing rows
+                
+                data.forEach(course => {
+                    const row = document.createElement('tr');
+
+                    row.innerHTML = `
+                        <td>${course.courseID}</td>
+                        <td>${course.courseName}</td>
+                        <td>${course.credits}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-2" onclick="viewDetails('${course.courseID}')">View Details</button>
+                            <a href="Edit Course.html?id=${course.courseID}" class="btn btn-sm btn-warning me-2">Edit</a>
+                            <button class="btn btn-sm btn-danger" onclick="deleteCourse('${course.courseID}')">Delete</button>
+                        </td>
+                    `;
+
+                    coursesTableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching course data:', error);
+            });
+    }
+
+    // Call the fetchCourses function when the page loads
+    window.onload = function() {
+        fetchCourses();
+    }
         // Sample course data (would typically come from a database)
-        const coursesData = {
-            'CS101': {
-                id: 'CS101',
-                name: 'Introduction to Programming',
-                lecturer: 'Dr. John Smith',
-                credits: 3,
-                department: 'Computer Science',
-                description: 'An introductory course to programming concepts using Python. Covers basic syntax, data types, control structures, and simple algorithms.'
-            },
-            'CS201': {
-                id: 'CS201',
-                name: 'Data Structures and Algorithms',
-                lecturer: 'Prof. Sarah Johnson',
-                credits: 4,
-                department: 'Computer Science',
-                description: 'Advanced course covering various data structures like arrays, linked lists, trees, and graphs, as well as algorithms for searching, sorting, and graph traversal.'
-            },
-            'CS301': {
-                id: 'CS301',
-                name: 'Database Management Systems',
-                lecturer: 'Dr. Michael Brown',
-                credits: 3,
-                department: 'Computer Science',
-                description: 'Comprehensive study of database concepts, design principles, and SQL programming. Includes normalization, transaction management, and database security.'
-            }
-        };
-
+    
         function viewDetails(courseId) {
-            // Get course data
-            const course = coursesData[courseId];
-            
-            // Populate modal with course data
-            document.getElementById('courseId').textContent = course.id;
-            document.getElementById('courseName').textContent = course.name;
-            document.getElementById('courseLecturer').textContent = course.lecturer;
-            document.getElementById('courseCredits').textContent = course.credits;
-            document.getElementById('courseDepartment').textContent = course.department;
-            document.getElementById('courseDescription').textContent = course.description;
+        // Get course data from the API or preloaded data
+        fetch(`http://localhost:8080/courses/${courseId}`)
+            .then(response => response.json())
+            .then(course => {
+                // Populate modal with course data
+                document.getElementById('courseId').textContent = course.courseID;
+                document.getElementById('courseName').textContent = course.courseName;
+                document.getElementById('courseCredits').textContent = course.credits;
+                // Show the modal
+                var myModal = new bootstrap.Modal(document.getElementById('courseDetailsModal'));
+                myModal.show();
+            })
+            .catch(error => {
+                console.error('Error fetching course details:', error);
+            });
+    }
 
-            // Show the modal
-            var myModal = new bootstrap.Modal(document.getElementById('courseDetailsModal'));
-            myModal.show();
-        }
-
-        function deleteCourse(courseId) {
-            if (confirm(`Are you sure you want to delete the course with ID: ${courseId}?`)) {
-                // Implement delete logic (this would typically be an API call)
-                console.log(`Deleting course with ID: ${courseId}`);
-                
-                // Show success message
+    function deleteCourse(courseId) {
+    if (confirm(`Are you sure you want to delete the course with ID: ${courseId}?`)) {
+        fetch(`http://localhost:8080/courses/${courseId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
                 alert(`Course with ID ${courseId} deleted successfully`);
-                
-                // Reload the page to reflect changes
-                location.reload();
+                fetchCourses(); // Reload the table
+            } else {
+                throw new Error('Failed to delete the course');
             }
-        }
+        })
+        .catch(error => {
+            console.error('Error deleting course:', error);
+        });
+    }
+}
+
+
+     
     </script>
 </body>
 

@@ -306,35 +306,40 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Courses</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-course.html" class="dropdown-item">Insert Course</a>
-                        <a href="view-all-courses.html" class="dropdown-item">View All Courses</a>
+                <a href="Student index.html" class="nav-item nav-link">Home</a>
+                
+                <div id="adminMenu" style="display: none;">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Courses</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="Insert Course.html" class="dropdown-item">Insert Course</a>
+                            <a href="View All Courses.html" class="dropdown-item active">View All Courses</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Degree Programmes</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="Insert Degree Programme.html" class="dropdown-item">Insert Degree Programme</a>
+                            <a href="View All Degree Programmes.html" class="dropdown-item">View All Degree Programmes</a>
+                        </div>
                     </div>
                 </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Assignments</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="upload-assignment.html" class="dropdown-item">Upload Assignment</a>
-                        <a href="view-assignments.html" class="dropdown-item">View Assignments</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Help & Support</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-help-content.html" class="dropdown-item">Create Content</a>
-                        <a href="view-help-content.html" class="dropdown-item">View Help Center</a>
-                        <a href="view-support-requests.html" class="dropdown-item active">Support Requests</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+    
             </div>
             <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve user data from session storage (or local storage)
+            const userData = JSON.parse(sessionStorage.getItem("user"));
+    
+            if (userData && userData.role === "Admin") {
+                document.getElementById("adminMenu").style.display = "block";
+            }
+        });
+    </script>
     <!-- Navbar End -->
 
     <!-- Header Start -->
@@ -357,122 +362,14 @@
                 <h6 class="section-title bg-white text-center text-primary px-3">Help & Support</h6>
                 <h1 class="mb-5">View Support Requests</h1>
             </div>
-            
-            <!-- Statistics -->
-            <div class="row g-4 mb-5 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="stats-icon">
-                            <i class="bi bi-ticket-perforated"></i>
-                        </div>
-                        <div class="stats-number">24</div>
-                        <div class="stats-label">Total Requests</div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="stats-icon">
-                            <i class="bi bi-hourglass-split"></i>
-                        </div>
-                        <div class="stats-number">8</div>
-                        <div class="stats-label">Pending Requests</div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="stats-icon">
-                            <i class="bi bi-check-circle"></i>
-                        </div>
-                        <div class="stats-number">12</div>
-                        <div class="stats-label">Resolved Today</div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-card">
-                        <div class="stats-icon">
-                            <i class="bi bi-clock-history"></i>
-                        </div>
-                        <div class="stats-number">4.2h</div>
-                        <div class="stats-label">Avg. Response Time</div>
-                    </div>
-                </div>
-            </div>
-            
+         
             <div class="row g-4">
-                <!-- Filters -->
-                <div class="col-lg-3 col-md-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="filter-section">
-                        <h5 class="mb-3">Filter Requests</h5>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Search</label>
-                            <input type="text" class="form-control" id="searchInput" placeholder="Search by ID, title, or content">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select class="form-select" id="statusFilter">
-                                <option value="all">All Statuses</option>
-                                <option value="new">New</option>
-                                <option value="in-progress">In Progress</option>
-                                <option value="resolved">Resolved</option>
-                                <option value="closed">Closed</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Priority</label>
-                            <select class="form-select" id="priorityFilter">
-                                <option value="all">All Priorities</option>
-                                <option value="high">High</option>
-                                <option value="medium">Medium</option>
-                                <option value="low">Low</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Category</label>
-                            <select class="form-select" id="categoryFilter">
-                                <option value="all">All Categories</option>
-                                <option value="account">Account Issues</option>
-                                <option value="technical">Technical Problems</option>
-                                <option value="course">Course Related</option>
-                                <option value="payment">Payment Issues</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Date Range</label>
-                            <div class="input-group mb-2">
-                                <span class="input-group-text">From</span>
-                                <input type="date" class="form-control" id="dateFrom">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-text">To</span>
-                                <input type="date" class="form-control" id="dateTo">
-                            </div>
-                        </div>
-                        
-                        <button class="btn btn-primary w-100" id="applyFilters">Apply Filters</button>
-                        <button class="btn btn-outline-secondary w-100 mt-2" id="resetFilters">Reset Filters</button>
-                    </div>
-                </div>
-                
+               
                 <!-- Requests List -->
-                <div class="col-lg-9 col-md-8 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="col-lg-12 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="mb-0">Support Requests</h4>
-                        <div class="d-flex gap-2">
-                            <select class="form-select form-select-sm" id="sortOrder">
-                                <option value="newest">Newest First</option>
-                                <option value="oldest">Oldest First</option>
-                                <option value="priority">Priority (High to Low)</option>
-                            </select>
-                            <button class="btn btn-sm btn-outline-primary" id="refreshButton">
-                                <i class="bi bi-arrow-clockwise"></i> Refresh
-                            </button>
-                        </div>
+                    
                     </div>
                     
                     <div id="requestsContainer">
@@ -693,226 +590,52 @@
 
     <!-- Custom Javascript for Support Requests -->
     <script>
-        // Sample support requests data (would typically come from a database)
-        const supportRequests = [
-            {
-                id: "SR-2023-001",
-                subject: "Unable to access course materials",
-                description: "I'm trying to access the course materials for CS101, but I keep getting an error message saying \"Access Denied\". I've been enrolled in this course for two weeks and was able to access it previously.",
-                status: "new",
-                priority: "high",
-                category: "technical",
-                user: {
-                    name: "John Doe",
-                    role: "Student",
-                    email: "john.doe@example.com",
-                    avatar: ""
-                },
-                date: "2023-09-15 14:30",
-                attachments: [
-                    {
-                        name: "error_screenshot.png",
-                        size: 245000,
-                        type: "image/png",
-                        url: "#"
-                    }
-                ],
-                conversation: [
-                    {
-                        sender: "user",
-                        name: "John Doe",
-                        role: "Student",
-                        message: "I'm trying to access the course materials for CS101, but I keep getting an error message saying \"Access Denied\". I've been enrolled in this course for two weeks and was able to access it previously.",
-                        time: "2023-09-15 14:30"
-                    },
-                    {
-                        sender: "admin",
-                        name: "Support Team",
-                        message: "Thank you for reporting this issue. We're looking into it and will get back to you shortly. Could you please let us know which browser you're using?",
-                        time: "2023-09-15 15:45"
-                    },
-                    {
-                        sender: "user",
-                        name: "John Doe",
-                        role: "Student",
-                        message: "I'm using Google Chrome version 116.0.5845.141 on Windows 10.",
-                        time: "2023-09-15 16:10"
-                    }
-                ]
+    let supportRequests = [];
+       fetch('http://localhost:8080/api/support/allMessages')
+    .then(response => response.json())
+    .then(data => {
+        // Mapping the fetched data to match the required structure
+         supportRequests = data.map(item => ({
+            id: `SR-${item.id}`, // Prefix with 'SR-' to match the ID format
+            subject: item.title,
+            description: item.message,
+            status: "new", // Set the status to 'new' or as per your logic
+            priority: "medium", // Set the appropriate priority based on your use case
+            category: item.category,
+            user: {
+                name: "Student", // Assuming senderType is always 'Student'
+                role: "Student", // Assuming senderType is always 'Student'
+                email: "example@student.com", // Replace with actual email if available
+                avatar: "" // Add avatar URL if available
             },
-            {
-                id: "SR-2023-002",
-                subject: "Payment not processed",
-                description: "I made a payment for the Advanced Web Development course three days ago, but it's still showing as 'pending' in my account. The amount has been deducted from my bank account.",
-                status: "in-progress",
-                priority: "high",
-                category: "payment",
-                user: {
-                    name: "Sarah Johnson",
-                    role: "Student",
-                    email: "sarah.j@example.com",
-                    avatar: ""
-                },
-                date: "2023-09-14 09:15",
-                attachments: [
-                    {
-                        name: "payment_receipt.pdf",
-                        size: 125000,
-                        type: "application/pdf",
-                        url: "#"
-                    }
-                ],
-                conversation: [
-                    {
-                        sender: "user",
-                        name: "Sarah Johnson",
-                        role: "Student",
-                        message: "I made a payment for the Advanced Web Development course three days ago, but it's still showing as 'pending' in my account. The amount has been deducted from my bank account.",
-                        time: "2023-09-14 09:15"
-                    },
-                    {
-                        sender: "admin",
-                        name: "Support Team",
-                        message: "Thank you for bringing this to our attention. We're checking with our payment processor and will update you as soon as possible. Could you please provide the transaction ID from your bank statement?",
-                        time: "2023-09-14 10:30"
-                    },
-                    {
-                        sender: "user",
-                        name: "Sarah Johnson",
-                        role: "Student",
-                        message: "The transaction ID is TX-987654321. I've also attached the payment receipt from my bank.",
-                        time: "2023-09-14 11:05"
-                    },
-                    {
-                        sender: "admin",
-                        name: "Support Team",
-                        message: "Thank you for providing the transaction ID. We've escalated this to our finance team and they're working on resolving it. We'll update you within 24 hours.",
-                        time: "2023-09-14 11:30"
-                    }
-                ]
-            },
-            {
-                id: "SR-2023-003",
-                subject: "Need to change my username",
-                description: "I would like to change my username as it contains a typo. My current username is 'micheal_smith' but my name is actually spelled 'michael_smith'.",
-                status: "resolved",
-                priority: "low",
-                category: "account",
-                user: {
-                    name: "Michael Smith",
-                    role: "Student",
-                    email: "micheal_smith@example.com",
-                    avatar: ""
-                },
-                date: "2023-09-13 16:45",
-                attachments: [],
-                conversation: [
-                    {
-                        sender: "user",
-                        name: "Michael Smith",
-                        role: "Student",
-                        message: "I would like to change my username as it contains a typo. My current username is 'micheal_smith' but my name is actually spelled 'michael_smith'.",
-                        time: "2023-09-13 16:45"
-                    },
-                    {
-                        sender: "admin",
-                        name: "Support Team",
-                        message: "We'd be happy to help you change your username. We've updated it to 'michael_smith' as requested. Please log out and log back in to see the change.",
-                        time: "2023-09-13 17:20"
-                    },
-                    {
-                        sender: "user",
-                        name: "Michael Smith",
-                        role: "Student",
-                        message: "Thank you! I've logged out and back in, and my username is now correct.",
-                        time: "2023-09-13 17:35"
-                    }
-                ]
-            },
-            {
-                id: "SR-2023-004",
-                subject: "Course content suggestion",
-                description: "I'm currently enrolled in the Data Science Fundamentals course and would like to suggest adding a section on data visualization with Tableau, as it's becoming an industry standard tool.",
-                status: "closed",
-                priority: "medium",
-                category: "course",
-                user: {
-                    name: "Emily Chen",
-                    role: "Student",
-                    email: "emily.chen@example.com",
-                    avatar: ""
-                },
-                date: "2023-09-10 11:20",
-                attachments: [],
-                conversation: [
-                    {
-                        sender: "user",
-                        name: "Emily Chen",
-                        role: "Student",
-                        message: "I'm currently enrolled in the Data Science Fundamentals course and would like to suggest adding a section on data visualization with Tableau, as it's becoming an industry standard tool.",
-                        time: "2023-09-10 11:20"
-                    },
-                    {
-                        sender: "admin",
-                        name: "Support Team",
-                        message: "Thank you for your suggestion! We appreciate your feedback. We'll forward this to our course development team for consideration in the next course update.",
-                        time: "2023-09-10 13:45"
-                    },
-                    {
-                        sender: "user",
-                        name: "Emily Chen",
-                        role: "Student",
-                        message: "Great, thank you for considering my suggestion!",
-                        time: "2023-09-10 14:10"
-                    },
-                    {
-                        sender: "admin",
-                        name: "Support Team",
-                        message: "We're pleased to inform you that our course development team has decided to include a Tableau section in the next update, which will be released within the next month. Thank you again for your valuable input!",
-                        time: "2023-09-12 10:30"
-                    }
-                ]
-            },
-            {
-                id: "SR-2023-005",
-                subject: "Quiz answers marked incorrectly",
-                description: "I believe some of my answers in the JavaScript Basics quiz were marked incorrectly. Specifically, questions 5 and 7 have answers that match the course material, but were marked wrong.",
-                status: "in-progress",
-                priority: "medium",
-                category: "course",
-                user: {
-                    name: "Alex Rodriguez",
-                    role: "Student",
-                    email: "alex.r@example.com",
-                    avatar: ""
-                },
-                date: "2023-09-12 15:30",
-                attachments: [
-                    {
-                        name: "quiz_answers.pdf",
-                        size: 180000,
-                        type: "application/pdf",
-                        url: "#"
-                    }
-                ],
-                conversation: [
-                    {
-                        sender: "user",
-                        name: "Alex Rodriguez",
-                        role: "Student",
-                        message: "I believe some of my answers in the JavaScript Basics quiz were marked incorrectly. Specifically, questions 5 and 7 have answers that match the course material, but were marked wrong.",
-                        time: "2023-09-12 15:30"
-                    },
-                    {
-                        sender: "admin",
-                        name: "Support Team",
-                        message: "Thank you for bringing this to our attention. We'll review the quiz questions and your answers, and get back to you as soon as possible.",
-                        time: "2023-09-12 16:15"
-                    }
-                ]
-            }
-        ];
+            date: item.timestamp,
+            attachments: item.filePath ? [
+                {
+                    name: item.filePath.split('/').pop(), // Extract file name from file path
+                    size: 0, // You can set actual file size if known
+                    type: "image/jpeg", // Assuming it's an image, adjust if needed
+                    url: item.filePath // Replace with the actual file URL
+                }
+            ] : [],
+            conversation: [
+                {
+                    sender: "user",
+                    name: "Student", // Replace with actual user name if available
+                    role: "Student", // Assuming senderType is always 'Student'
+                    message: item.message,
+                    time: item.timestamp
+                }
+            ]
+        }));
+
+        // Call renderRequests after the data is processed
+        renderRequests(supportRequests);
         
+        // Optionally log the requests to the console to verify
+        console.log(supportRequests);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+
         // Function to render support requests
         function renderRequests(requests) {
             const container = document.getElementById('requestsContainer');
@@ -1106,61 +829,7 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
         
-        // Filter requests based on search and filters
-        function filterRequests() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-            const priorityFilter = document.getElementById('priorityFilter').value;
-            const categoryFilter = document.getElementById('categoryFilter').value;
-            const dateFrom = document.getElementById('dateFrom').value;
-            const dateTo = document.getElementById('dateTo').value;
-            
-            let filteredRequests = supportRequests.filter(request => {
-                // Search term filter
-                const matchesSearch = searchTerm === '' || 
-                    request.id.toLowerCase().includes(searchTerm) || 
-                    request.subject.toLowerCase().includes(searchTerm) || 
-                    request.description.toLowerCase().includes(searchTerm);
-                
-                // Status filter
-                const matchesStatus = statusFilter === 'all' || request.status === statusFilter;
-                
-                // Priority filter
-                const matchesPriority = priorityFilter === 'all' || request.priority === priorityFilter;
-                
-                // Category filter
-                const matchesCategory = categoryFilter === 'all' || request.category === categoryFilter;
-                
-                // Date range filter
-                let matchesDateRange = true;
-                if (dateFrom) {
-                    const requestDate = new Date(request.date.split(' ')[0]);
-                    const fromDate = new Date(dateFrom);
-                    matchesDateRange = matchesDateRange && requestDate >= fromDate;
-                }
-                if (dateTo) {
-                    const requestDate = new Date(request.date.split(' ')[0]);
-                    const toDate = new Date(dateTo);
-                    matchesDateRange = matchesDateRange && requestDate <= toDate;
-                }
-                
-                return matchesSearch && matchesStatus && matchesPriority && matchesCategory && matchesDateRange;
-            });
-            
-            // Sort requests
-            const sortOrder = document.getElementById('sortOrder').value;
-            if (sortOrder === 'newest') {
-                filteredRequests.sort((a, b) => new Date(b.date) - new Date(a.date));
-            } else if (sortOrder === 'oldest') {
-                filteredRequests.sort((a, b) => new Date(a.date) - new Date(b.date));
-            } else if (sortOrder === 'priority') {
-                const priorityOrder = { 'high': 0, 'medium': 1, 'low': 2 };
-                filteredRequests.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
-            }
-            
-            renderRequests(filteredRequests);
-        }
-        
+     
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
             // Hide spinner after page loads
@@ -1268,6 +937,7 @@
                 });
             });
         });
-    </script>
+   
+   </script>
 </body>
 </html>

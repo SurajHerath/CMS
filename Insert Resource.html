@@ -102,14 +102,7 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                     <select class="form-select" id="department" required>
-                                        <option value="" selected disabled>Select Department</option>
-                                        <option value="Computer Science">Computer Science</option>
-                                        <option value="Engineering">Engineering</option>
-                                        <option value="Business">Business</option>
-                                        <option value="Arts">Arts</option>
-                                        <option value="Science">Science</option>
-                                        <option value="Medicine">Medicine</option>
-                                        <option value="Law">Law</option>
+                                  
                                     </select>
                                     <label for="department">Department</label>
                                 </div>
@@ -258,24 +251,93 @@
                 document.getElementById('spinner').classList.remove('show');
             }, 1000);
 
-            // Form submission
-            const resourceForm = document.getElementById('resourceForm');
-            resourceForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const department = document.getElementById('department').value;
-                const resourceName = document.getElementById('resourceName').value;
-                const resourceType = document.getElementById('resourceType').value;
-                const description = document.getElementById('description').value;
-                const capacity = document.getElementById('capacity').value;
-                
-                // In a real application, you would send this data to the server
-                // For now, we'll just show an alert and redirect
-                alert('Resource added successfully!');
-                window.location.href = 'view-resources.html';
-            });
         });
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("http://localhost:8080/departments")
+            .then(response => response.json())
+            .then(data => {
+                const departmentSelect = document.getElementById("department");
+                departmentSelect.innerHTML = '<option value="">Select Department</option>';
+    
+                data.forEach(department => {
+                    const option = document.createElement("option");
+                    option.value = department.deptId;
+                    option.textContent = department.deptName;
+                    departmentSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching departments:", error));
+    });
+    </script>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    var userSession = localStorage.getItem("user");
+
+    if (!userSession) {
+        alert("User session not found. Please log in again.");
+        console.log("User session:", userSession);
+        return;
+    }
+
+    userSession = JSON.parse(userSession); // Parse the string back into an object
+
+    if (!userSession.id) {
+        alert("User session invalid. Please log in again.");
+        console.log("Parsed user session:", userSession);
+        return;
+    }
+
+    document.getElementById("resourceForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form values
+        const userID = userSession.id; // Now correctly retrieving the ID
+        const departmentID = document.getElementById("department").value;
+        const name = document.getElementById("resourceName").value;
+        const type = document.getElementById("resourceType").value;
+        const description = document.getElementById("description").value;
+        const capacity = document.getElementById("capacity").value;
+        const status = 1; 
+
+        // Construct the resource request object
+        const resourceData = {
+            userID,
+            departmentID,
+            name,
+            type,
+            description,
+            capacity,
+            status
+        };
+
+        try {
+            const response = await fetch("http://localhost:8080/resources", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(resourceData)
+            });
+
+            if (response.ok) {
+                alert("Resource added successfully!");
+                window.location.href = "view-resources.html"; // Redirect to resource list
+            } else {
+                const errorText = await response.text();
+                console.error("Error:", errorText);
+                alert("Failed to add resource: " + errorText);
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            alert("Network error. Please try again.");
+        }
+    });
+});
+
+ </script>
 </body>
 </html>

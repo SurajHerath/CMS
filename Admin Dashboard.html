@@ -747,46 +747,42 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">User Management</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="admin-registration.html" class="dropdown-item">Admin Registration</a>
-                        <a href="lecturer-registration.html" class="dropdown-item">Lecturer Registration</a>
-                        <a href="student-registration.html" class="dropdown-item">Student Registration</a>
-                        <a href="manage-users.html" class="dropdown-item">Manage Users</a>
+                        <a href="View All Admins.html" class="dropdown-item">Admin</a>
+                        <a href="View All Lecturers.html" class="dropdown-item">Lecturer</a>
+                        <a href="ViewAllStudents.html" class="dropdown-item">Student</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Academic</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="manage-departments.html" class="dropdown-item">Departments</a>
-                        <a href="manage-degrees.html" class="dropdown-item">Degree Programs</a>
-                        <a href="manage-courses.html" class="dropdown-item">Courses</a>
-                        <a href="assign-courses.html" class="dropdown-item">Assign Courses to Degrees</a>
-                        <a href="assign-lecturers.html" class="dropdown-item">Assign Lecturers to Courses</a>
+                        <a href="View All Departments.html" class="dropdown-item">Departments</a>
+                        <a href="View All Degree Programmes.html" class="dropdown-item">Degree Programs</a>
+                        <a href="View All Courses.html" class="dropdown-item">Courses</a>
+                        <a href="Assign Courses to Degree Programme.html" class="dropdown-item">Assign Courses to Degrees</a>
+                        <a href="Assign Lectures to Courses.html" class="dropdown-item">Assign Lecturers to Courses</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Student Affairs</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="enroll-students.html" class="dropdown-item">Enroll Students</a>
-                        <a href="student-records.html" class="dropdown-item">Student Records</a>
-                        <a href="student-attendance.html" class="dropdown-item">Attendance Reports</a>
+                        <a href="Enroll Student to Degree Programme.html" class="dropdown-item">Enroll Students</a>
+                     
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Facilities</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="manage-classrooms.html" class="dropdown-item">Manage Classrooms</a>
-                        <a href="classroom-requests.html" class="dropdown-item">Classroom Requests</a>
+                        <a href="Insert Resource.html" class="dropdown-item">Manage Resources</a>
+                        <a href="Assign Lectures to Courses.html" class="dropdown-item">Classroom Requests</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Communication</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="manage-announcements.html" class="dropdown-item">Announcements</a>
-                        <a href="manage-events.html" class="dropdown-item">Events</a>
-                        <a href="manage-notifications.html" class="dropdown-item">Notifications</a>
+                        <a href="Insert Announcement.html" class="dropdown-item">Announcements</a>
+                        <a href="Add New Event.html" class="dropdown-item">Events</a>
                     </div>
                 </div>
-                <a href="support-tickets.html" class="nav-item nav-link">Support</a>
             </div>
             <!-- Navigation End -->
             
@@ -831,7 +827,7 @@
             <div class="user-dropdown me-4">
                 <button class="btn btn-light d-flex align-items-center" id="userButton">
                     <div class="user-avatar-small me-2">
-                        <img src="img/admin.jpg" alt="Admin">
+                        <img src="img/profile.png" alt="Admin">
                     </div>
                     <span class="d-none d-lg-inline">Admin User</span>
                     <i class="bi bi-chevron-down ms-2"></i>
@@ -839,7 +835,7 @@
                 <div class="user-menu" id="userMenu">
                     <div class="user-header">
                         <div class="user-avatar-small">
-                            <img src="img/admin.jpg" alt="Admin">
+                            <img src="img/profile.png" alt="Admin">
                         </div>
                         <div>
                             <div class="user-name">Admin User</div>
@@ -859,11 +855,23 @@
                         System Logs
                     </a>
                     <div class="user-menu-footer">
-                        <a href="logout.html" class="user-menu-item text-danger">
+                        <a href="#" class="user-menu-item text-danger" onclick="logoutUser()">
                             <i class="bi bi-box-arrow-right user-menu-icon"></i>
                             Logout
                         </a>
                     </div>
+                    
+                    <script>
+                        function logoutUser() {
+                            // Clear session storage and local storage
+                            localStorage.removeItem("user");
+                            sessionStorage.clear();
+                    
+                            // Redirect to login page
+                            window.location.href = "login.html";
+                        }
+                    </script>
+                    
                 </div>
             </div>
         </div>
@@ -901,42 +909,27 @@
             
             <!-- Quick Actions -->
             <div class="quick-actions wow fadeInUp" data-wow-delay="0.2s">
-                <a href="admin-registration.html" class="quick-action-btn">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-person-plus"></i>
-                    </div>
-                    <div class="quick-action-label">Add User</div>
-                </a>
-                <a href="manage-courses.html" class="quick-action-btn">
+                
+                <a href="View All Courses.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-book"></i>
                     </div>
                     <div class="quick-action-label">Manage Courses</div>
                 </a>
-                <a href="manage-events.html" class="quick-action-btn">
+                <a href="Add New Event.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-calendar-plus"></i>
                     </div>
                     <div class="quick-action-label">Add Event</div>
                 </a>
-                <a href="classroom-requests.html" class="quick-action-btn">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-building"></i>
-                    </div>
-                    <div class="quick-action-label">Classroom Requests</div>
-                </a>
-                <a href="manage-announcements.html" class="quick-action-btn">
+           
+                <a href="Insert Announcement.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-megaphone"></i>
                     </div>
                     <div class="quick-action-label">Announcements</div>
                 </a>
-                <a href="support-tickets.html" class="quick-action-btn">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-headset"></i>
-                    </div>
-                    <div class="quick-action-label">Support</div>
-                </a>
+              
             </div>
             
             <!-- Analytics Overview -->
@@ -945,65 +938,55 @@
                     <h4 class="section-title">
                         <i class="bi bi-graph-up me-2"></i>System Analytics
                     </h4>
-                    <a href="detailed-analytics.html" class="section-action">View Detailed Reports</a>
+                    <!-- <a href="Analytics Dashboard.html" class="section-action">View Detailed Reports</a> -->
                 </div>
                 <div class="stats-container">
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="bi bi-people"></i>
                         </div>
-                        <div class="stat-value">1,245</div>
+                        <div class="stat-value" id="total-students">Loading...</div>
                         <div class="stat-label">Total Students</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="bi bi-person-badge"></i>
                         </div>
-                        <div class="stat-value">87</div>
+                        <div class="stat-value" id="total-lecturers">Loading...</div>
                         <div class="stat-label">Lecturers</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="bi bi-book"></i>
                         </div>
-                        <div class="stat-value">156</div>
+                        <div class="stat-value" id="total-courses">Loading...</div>
                         <div class="stat-label">Active Courses</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="bi bi-building"></i>
                         </div>
-                        <div class="stat-value">42</div>
+                        <div class="stat-value" id="total-classrooms">Loading...</div>
                         <div class="stat-label">Classrooms</div>
                     </div>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-bar-chart dashboard-icon"></i>Student Enrollment</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <div class="chart-container" id="enrollmentChart">
-                                    <!-- Chart will be rendered here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-pie-chart dashboard-icon"></i>Department Distribution</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <div class="chart-container" id="departmentChart">
-                                    <!-- Chart will be rendered here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+            
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch("http://localhost:8080/api/analytics/summary")
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("total-students").textContent = data.totalStudents;
+                        document.getElementById("total-lecturers").textContent = data.totalLecturers;
+                        document.getElementById("total-courses").textContent = data.totalCourses;
+                        document.getElementById("total-classrooms").textContent = data.totalClassrooms;
+                    })
+                    .catch(error => {
+                        console.error("Error fetching analytics data:", error);
+                    });
+            });
+            </script>
             
             <!-- Main Dashboard Content -->
             <div class="row g-4 mt-3">
@@ -1032,204 +1015,15 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Dr. Sarah Johnson</td>
-                                            <td>Computer Lab 3</td>
-                                            <td>Database Practical</td>
-                                            <td>Sep 22, 2023 | 14:00-16:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prof. Michael Brown</td>
-                                            <td>Room 201</td>
-                                            <td>Guest Lecture</td>
-                                            <td>Sep 25, 2023 | 09:00-11:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dr. Emily Davis</td>
-                                            <td>Conference Room</td>
-                                            <td>Department Meeting</td>
-                                            <td>Sep 20, 2023 | 13:00-15:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dr. Robert Wilson</td>
-                                            <td>Auditorium</td>
-                                            <td>Seminar</td>
-                                            <td>Sep 28, 2023 | 10:00-12:00</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-approve">Approve</button>
-                                                <button class="btn-action btn-reject">Reject</button>
-                                            </td>
-                                        </tr>
+                                    <tbody  id="reservationBody">
+                                 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Course Assignment -->
-                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="section-header">
-                            <h4 class="section-title">
-                                <i class="bi bi-diagram-3 me-2"></i>Course Assignments
-                            </h4>
-                            <a href="assign-courses.html" class="section-action">Manage Assignments</a>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-diagram-3 dashboard-icon"></i>Recent Course Assignments</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Course Code</th>
-                                            <th>Course Name</th>
-                                            <th>Degree Program</th>
-                                            <th>Lecturer</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>CS301</td>
-                                            <td>Database Management Systems</td>
-                                            <td>BSc Computer Science</td>
-                                            <td>Dr. Sarah Johnson</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>CS501</td>
-                                            <td>Advanced Database Concepts</td>
-                                            <td>MSc Computer Science</td>
-                                            <td>Dr. Sarah Johnson</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>CS201</td>
-                                            <td>Introduction to Programming</td>
-                                            <td>BSc Computer Science</td>
-                                            <td>Prof. Michael Brown</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>CS401</td>
-                                            <td>Software Engineering</td>
-                                            <td>BSc Software Engineering</td>
-                                            <td>Dr. Emily Davis</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Recent Registrations -->
-                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="section-header">
-                            <h4 class="section-title">
-                                <i class="bi bi-person-plus me-2"></i>Recent Registrations
-                            </h4>
-                            <a href="manage-users.html" class="section-action">View All Users</a>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-person-plus dashboard-icon"></i>New Users</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <table class="admin-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>Registration Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>John Doe</td>
-                                            <td>john.doe@example.com</td>
-                                            <td>Student</td>
-                                            <td>Sep 18, 2023</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jane Smith</td>
-                                            <td>jane.smith@example.com</td>
-                                            <td>Student</td>
-                                            <td>Sep 18, 2023</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Dr. Thomas Wilson</td>
-                                            <td>thomas.wilson@example.com</td>
-                                            <td>Lecturer</td>
-                                            <td>Sep 17, 2023</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lisa Johnson</td>
-                                            <td>lisa.johnson@example.com</td>
-                                            <td>Admin</td>
-                                            <td>Sep 16, 2023</td>
-                                            <td class="action-buttons">
-                                                <button class="btn-action btn-view">View</button>
-                                                <button class="btn-action btn-edit">Edit</button>
-                                                <button class="btn-action btn-delete">Delete</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
                 
                 <!-- Right Column -->
@@ -1244,7 +1038,7 @@
                             <div class="dashboard-card-body">
                                 <div class="profile-header">
                                     <div class="profile-avatar">
-                                        <img src="img/admin.jpg" alt="Admin User">
+                                        <img src="img/profile.png" alt="Admin User">
                                     </div>
                                     <div class="profile-info">
                                         <h5>Admin User</h5>
@@ -1283,51 +1077,55 @@
                             <h4 class="section-title">
                                 <i class="bi bi-headset me-2"></i>Support Tickets
                             </h4>
-                            <a href="support-tickets.html" class="section-action">View All</a>
+                            <a href="View Support Requests.html" class="section-action">View All</a>
                         </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
                                 <span><i class="bi bi-headset dashboard-icon"></i>Recent Tickets</span>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="request-item">
-                                    <div class="request-info">
-                                        <div class="request-title">System Access Issue</div>
-                                        <div class="request-details">From: John Doe (Student)</div>
-                                        <div class="request-date">Submitted: 1 hour ago</div>
-                                    </div>
-                                    <span class="request-status status-pending">New</span>
-                                </div>
-                                <div class="request-item">
-                                    <div class="request-info">
-                                        <div class="request-title">Course Registration Problem</div>
-                                        <div class="request-details">From: Jane Smith (Student)</div>
-                                        <div class="request-date">Submitted: 3 hours ago</div>
-                                    </div>
-                                    <span class="request-status status-pending">In Progress</span>
-                                </div>
-                                <div class="request-item">
-                                    <div class="request-info">
-                                        <div class="request-title">Email Configuration</div>
-                                        <div class="request-details">From: Dr. Sarah Johnson (Lecturer)</div>
-                                        <div class="request-date">Submitted: Yesterday</div>
-                                    </div>
-                                    <span class="request-status status-approved">Resolved</span>
-                                </div>
-                                <div class="request-item" style="border-bottom: none;">
-                                    <div class="request-info">
-                                        <div class="request-title">Password Reset</div>
-                                        <div class="request-details">From: Prof. Michael Brown (Lecturer)</div>
-                                        <div class="request-date">Submitted: 2 days ago</div>
-                                    </div>
-                                    <span class="request-status status-approved">Resolved</span>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <a href="support-tickets.html" class="btn btn-primary">Manage Support</a>
-                                </div>
+                            <div class="dashboard-card-body" id="support-tickets-container">
+                                <div class="request-item">Loading support tickets...</div>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="View Support Requests.html" class="btn btn-primary">Manage Support</a>
                             </div>
                         </div>
                     </div>
+                    
+                    <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        fetch("http://localhost:8080/api/support/allMessages")
+                            .then(response => response.json())
+                            .then(data => {
+                                const container = document.getElementById("support-tickets-container");
+                                container.innerHTML = ""; // Clear previous content
+                    
+                                if (data.length === 0) {
+                                    container.innerHTML = "<div class='request-item'>No recent support tickets.</div>";
+                                    return;
+                                }
+                    
+                                data.forEach(ticket => {
+                                    const ticketHTML = `
+                                        <div class="request-item">
+                                            <div class="request-info">
+                                                <div class="request-title">${ticket.title}</div>
+                                                <div class="request-details">From: ${ticket.senderType} (ID: ${ticket.senderId})</div>
+                                                <div class="request-date">Submitted: ${new Date(ticket.timestamp).toLocaleString()}</div>
+                                            </div>
+                                            <span class="request-status status-pending">New</span>
+                                        </div>
+                                    `;
+                                    container.innerHTML += ticketHTML;
+                                });
+                            })
+                            .catch(error => {
+                                console.error("Error fetching support tickets:", error);
+                                document.getElementById("support-tickets-container").innerHTML = "<div class='request-item'>Failed to load support tickets.</div>";
+                            });
+                    });
+                    </script>
+                    
                     
                     <!-- Upcoming Events -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
@@ -1344,35 +1142,13 @@
                             <div class="dashboard-card-body">
                                 <div class="event-item">
                                     <div class="event-date">
-                                        <div class="event-day">20</div>
-                                        <div class="event-month">SEP</div>
+                                        <div class="event-day">27</div>
+                                        <div class="event-month">MAR</div>
                                     </div>
                                     <div class="event-info">
-                                        <div class="event-title">Faculty Meeting</div>
-                                        <div class="event-time"><i class="bi bi-clock me-1"></i>10:00 - 12:00</div>
-                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Conference Room</div>
-                                    </div>
-                                </div>
-                                <div class="event-item">
-                                    <div class="event-date">
-                                        <div class="event-day">25</div>
-                                        <div class="event-month">SEP</div>
-                                    </div>
-                                    <div class="event-info">
-                                        <div class="event-title">New Semester Orientation</div>
-                                        <div class="event-time"><i class="bi bi-clock me-1"></i>09:00 - 13:00</div>
-                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Auditorium</div>
-                                    </div>
-                                </div>
-                                <div class="event-item" style="border-bottom: none;">
-                                    <div class="event-date">
-                                        <div class="event-day">30</div>
-                                        <div class="event-month">SEP</div>
-                                    </div>
-                                    <div class="event-info">
-                                        <div class="event-title">IT System Maintenance</div>
-                                        <div class="event-time"><i class="bi bi-clock me-1"></i>22:00 - 02:00</div>
-                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Server Room</div>
+                                        <div class="event-title">Tech Conference 2025</div>
+                                        <div class="event-time"><i class="bi bi-clock me-1"></i>10:00 - 18:00</div>
+                                        <div class="event-location"><i class="bi bi-geo-alt me-1"></i>Room B3</div>
                                     </div>
                                 </div>
                             </div>
@@ -1381,35 +1157,47 @@
                     
                     <!-- Announcements -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="section-header">
-                            <h4 class="section-title">
-                                <i class="bi bi-megaphone me-2"></i>Announcements
-                            </h4>
-                            <a href="manage-announcements.html" class="section-action">Create New</a>
-                        </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
                                 <span><i class="bi bi-megaphone dashboard-icon"></i>Recent Announcements</span>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="announcement-item">
-                                    <div class="announcement-title">System Maintenance Notice</div>
-                                    <div class="announcement-date">Posted on: September 18, 2023</div>
-                                    <div class="announcement-content">The system will undergo maintenance on September 30, 2023, from 22:00 to 02:00. Please save your work and log out before this time.</div>
-                                </div>
-                                <div class="announcement-item">
-                                    <div class="announcement-title">New Semester Registration</div>
-                                    <div class="announcement-date">Posted on: September 15, 2023</div>
-                                    <div class="announcement-content">Registration for the new semester will begin on September 25, 2023. All students are required to complete their registration by October 5, 2023.</div>
-                                </div>
-                                <div class="announcement-item" style="border-bottom: none;">
-                                    <div class="announcement-title">Faculty Meeting</div>
-                                    <div class="announcement-date">Posted on: September 12, 2023</div>
-                                    <div class="announcement-content">All faculty members are required to attend the meeting on September 20, 2023, at 10:00 AM in the Conference Room.</div>
-                                </div>
+                            <div class="dashboard-card-body" id="announcements-container">
+                                <div class="announcement-item">Loading announcements...</div>
                             </div>
                         </div>
                     </div>
+                    
+                    <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        fetch("http://localhost:8080/api/announcements/latest")
+                            .then(response => response.json())
+                            .then(data => {
+                                const container = document.getElementById("announcements-container");
+                                container.innerHTML = ""; // Clear previous content
+                    
+                                if (data.length === 0) {
+                                    container.innerHTML = "<div class='announcement-item'>No recent announcements.</div>";
+                                    return;
+                                }
+                    
+                                data.forEach(announcement => {
+                                    const announcementHTML = `
+                                        <div class="announcement-item">
+                                            <div class="announcement-title">${announcement.message}</div>
+                                            <div class="announcement-date">Posted on: ${announcement.date}</div>
+                                            <div class="announcement-content">Closing Date: ${announcement.closingDate}</div>
+                                        </div>
+                                    `;
+                                    container.innerHTML += announcementHTML;
+                                });
+                            })
+                            .catch(error => {
+                                console.error("Error fetching announcements:", error);
+                                document.getElementById("announcements-container").innerHTML = "<div class='announcement-item'>Failed to load announcements.</div>";
+                            });
+                    });
+                    </script>
+                    
                 </div>
             </div>
         </div>
@@ -1508,6 +1296,76 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <script>
+        // Fetch data from the API
+        fetch('http://localhost:8080/reservations/class')
+            .then(response => response.json())
+            .then(data => {
+                const reservationBody = document.getElementById('reservationBody');
+                data.forEach(reservation => {
+                    // Extract necessary details from the response
+                    const requesterName = reservation.lecturerName;
+                    const roomName = reservation.roomName;
+                    const purpose = reservation.courseName;
+                    const dateTime = `${reservation.day} | ${reservation.startTime}-${reservation.endTime}`;
+                    const reservationId = reservation.reservationID;  
+                    const row = document.createElement('tr');
+                    // Add cells to the row
+                    row.innerHTML = `
+                        <td>${requesterName}</td>
+                        <td>${roomName}</td>
+                        <td>${purpose}</td>
+                        <td>${dateTime}</td>
+                        <td class="action-buttons">
+                            <button class="btn-action btn-view">View</button>
+                            <button class="btn-action btn-approve" onclick="updateStatus(${reservationId}, 'Approved')">Approve</button>
+                            <button class="btn-action btn-reject" onclick="updateStatus(${reservationId}, 'Rejected')">Reject</button>
+                        </td>
+                    `;
+    
+                    // Append the row to the table body
+                    reservationBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching reservation data:', error);
+            });
+    
+        function updateStatus(reservationId, newStatus) {
+            // Create the request body with the new status
+            const requestData = JSON.stringify(newStatus);
+    
+            // Make the PUT request
+            fetch(`http://localhost:8080/reservations/class/${reservationId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: requestData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Status updated successfully
+                    alert('Status updated to ' + newStatus);
+                    // Optionally, you can reload the page or update the UI
+                    location.reload();  // Reload the page to see the updated status
+                } else {
+                    // Handle error response
+                    return response.json();
+                }
+            })
+            .then(error => {
+                if (error) {
+                    alert('Error: ' + error.message);
+                }
+            })
+            .catch(error => {
+                // Handle network or other errors
+                console.error('Error updating status:', error);
+            });
+        }
+    </script>
+    
     <!-- Custom Javascript for Dashboard -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

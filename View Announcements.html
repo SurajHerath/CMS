@@ -389,7 +389,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 d-flex align-items-center justify-content-center">
-                        <a href="insert-announcement.html" class="btn btn-primary py-3 px-4 w-100">
+                        <a href="Insert Announcement.html" class="btn btn-primary py-3 px-4 w-100">
                             <i class="bi bi-plus-circle me-2"></i>Create New
                         </a>
                     </div>
@@ -829,5 +829,88 @@
             });
         });
     </script>
+
+<script>
+    // Function to fetch announcements
+    async function fetchAnnouncements() {
+        try {
+            // Fetch the latest announcements from the API
+            const response = await fetch('http://localhost:8080/api/announcements/latest');
+            const data = await response.json();
+
+            // Get the container to append the announcement cards
+            const announcementGrid = document.querySelector('.row.g-4.justify-content-center');
+
+            // Clear any existing announcements (optional)
+            announcementGrid.innerHTML = '';
+
+            function shortenMessage(message, maxLength) {
+                    if (message.length > maxLength) {
+                        return message.substring(0, maxLength) + '...';
+                    } else {
+                        return message;
+                    }
+            }
+
+            // Loop through each announcement and add it to the grid
+            data.forEach(announcement => {
+                const announcementCard = document.createElement('div');
+                announcementCard.classList.add('col-lg-4', 'col-md-6', 'wow', 'fadeInUp');
+                announcementCard.setAttribute('data-wow-delay', '0.1s');
+
+                
+
+                let message = announcement.message;
+                let shortenedMessage = shortenMessage(message, 50);
+
+
+                announcementCard.innerHTML = `
+                    <div class="announcement-card">
+                        <div class="announcement-card-header">
+                            <span>${shortenedMessage}</span>
+                            <div>
+                                <a href="edit-announcement.html?id=${announcement.announcementId}" class="text-white me-2">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a href="#" class="text-white delete-announcement" data-id="${announcement.announcementId}">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="announcement-card-body">
+                            <div class="announcement-date">
+                                <strong>Posted:</strong> ${announcement.date} | <strong>Expires:</strong> ${announcement.closingDate}
+                            </div>
+                            <div class="announcement-message">
+                                ${announcement.message}
+                            </div>
+                            <div class="announcement-footer">
+                                <div class="announcement-target">
+                                    ${announcement.type === 'All' ? 
+                                        '<span class="target-badge target-all">All Users</span>' : 
+                                        '<span class="target-badge target-students">Students</span><span class="target-badge target-lecturers">Lecturers</span>'}
+                                </div>
+                                <div class="announcement-actions">
+                                    <a href="edit-announcement.html?id=${announcement.announcementId}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <button class="btn btn-sm btn-outline-danger delete-announcement" data-id="${announcement.announcementId}">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Append the new card to the grid
+                announcementGrid.appendChild(announcementCard);
+            });
+        } catch (error) {
+            console.error('Error fetching announcements:', error);
+        }
+    }
+
+    // Call the function to fetch and display the announcements
+    fetchAnnouncements();
+</script>
+
+  
 </body>
 </html>
