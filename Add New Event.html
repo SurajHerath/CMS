@@ -191,6 +191,13 @@
                                         <label for="eventType">Event Type</label>
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="maxCapacity" placeholder="Maximum Capacity" min="1" required>
+                                        <label for="maxCapacity">Maximum Capacity</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
@@ -205,19 +212,24 @@
                                     </div>
                                 </div>
                                 
+                                
+                         
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" id="maxCapacity" placeholder="Maximum Capacity" min="1" required>
-                                        <label for="maxCapacity">Maximum Capacity</label>
+                                        <select class="form-select" id="eventType" required>
+                                            <option value="" selected disabled>Select Room</option>
+                                            <option value="Conference">Room B3</option>
+                                        </select>
+                                        <label for="eventType">Room</label>
                                     </div>
                                 </div>
-                                
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="date" class="form-control" id="registerDeadline" required>
                                         <label for="registerDeadline">Registration Deadline</label>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         

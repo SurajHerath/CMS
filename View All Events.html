@@ -182,7 +182,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="#"  class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>CMS</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -190,27 +190,79 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <div class="nav-item dropdown">
+                <a href="#" id="dashboardLink" class="nav-item nav-link">Home</a>
+    
+                <!-- Courses (Visible to Admin only) -->
+                <div class="nav-item dropdown admin-only">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Courses</a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="insert-course.html" class="dropdown-item">Insert Course</a>
                         <a href="view-all-courses.html" class="dropdown-item">View All Courses</a>
                     </div>
                 </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Events</a>
+    
+                <!-- Lectures (Visible to Admin only) -->
+                <div class="nav-item dropdown admin-only">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Lectures</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-event.html" class="dropdown-item">Add New Event</a>
-                        <a href="view-events.html" class="dropdown-item active">View All Events</a>
+                        <a href="assign-lectures.html" class="dropdown-item">Assign Lectures</a>
+                        <a href="view-lecture-assignments.html" class="dropdown-item">View Assignments</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+    
+                <!-- Assignments (Upload only visible to Lecturer) -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Assignments</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="upload-assignment.html" class="dropdown-item lecturer-only">Upload Assignment</a>
+                        <a href="view-assignments.html" class="dropdown-item active">View Assignments</a>
+                    </div>
+                </div>
+    
+                <!-- Help Section (Visible to All) -->
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Help</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="create-help-article.html" class="dropdown-item">Create Help Article</a>
+                        <a href="view-help-articles.html" class="dropdown-item">View Help Articles</a>
+                    </div>
+                </div>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve user data from session storage
+            const userData = JSON.parse(localStorage.getItem("user"));
+    
+            if (userData) {
+                const role = userData.role.toLowerCase();
+    
+                // Redirect users based on role
+                const dashboardLink = document.getElementById("dashboardLink");
+                if (role === "student") {
+                    dashboardLink.href = "Student Index.html";
+                } else if (role === "lecturer") {
+                    dashboardLink.href = "Lecturer Dashboard.html";
+                } else if (role === "admin") {
+                    dashboardLink.href = "Admin Dashboard.html";
+                }
+    
+                // Hide elements based on role
+                if (role !== "admin") {
+                    document.querySelectorAll(".admin-only").forEach(el => el.style.display = "none");
+                }   
+                if (role !== "lecturer") {
+                    document.querySelectorAll(".lecturer-only").forEach(el => el.style.display = "none");
+                }
+            } else {
+                // Redirect to login if no user session found
+                window.location.href = "login.html";
+            }
+        });
+    </script>
     <!-- Navbar End -->
 
     <!-- Header Start -->
@@ -254,11 +306,31 @@
                                 <button class="btn btn-outline-secondary btn-sm" id="filterWebinar">Webinar</button>
                                 <button class="btn btn-outline-secondary btn-sm" id="filterOther">Other</button>
                             </div>
-                            <div>
-                                <a href="insert-event.html" class="btn btn-success btn-sm">
+                            <div id="addEventContainer" style="display: none;">
+                                <a href="Add New Event.html" class="btn btn-success btn-sm">
                                     <i class="bi bi-plus-circle me-1"></i>Add New Event
                                 </a>
                             </div>
+                            
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    // Retrieve user data from localStorage
+                                    const userData = JSON.parse(localStorage.getItem("user"));
+                            
+                                    if (userData) {
+                                        const role = userData.role.toLowerCase();
+                            
+                                        // Show "Add New Event" only for Admin
+                                        if (role === "admin") {
+                                            document.getElementById("addEventContainer").style.display = "block";
+                                        }
+                                    } else {
+                                        // Redirect to login if no user session found
+                                        window.location.href = "login.html";
+                                    }
+                                });
+                            </script>
+                            
                         </div>
                     </div>
                     
@@ -305,7 +377,7 @@
                             </div>
                             <div class="event-footer d-flex justify-content-between align-items-center">
                                 <span class="text-muted">Created: 2023-08-01</span>
-                                <div>
+                                <div id="eventActions" style="display: none;">
                                     <a href="edit-event.html?id=1" class="btn btn-sm btn-primary">
                                         <i class="bi bi-pencil-square me-1"></i>Edit
                                     </a>
@@ -314,6 +386,24 @@
                                     </button>
                                 </div>
                             </div>
+                            
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    // Retrieve user data from localStorage
+                                    const userData = localStorage.getItem("user");
+                            
+                                    if (userData) {
+                                        const user = JSON.parse(userData);
+                                        const role = user.role ? user.role.toLowerCase() : "";
+                            
+                                        if (role === "admin") {
+                                            document.getElementById("eventActions").style.display = "block";
+                                        }
+                                    }
+                                });
+                            </script>
+                            
+                            
                         </div>
                     </div>
                 </div>

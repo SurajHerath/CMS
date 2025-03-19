@@ -851,36 +851,25 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <!-- Navigation Start -->
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="lecturer-dashboard.html" class="nav-item nav-link active">Dashboard</a>
-                <a href="my-courses.html" class="nav-item nav-link">My Courses</a>
+                <a href="Lecturer Dashboard.html" class="nav-item nav-link active">Dashboard</a>
+                <a href="View All Courses.html" class="nav-item nav-link">My Courses</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Assignments</a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="Upload Assignment.html" class="dropdown-item">Create Assignment</a>
-                        <a href="manage-assignments.html" class="dropdown-item">Manage Assignments</a>
-                        <a href="grade-assignments.html" class="dropdown-item">Grade Assignments</a>
+                        <a href="View Assignments.html" class="dropdown-item">Manage Assignments</a>
                     </div>
                 </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="bi bi-people me-2"></i>Students
-                    </a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="student-list.html" class="dropdown-item">Student List</a>
-                        <a href="mark-attendance.html" class="dropdown-item">Mark Attendance</a>
-                        <a href="student-performance.html" class="dropdown-item">Performance</a>
-                    </div>
-                </div>
+         
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Resources</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="upload-materials.html" class="dropdown-item">Upload Materials</a>
-                        <a href="classroom-request.html" class="dropdown-item">Classroom Request</a>
-                        <a href="help-center.html" class="dropdown-item">Help Center</a>
+                        <a href="Assign Lectures to Courses.html" class="dropdown-item">Classroom Request</a>
+                        <a href="View Support Requests.html" class="dropdown-item">Help Center</a>
                     </div>
                 </div>
-                <a href="announcements.html" class="nav-item nav-link">Announcements</a>
-                <a href="events.html" class="nav-item nav-link">Events</a>
+                <a href="View Announcements.html" class="nav-item nav-link">Announcements</a>
+                <a href="View All Events.html" class="nav-item nav-link">Events</a>
             </div>
             <!-- Navigation End -->
             
@@ -925,18 +914,18 @@
             <div class="user-dropdown me-4">
                 <button class="btn btn-light d-flex align-items-center" id="userButton">
                     <div class="user-avatar-small me-2">
-                        <img src="img/lecturer.jpg" alt="User">
+                        <img src="img/profile.png" alt="User">
                     </div>
-                    <span class="d-none d-lg-inline">Dr. Sarah Johnson</span>
+                    <span class="d-none d-lg-inline">Dr. Sarah Fernando</span>
                     <i class="bi bi-chevron-down ms-2"></i>
                 </button>
                 <div class="user-menu" id="userMenu">
                     <div class="user-header">
                         <div class="user-avatar-small">
-                            <img src="img/lecturer.jpg" alt="User">
+                            <img src="img/profile.png" alt="User">
                         </div>
                         <div>
-                            <div class="user-name">Dr. Sarah Johnson</div>
+                            <div class="user-name">Dr. Sarah Fernando</div>
                             <div class="user-role">Lecturer</div>
                         </div>
                     </div>
@@ -944,15 +933,8 @@
                         <i class="bi bi-person user-menu-icon"></i>
                         My Profile
                     </a>
-                    <a href="account-settings.html" class="user-menu-item">
-                        <i class="bi bi-gear user-menu-icon"></i>
-                        Account Settings
-                    </a>
-                    <a href="my-schedule.html" class="user-menu-item">
-                        <i class="bi bi-calendar-week user-menu-icon"></i>
-                        My Schedule
-                    </a>
-                    <a href="support.html" class="user-menu-item">
+                   
+                    <a href="Create Help & Support Content.html" class="user-menu-item">
                         <i class="bi bi-question-circle user-menu-icon"></i>
                         Support
                     </a>
@@ -987,13 +969,15 @@
                 <div class="welcome-carousel-item" style="background-image: url('img/carousel-1.jpg');">
                     <div class="welcome-carousel-overlay">
                         <div class="welcome-carousel-content">
-                            <h5 class="text-primary text-uppercase mb-3">Welcome back, Dr. Johnson!</h5>
+                            <h5 class="text-primary text-uppercase mb-3" id="welcome-message">Welcome back, Dr. Sarah!</h5>
                             <h1 class="display-3 text-white">Your Teaching Dashboard</h1>
                             <p class="fs-5 text-white mb-4 pb-2">You have 2 assignments to grade, 3 upcoming classes, and a department meeting this week.</p>
                             <a href="my-courses.html" class="btn btn-light py-md-3 px-md-5 me-3">My Courses</a>
                             <a href="Upload Assignment.html" class="btn btn-primary py-md-3 px-md-5">Create Assignment</a>
                         </div>
                     </div>
+                  
+                    
                 </div>
                 <div class="welcome-carousel-item" style="background-image: url('img/carousel-2.jpg');">
                     <div class="welcome-carousel-overlay">
@@ -1010,42 +994,27 @@
             
             <!-- Quick Actions -->
             <div class="quick-actions wow fadeInUp" data-wow-delay="0.2s">
-                <a href="mark-attendance.html" class="quick-action-btn">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-person-check"></i>
-                    </div>
-                    <div class="quick-action-label">Mark Attendance</div>
-                </a>
-                <a href="create-assignment.html" class="quick-action-btn">
+            
+                <a href="Upload Assignment.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-file-earmark-plus"></i>
                     </div>
                     <div class="quick-action-label">Create Assignment</div>
                 </a>
-                <a href="grade-assignments.html" class="quick-action-btn">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-check2-square"></i>
-                    </div>
-                    <div class="quick-action-label">Grade Assignments</div>
-                </a>
-                <a href="classroom-request.html" class="quick-action-btn">
+          
+                <a href="Assign Lectures to Courses.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-building"></i>
                     </div>
                     <div class="quick-action-label">Request Classroom</div>
                 </a>
-                <a href="announcements.html" class="quick-action-btn">
+                <a href="View Announcements.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-megaphone"></i>
                     </div>
                     <div class="quick-action-label">Announcements</div>
                 </a>
-                <a href="upload-materials.html" class="quick-action-btn">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-cloud-upload"></i>
-                    </div>
-                    <div class="quick-action-label">Upload Materials</div>
-                </a>
+              
             </div>
             
             <!-- Main Dashboard Content -->
@@ -1058,7 +1027,6 @@
                             <h4 class="section-title">
                                 <i class="bi bi-calendar3 me-2"></i>Today's Timetable
                             </h4>
-                            <a href="my-schedule.html" class="section-action">View Full Schedule</a>
                         </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
@@ -1080,13 +1048,17 @@
                             <h4 class="section-title">
                                 <i class="bi bi-person-check me-2"></i>Classroom Attendance
                             </h4>
-                            <a href="mark-attendance.html" class="section-action">View All Classes</a>
                         </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
-                                <span><i class="bi bi-people dashboard-icon"></i>Database Management Systems (CS301)</span>
+                                <!-- Dropdown to select the class -->
                                 <div>
-                                    <button class="btn btn-sm btn-primary">Save Attendance</button>
+                                    <select class="form-select" id="classSelect" aria-label="Select Class">
+                                        <!-- Options will be populated dynamically -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary" id="saveAttendanceBtn">Save Attendance</button>
                                 </div>
                             </div>
                             <div class="dashboard-card-body">
@@ -1100,32 +1072,153 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>ST12345</td>
-                                            <td>John Doe</td>
-                                            <td>Present</td>
-                                            <td class="attendance-actions">
-                                                <button class="btn-present">Present</button>
-                                                <button class="btn-absent">Absent</button>
-                                                <button class="btn-late">Late</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>ST12346</td>
-                                            <td>Jane Smith</td>
-                                            <td>Present</td>
-                                            <td class="attendance-actions">
-                                                <button class="btn-present">Present</button>
-                                                <button class="btn-absent">Absent</button>
-                                                <button class="btn-late">Late</button>
-                                            </td>
-                                        </tr>
-                                    
+                               
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    
+                    <script>
+                        // Function to populate the dropdown with class options
+                        async function populateClassDropdown() {
+                            const userId = getLoggedInUserId();  // Retrieve the logged-in user's ID
+                            try {
+                                const response = await fetch(`http://localhost:8080/lecturers/${userId}/classes`);
+                                const classes = await response.json();
+                    
+                                // Clear existing options
+                                const selectElement = document.getElementById('classSelect');
+                                selectElement.innerHTML = '';
+                    
+                                // Populate dropdown with class options
+                                classes.forEach(classInfo => {
+                                    const option = document.createElement('option');
+                                    option.value = classInfo.course.courseID;  // Set the courseID as the value
+                                    option.textContent = `${classInfo.course.courseName} - ${classInfo.day}`; // Display the course name and courseID
+                                    selectElement.appendChild(option);
+                                });
+                    
+                                // Bind change event to fetch students when course is selected
+                                selectElement.addEventListener('change', function () {
+                                    const selectedCourseID = selectElement.value;
+                                    if (selectedCourseID) {
+                                        fetchStudentsForCourse(selectedCourseID);  // Fetch students when a course is selected
+                                    }
+                                });
+                            } catch (error) {
+                                console.error("Error fetching classes:", error);
+                            }
+                        }
+                    
+                        // Function to get the logged-in user ID (you can adjust this based on your login system)
+                        function getLoggedInUserId() {
+                            const user = JSON.parse(localStorage.getItem("user"));
+                            if (user && user.id) {
+                                return user.id;
+                            } else {
+                                console.error("User not found in localStorage");
+                                return null;
+                            }
+                        }
+                    
+                        // Function to fetch and display students for a selected course
+                        async function fetchStudentsForCourse(courseID) {
+                            try {
+                                const response = await fetch(`http://localhost:8080/courses/${courseID}/degree-programs`);
+                                const degreePrograms = await response.json();
+                    
+                                // Find the students enrolled in this course (degree program)
+                                const students = degreePrograms.flatMap(program => program.studentDegrees)
+                                                                .map(studentDegree => studentDegree.student);
+                    
+                                // Clear existing table rows
+                                const tableBody = document.querySelector('.attendance-table tbody');
+                                tableBody.innerHTML = '';
+                    
+                                // Populate the table with student data
+                                students.forEach(student => {
+                                    const row = document.createElement('tr');
+                                    row.innerHTML = `
+                                        <td>${student.user.id}</td>
+                                        <td>${student.user.firstName} ${student.user.lastName}</td>
+                                        <td>Present</td> <!-- Default status -->
+                                        <td class="attendance-actions">
+                                            <button class="btn-present">Present</button>
+                                            <button class="btn-absent">Absent</button>
+                                            <button class="btn-late">Late</button>
+                                        </td>
+                                    `;
+                                    tableBody.appendChild(row);
+                                });
+                            } catch (error) {
+                                console.error("Error fetching students:", error);
+                            }
+                        }
+                    
+                        // Mark the attendance
+                        async function markAttendance(classId, userId, status) {
+                            try {
+                                const response = await fetch("http://localhost:8080/api/class-attendance/mark", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        classId: classId,
+                                        userId: userId,
+                                        status: status
+                                    })
+                                });
+                    
+                                if (response.ok) {
+                                    console.log(`Attendance marked as ${status} for student ID: ${userId}`);
+                                } else {
+                                    console.error("Error marking attendance:", response.statusText);
+                                }
+                            } catch (error) {
+                                console.error("Error sending attendance data:", error);
+                            }
+                        }
+                    
+                        document.addEventListener('DOMContentLoaded', function () {
+                            populateClassDropdown();
+                    
+                            // Save attendance event handler
+                            document.getElementById('saveAttendanceBtn').addEventListener('click', function () {
+                                alert("Attendance saved for selected class!");
+                            });
+                    
+                            // Handle attendance status updates
+                            document.querySelector('.attendance-table').addEventListener('click', function (e) {
+                                const button = e.target;
+                    
+                                // Check if a button inside the actions column was clicked
+                                if (button.classList.contains('btn-present') || 
+                                    button.classList.contains('btn-absent') || 
+                                    button.classList.contains('btn-late')) {
+                    
+                                    const row = button.closest('tr');  
+                                    const statusCell = row.querySelector('td:nth-child(3)'); 
+                                    const userId = row.querySelector('td:nth-child(1)').textContent;  // Get the user ID from the first column
+                                    const classId = document.getElementById('classSelect').value; // Get the selected class ID
+                                    const status = button.textContent;  // Get the status (Present, Absent, or Late)
+                    
+                                    // Update the status cell with the button text (Present, Absent, or Late)
+                                    statusCell.textContent = status;
+                    
+                                    // Mark attendance for the student
+                                    markAttendance(classId, userId, status);
+                                }
+                            });
+                        });
+                    </script>
+                    
+                    
+                    
+                    
+             
+                    
                     
                     <!-- Assignment Management -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
@@ -1151,31 +1244,17 @@
                             <h4 class="section-title">
                                 <i class="bi bi-megaphone me-2"></i>Announcements
                             </h4>
-                            <a href="create-announcement.html" class="section-action">Create New</a>
                         </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
                                 <span><i class="bi bi-megaphone dashboard-icon"></i>Recent Announcements</span>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="announcement-item">
-                                    <div class="announcement-title">Midterm Exam Schedule</div>
-                                    <div class="announcement-date">Posted on: September 15, 2023 | To: All Classes</div>
-                                    <div class="announcement-content">The midterm examination schedule has been released. Database Management Systems (CS301) exam will be held on October 10, 2023, from 9:00 AM to 11:00 AM in Room 105. Advanced Database Concepts (CS501) exam will be held on October 12, 2023, from 9:00 AM to 11:00 AM in Room 201.</div>
-                                </div>
-                                <div class="announcement-item">
-                                    <div class="announcement-title">Office Hours Change</div>
-                                    <div class="announcement-date">Posted on: September 14, 2023 | To: All Classes</div>
-                                    <div class="announcement-content">Please note that my office hours will be changed next week. Instead of Monday 2:00 PM - 3:30 PM, I will be available on Tuesday 10:00 AM - 11:30 AM. If you need to meet outside these hours, please email me to schedule an appointment.</div>
-                                </div>
-                                <div class="announcement-item" style="border-bottom: none;">
-                                    <div class="announcement-title">Guest Lecture: Database Security</div>
-                                    <div class="announcement-date">Posted on: September 12, 2023 | To: Advanced Database Concepts (CS501)</div>
-                                    <div class="announcement-content">We will have a guest lecture on Database Security by Dr. Robert Chen from Cybersecurity Solutions Inc. on September 20, 2023. Attendance is mandatory as the content will be included in the midterm exam.</div>
-                                </div>
+                            <div class="dashboard-card-body" id="announcementContainer">
+                                <!-- Announcements will be populated here -->
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 
                 <!-- Right Column -->
@@ -1190,11 +1269,10 @@
                             <div class="dashboard-card-body">
                                 <div class="profile-header">
                                     <div class="profile-avatar">
-                                        <img src="img/lecturer.jpg" alt="Dr. Sarah Johnson">
+                                        <img src="img/profile.png" alt="Dr. Sarah Johnson">
                                     </div>
                                     <div class="profile-info">
-                                        <h5>Dr. Sarah Johnson</h5>
-                                        <p>Faculty ID: FC5678</p>
+                                        <h5>Dr. Sarah Fernando</h5>
                                         <p>Computer Science Department</p>
                                     </div>
                                 </div>
@@ -1228,50 +1306,7 @@
                         </div>
                     </div>
                     
-                    <!-- Classroom Requests -->
-                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="section-header">
-                            <h4 class="section-title">
-                                <i class="bi bi-building me-2"></i>Classroom Requests
-                            </h4>
-                            <a href="classroom-request.html" class="section-action">New Request</a>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-building dashboard-icon"></i>Recent Requests</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <div class="classroom-request-item">
-                                    <div class="classroom-request-info">
-                                        <div class="classroom-request-title">Computer Lab 3</div>
-                                        <div class="classroom-request-details">Database Management Systems (CS301)</div>
-                                        <div class="classroom-request-date">Sep 22, 2023 | 14:00 - 16:00</div>
-                                    </div>
-                                    <span class="classroom-request-status status-approved">Approved</span>
-                                </div>
-                                <div class="classroom-request-item">
-                                    <div class="classroom-request-info">
-                                        <div class="classroom-request-title">Room 201</div>
-                                        <div class="classroom-request-details">Advanced Database Concepts (CS501)</div>
-                                        <div class="classroom-request-date">Sep 25, 2023 | 09:00 - 11:00</div>
-                                    </div>
-                                    <span class="classroom-request-status status-pending-approval">Pending</span>
-                                </div>
-                                <div class="classroom-request-item" style="border-bottom: none;">
-                                    <div class="classroom-request-info">
-                                        <div class="classroom-request-title">Conference Room</div>
-                                        <div class="classroom-request-details">Guest Lecture: Database Security</div>
-                                        <div class="classroom-request-date">Sep 20, 2023 | 13:00 - 15:00</div>
-                                    </div>
-                                    <span class="classroom-request-status status-approved">Approved</span>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <a href="classroom-request.html" class="btn btn-primary">Request Classroom</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                
                     <!-- Upcoming Events -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
                         <div class="section-header">
@@ -1296,57 +1331,7 @@
                         </div>
                     </div>
                     
-                    
-                    <!-- Student Performance -->
-                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="section-header">
-                            <h4 class="section-title">Student Performance</h4>
-                            <a href="student-performance.html" class="section-action">View Details</a>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-graph-up dashboard-icon"></i>Course Performance</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Database Management Systems (CS301)</div>
-                                        <div class="progress-value">78%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Advanced Database Concepts (CS501)</div>
-                                        <div class="progress-value">82%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Database Administration (CS401)</div>
-                                        <div class="progress-value">75%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Introduction to SQL (CS201)</div>
-                                        <div class="progress-value">85%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
                 </div>
             </div>
         </div>
@@ -1509,31 +1494,7 @@
             });
             
             // Attendance marking functionality
-            const attendanceButtons = document.querySelectorAll('.attendance-actions button');
-            attendanceButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const row = this.closest('tr');
-                    const statusCell = row.querySelector('td:nth-child(3)');
-                    
-                    // Remove all active classes from buttons in this row
-                    const rowButtons = row.querySelectorAll('.attendance-actions button');
-                    rowButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Update status cell
-                    if (this.classList.contains('btn-present')) {
-                        statusCell.textContent = 'Present';
-                    } else if (this.classList.contains('btn-absent')) {
-                        statusCell.textContent = 'Absent';
-                    } else if (this.classList.contains('btn-late')) {
-                        statusCell.textContent = 'Late';
-                    }
-                });
-            });
+         
         });
 
         $(document).ready(function() {
@@ -1764,5 +1725,52 @@
         fetchEvents();
     };
 </script>
+
+<script>
+    // Fetch the latest announcements
+    async function loadAnnouncements() {
+        try {
+            const response = await fetch('http://localhost:8080/api/announcements/latest');
+            const announcements = await response.json();
+
+            const announcementContainer = document.getElementById('announcementContainer');
+            announcementContainer.innerHTML = ''; 
+
+            announcements.forEach(announcement => {
+                // Create a new announcement item
+                const announcementItem = document.createElement('div');
+                announcementItem.classList.add('announcement-item');
+
+                // Add title
+                const title = document.createElement('div');
+                title.classList.add('announcement-title');
+                title.textContent = announcement.message.length > 40 ? announcement.message.slice(0, 40) + '...' : announcement.message; // Shorten if too long
+                announcementItem.appendChild(title);
+
+                // Add date and target user type
+                const dateAndUser = document.createElement('div');
+                dateAndUser.classList.add('announcement-date');
+                const formattedDate = new Date(announcement.date).toLocaleDateString(); // Format the date
+                dateAndUser.textContent = `Posted on: ${formattedDate} | To: ${announcement.type}`;
+                announcementItem.appendChild(dateAndUser);
+
+                // Add the message content
+                const content = document.createElement('div');
+                content.classList.add('announcement-content');
+                content.textContent = announcement.message;
+                announcementItem.appendChild(content);
+
+                // Append the new announcement to the container
+                announcementContainer.appendChild(announcementItem);
+            });
+        } catch (error) {
+            console.error('Error fetching announcements:', error);
+        }
+    }
+
+    // Load announcements when the page loads
+    window.onload = loadAnnouncements;
+</script>
+
 </body>
 </html>

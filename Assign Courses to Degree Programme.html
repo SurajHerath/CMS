@@ -306,11 +306,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 const programmeSelect= document.getElementById("degreeProgram");
                 programmeSelect.innerHTML = '<option value="">Select Degree Program</option>';
-    
+                console.log(data);
                 data.forEach(programme => {
                     const option = document.createElement("option");
                     option.value = programme.programID;
-                    option.textContent = programme.program_name;
+                    option.textContent = programme.programName;
                     programmeSelect.appendChild(option);
                 });
             })

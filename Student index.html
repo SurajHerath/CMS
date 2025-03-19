@@ -1320,35 +1320,15 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <!-- Navigation Start -->
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="student-dashboard.html" class="nav-item nav-link active">Dashboard</a>
-                <a href="courses.html" class="nav-item nav-link">My Courses</a>
+                <a href="Student index.html" class="nav-item nav-link active">Dashboard</a>
+                <a href="View All Courses.html" class="nav-item nav-link">My Courses</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Assignments</a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="view-assignments.html" class="dropdown-item">View Assignments</a>
-                        <a href="submit-assignment.html" class="dropdown-item">Submit Assignment</a>
-                        <a href="assignment-grades.html" class="dropdown-item">Assignment Grades</a>
+                        <a href="View Assignments.html" class="dropdown-item">View Assignments</a>
                     </div>
                 </div>
-                <!-- Update the Grades dropdown menu in the navbar -->
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="bi bi-mortarboard me-2"></i>Grades
-                    </a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="current-grades.html" class="dropdown-item">Current Grades</a>
-                        <a href="grade-history.html" class="dropdown-item">Grade History</a>
-                        <a href="gpa-calculator.html" class="dropdown-item">GPA Calculator</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Resources</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="course-materials.html" class="dropdown-item">Course Materials</a>
-                        <a href="library.html" class="dropdown-item">Library</a>
-                        <a href="view-help-content.html" class="dropdown-item">Help Center</a>
-                    </div>
-                </div>
+              
                 <a href="group-discussions.html" class="nav-item nav-link">Discussions</a>
                 <a href="events.html" class="nav-item nav-link">Events</a>
             </div>
@@ -1395,34 +1375,36 @@
             <div class="user-dropdown me-4">
                 <button class="btn btn-light d-flex align-items-center" id="userButton">
                     <div class="user-avatar-small me-2">
-                        <img src="img/user.jpg" alt="User">
+                        <img src="img/profile.png" alt="User">
                     </div>
-                    <span class="d-none d-lg-inline">John Doe</span>
+                    <span class="d-none d-lg-inline">Namal Rajapaksha</span>
                     <i class="bi bi-chevron-down ms-2"></i>
                 </button>
                 <div class="user-menu" id="userMenu">
                     <div class="user-header">
                         <div class="user-avatar-small">
-                            <img src="img/user.jpg" alt="User">
+                            <img src="img/profile.png" alt="User">
                         </div>
                         <div>
-                            <div class="user-name">John Doe</div>
-                            <div class="user-role">Student</div>
+                            <div class="user-name" id="userName">Namal Rajapaksha</div>
+                            <div class="user-role" id="userRole">Student</div>
                         </div>
                     </div>
-                    <a href="student-profile.html" class="user-menu-item">
-                        <i class="bi bi-person user-menu-icon"></i>
-                        My Profile
-                    </a>
-                    <a href="account-settings.html" class="user-menu-item">
-                        <i class="bi bi-gear user-menu-icon"></i>
-                        Account Settings
-                    </a>
-                    <a href="grades.html" class="user-menu-item">
-                        <i class="bi bi-mortarboard user-menu-icon"></i>
-                        My Grades
-                    </a>
-                    <a href="view-support-requests.html" class="user-menu-item">
+                    
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Retrieve user data from session storage
+                            const userData = JSON.parse(sessionStorage.getItem("user"));
+                    
+                            if (userData) {
+                                document.getElementById("userName").textContent = userData.firstName + " " + userData.lastName;
+                                document.getElementById("userRole").textContent = userData.role;
+                            }
+                        });
+                    </script>
+                    
+                 
+                    <a href="Create Help & Support Content.html" class="user-menu-item">
                         <i class="bi bi-question-circle user-menu-icon"></i>
                         Support
                     </a>
@@ -1459,8 +1441,8 @@
                             <h5 class="text-primary text-uppercase mb-3">Welcome back, John!</h5>
                             <h1 class="display-3 text-white">Your Learning Journey Continues</h1>
                             <p class="fs-5 text-white mb-4 pb-2">You have 3 assignments due this week and 2 upcoming events. Keep up the good work!</p>
-                            <a href="courses.html" class="btn btn-light py-md-3 px-md-5 me-3">My Courses</a>
-                            <a href="submit-assignment.html" class="btn btn-primary py-md-3 px-md-5">Submit Assignment</a>
+                            <a href="View All Courses.html" class="btn btn-light py-md-3 px-md-5 me-3">My Courses</a>
+                            <!-- <a href="submit-assignment.html" class="btn btn-primary py-md-3 px-md-5">Submit Assignment</a> -->
                         </div>
                     </div>
                 </div>
@@ -1479,37 +1461,27 @@
             
             <!-- Quick Actions -->
             <div class="quick-actions wow fadeInUp" data-wow-delay="0.2s">
-                <a href="courses.html" class="quick-action-btn">
+                <a href="View All Courses.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-book"></i>
                     </div>
                     <div class="quick-action-label">Courses</div>
                 </a>
-                <a href="submit-assignment.html" class="quick-action-btn">
+                <a href="View Assignments.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-file-earmark-text"></i>
                     </div>
                     <div class="quick-action-label">Assignments</div>
                 </a>
-                <a href="grades.html" class="quick-action-btn">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-file-earmark-text"></i>
-                    </div>
-                    <div class="quick-action-label">Grades</div>
-                </a>
-                <a href="events.html" class="quick-action-btn">
+               
+                <a href="View All Events.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-calendar-event"></i>
                     </div>
                     <div class="quick-action-label">Events</div>
                 </a>
-                <a href="#" class="quick-action-btn" id="discussionsQuickAction">
-                    <div class="quick-action-icon">
-                        <i class="bi bi-chat-dots"></i>
-                    </div>
-                    <div class="quick-action-label">Discussions</div>
-                </a>
-                <a href="view-support-requests.html" class="quick-action-btn">
+             
+                <a href="View Support Requests.html" class="quick-action-btn">
                     <div class="quick-action-icon">
                         <i class="bi bi-question-circle"></i>
                     </div>
@@ -1562,34 +1534,67 @@
                     </div>
                     
                     <!-- Announcements -->
-                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
                         <div class="section-header">
-                            <h4 class="section-title">Recent Announcements</h4>
-                            <a href="announcements.html" class="section-action">View All</a>
+                            <h4 class="section-title">
+                                <i class="bi bi-megaphone me-2"></i>Announcements
+                            </h4>
                         </div>
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
-                                <span><i class="bi bi-megaphone dashboard-icon"></i>Announcements</span>
+                                <span><i class="bi bi-megaphone dashboard-icon"></i>Recent Announcements</span>
                             </div>
-                            <div class="dashboard-card-body">
-                                <div class="announcement-item">
-                                    <div class="announcement-title">Midterm Exam Schedule Released</div>
-                                    <div class="announcement-date">Posted on: September 15, 2023</div>
-                                    <div class="announcement-content">The midterm examination schedule has been released. Please check the examination portal for your individual schedule. All exams will be conducted in-person unless otherwise specified.</div>
-                                </div>
-                                <div class="announcement-item">
-                                    <div class="announcement-title">System Maintenance Notice</div>
-                                    <div class="announcement-date">Posted on: September 14, 2023</div>
-                                    <div class="announcement-content">The eLEARNING platform will be undergoing maintenance on Saturday, September 23, from 2:00 AM to 6:00 AM. During this time, the system will be unavailable. Please plan accordingly.</div>
-                                </div>
-                                <div class="announcement-item" style="border-bottom: none;">
-                                    <div class="announcement-title">New Library Resources Available</div>
-                                    <div class="announcement-date">Posted on: September 12, 2023</div>
-                                    <div class="announcement-content">The university library has added new digital resources for computer science students. These include access to IEEE Xplore Digital Library and ACM Digital Library. Access these resources through your library account.</div>
-                                </div>
+                            <div class="dashboard-card-body" id="announcementContainer">
+                                <!-- Announcements will be populated here -->
                             </div>
                         </div>
                     </div>
+                    
+                    <script>
+                        async function loadAnnouncements() {
+                            try {
+                                const response = await fetch('http://localhost:8080/api/announcements/latest');
+                                const announcements = await response.json();
+                    
+                                const announcementContainer = document.getElementById('announcementContainer');
+                                announcementContainer.innerHTML = ''; // Clear any existing announcements
+                    
+                                announcements.forEach(announcement => {
+                                    // Create a new announcement item
+                                    const announcementItem = document.createElement('div');
+                                    announcementItem.classList.add('announcement-item');
+                    
+                                    // Add title
+                                    const title = document.createElement('div');
+                                    title.classList.add('announcement-title');
+                                    title.textContent = announcement.message.length > 40 ? announcement.message.slice(0, 40) + '...' : announcement.message; // Shorten if too long
+                                    announcementItem.appendChild(title);
+                    
+                                    // Add date and target user type
+                                    const dateAndUser = document.createElement('div');
+                                    dateAndUser.classList.add('announcement-date');
+                                    const formattedDate = new Date(announcement.date).toLocaleDateString(); // Format the date
+                                    dateAndUser.textContent = `Posted on: ${formattedDate} | To: ${announcement.type}`;
+                                    announcementItem.appendChild(dateAndUser);
+                    
+                                    // Add the message content
+                                    const content = document.createElement('div');
+                                    content.classList.add('announcement-content');
+                                    content.textContent = announcement.message;
+                                    announcementItem.appendChild(content);
+                    
+                                    // Append the new announcement to the container
+                                    announcementContainer.appendChild(announcementItem);
+                                });
+                            } catch (error) {
+                                console.error('Error fetching announcements:', error);
+                            }
+                        }
+                    
+                        // Load announcements when the page loads
+                        window.onload = loadAnnouncements;
+                    </script>
+                    
                     
                     <!-- Group Discussions -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s" id="discussionsSection">
@@ -1607,38 +1612,12 @@
                         <div class="dashboard-card">
                             <div class="dashboard-card-header">
                                 <div class="group-tabs">
-                                    <div class="group-tab active" data-tab="my-groups">My Groups</div>
                                     <div class="group-tab" data-tab="group-chat">Group Chat</div>
                                     <div class="group-tab" data-tab="manage-groups">Manage Groups</div>
                                 </div>
                             </div>
                             <div class="dashboard-card-body">
-                                <!-- My Groups Tab -->
-                                <div class="group-content active" id="my-groups-content">
-                                    <div class="group-container">
-                                        <div class="group-card-small" data-group-id="1">
-                                            <div class="group-card-header-small">Database Project Team</div>
-                                            <div class="group-card-body-small">
-                                                <p class="mb-1 text-muted small">CS301 - Database Management Systems</p>
-                                                <div class="group-members-small">
-                                                    <div class="group-member-small">
-                                                        <img src="img/profile.png" alt="John Doe">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/profile.png" alt="Alice Johnson">
-                                                    </div>
-                                                    <div class="group-member-small">
-                                                        <img src="img/profile.png" alt="Bob Smith">
-                                                    </div>
-                                                    <div class="group-member-count-small">+3</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                     
-                                    </div>
-                           
-                                </div>
+                              
                                 
                                 <!-- Group Chat Tab -->
                                 <div class="group-content" id="group-chat-content">
@@ -1650,54 +1629,30 @@
                                             <div class="members-list">
                                                 <div class="member-item">
                                                     <div class="member-avatar">
-                                                        <img src="img/user.jpg" alt="John Doe">
+                                                        <img src="img/profile.png" alt="John Doe">
                                                     </div>
                                                     <div class="member-info">
-                                                        <h6 class="member-name">John Doe (You)</h6>
-                                                        <div class="member-status online">Online</div>
+                                                        <h6 class="member-name">Namal Rajapaksha (You)                                                            (You)</h6>
                                                     </div>
                                                 </div>
                                                 <div class="member-item">
                                                     <div class="member-avatar">
-                                                        <img src="img/student-1.jpg" alt="Alice Johnson">
+                                                        <img src="img/profile.png" alt="Alice Johnson">
                                                     </div>
                                                     <div class="member-info">
-                                                        <h6 class="member-name">Alice Johnson</h6>
-                                                        <div class="member-status online">Online</div>
+                                                        <h6 class="member-name">Bosilu Indeepa</h6>
                                                     </div>
                                                     <div class="member-actions">
                                                         <button title="Remove" class="text-danger remove-member-btn"><i class="bi bi-person-x"></i></button>
                                                     </div>
                                                 </div>
-                                                <div class="member-item">
-                                                    <div class="member-avatar">
-                                                        <img src="img/student-2.jpg" alt="Bob Smith">
-                                                    </div>
-                                                    <div class="member-info">
-                                                        <h6 class="member-name">Bob Smith</h6>
-                                                        <div class="member-status">Last seen 2 hours ago</div>
-                                                    </div>
-                                                    <div class="member-actions">
-                                                        <button title="Remove" class="text-danger remove-member-btn"><i class="bi bi-person-x"></i></button>
-                                                    </div>
-                                                </div>
-                                                <div class="member-item">
-                                                    <div class="member-avatar">
-                                                        <img src="img/student-3.jpg" alt="Carol Williams">
-                                                    </div>
-                                                    <div class="member-info">
-                                                        <h6 class="member-name">Carol Williams</h6>
-                                                        <div class="member-status online">Online</div>
-                                                    </div>
-                                                    <div class="member-actions">
-                                                        <button title="Remove" class="text-danger remove-member-btn"><i class="bi bi-person-x"></i></button>
-                                                    </div>
-                                                </div>
+                                                
+                                              
                                             </div>
                                         </div>
                                         <div class="chat-main">
                                             <div class="chat-header">
-                                                <h5>Database Project Team</h5>
+                                                <h5>SDP Group Project</h5>
                                                 <div class="chat-header-actions">
                                                     <button title="Add Member" id="addMemberBtn"><i class="bi bi-person-plus"></i></button>
                                                     <button title="Group Info"><i class="bi bi-info-circle"></i></button>
@@ -1705,45 +1660,22 @@
                                             </div>
                                             <div class="chat-messages" id="chatMessages">
                                                 <div class="message message-received">
-                                                    <div class="message-sender">Alice Johnson</div>
+                                                    <div class="message-sender">Bosilu Indeepa</div>
                                                     <div class="message-content">
-                                                        Hi everyone! I've started working on the ER diagram for our hospital management system. I'll share it once I have a draft ready.
+                                                        Hi everyone!
                                                     </div>
                                                     <div class="message-time">10:15 AM</div>
                                                 </div>
                                                 
-                                                <div class="message message-received">
-                                                    <div class="message-sender">Bob Smith</div>
-                                                    <div class="message-content">
-                                                        That's great Alice! I've been researching similar systems. I'll share my findings tomorrow.
-                                                    </div>
-                                                    <div class="message-time">11:30 AM</div>
-                                                </div>
-                                                
+                                       
                                                 <div class="message message-sent">
-                                                    <div class="message-sender">John Doe (You)</div>
+                                                    <div class="message-sender">Namal Rajapaksha (You)</div>
                                                     <div class="message-content">
-                                                        Thanks for taking the initiative! I think we should use PostgreSQL for this project since it handles complex queries well.
+                                                        Hi
                                                     </div>
-                                                    <div class="message-time">1:45 PM</div>
+                                                    <div class="message-time">10:16 AM</div>
                                                 </div>
-                                                
-                                                <div class="message message-received">
-                                                    <div class="message-sender">Carol Williams</div>
-                                                    <div class="message-content">
-                                                        I agree with John. PostgreSQL would be a good choice. I've worked with it before and it's great for relational data.
-                                                    </div>
-                                                    <div class="message-time">2:20 PM</div>
-                                                </div>
-                                                
-                                                <div class="typing-indicator">
-                                                    <span>Alice Johnson is typing</span>
-                                                    <div class="typing-dots">
-                                                        <div class="typing-dot"></div>
-                                                        <div class="typing-dot"></div>
-                                                        <div class="typing-dot"></div>
-                                                    </div>
-                                                </div>
+                                          
                                             </div>
                                             <div class="chat-input">
                                                 <textarea class="form-control" placeholder="Type a message..." rows="1" id="messageInput"></textarea>
@@ -1869,102 +1801,24 @@
                         </div>
                     </div>
                     
-                    <!-- Attendance Summary -->
-                    <div class="dashboard-section wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="section-header">
-                            <h4 class="section-title">Attendance Summary</h4>
-                            <a href="attendance.html" class="section-action">View Details</a>
-                        </div>
-                        <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-calendar-check dashboard-icon"></i>Attendance</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <div class="attendance-summary">
-                                    <div class="attendance-item attendance-present">
-                                        <div class="attendance-value">92%</div>
-                                        <div class="attendance-label">Present</div>
-                                    </div>
-                                    <div class="attendance-item attendance-absent">
-                                        <div class="attendance-value">5%</div>
-                                        <div class="attendance-label">Absent</div>
-                                    </div>
-                                    <div class="attendance-item attendance-late">
-                                        <div class="attendance-value">3%</div>
-                                        <div class="attendance-label">Late</div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Data Structures and Algorithms</div>
-                                        <div class="progress-value">95%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Database Management Systems</div>
-                                        <div class="progress-value">90%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Web Development</div>
-                                        <div class="progress-value">85%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-container">
-                                    <div class="progress-label">
-                                        <div class="progress-title">Software Engineering Principles</div>
-                                        <div class="progress-value">100%</div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  
                     
                     <!-- Support Tickets -->
                     <div class="dashboard-section wow fadeInUp" data-wow-delay="0.6s">
                         <div class="section-header">
-                            <h4 class="section-title">Support Tickets</h4>
-                            <a href="view-support-requests.html" class="section-action">View All</a>
+                          <h4 class="section-title">Support Tickets</h4>
+                          <a href="view-support-requests.html" class="section-action">View All</a>
                         </div>
                         <div class="dashboard-card">
-                            <div class="dashboard-card-header">
-                                <span><i class="bi bi-ticket-perforated dashboard-icon"></i>Recent Tickets</span>
-                            </div>
-                            <div class="dashboard-card-body">
-                                <div class="support-ticket">
-                                    <div class="ticket-info">
-                                        <div class="ticket-id">Ticket #SR-2023-001</div>
-                                        <div class="ticket-title">Unable to access course materials</div>
-                                    </div>
-                                    <span class="ticket-status status-in-progress">In Progress</span>
-                                </div>
-                                <div class="support-ticket" style="border-bottom: none;">
-                                    <div class="ticket-info">
-                                        <div class="ticket-id">Ticket #SR-2023-002</div>
-                                        <div class="ticket-title">Issue with assignment submission</div>
-                                    </div>
-                                    <span class="ticket-status status-resolved">Resolved</span>
-                                </div>
-                                <div class="text-center mt-3">
-                                    <a href="create-support-request.html" class="btn btn-primary">Create New Ticket</a>
-                                </div>
-                            </div>
+                          <div class="dashboard-card-header">
+                            <span><i class="bi bi-ticket-perforated dashboard-icon"></i>Recent Tickets</span>
+                          </div>
+                          <div id="supportTicketContainer" class="dashboard-card-body"> <!-- Add ID here -->
+                            <!-- Tickets will be populated here -->
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                      
                 </div>
             </div>
         </div>
@@ -2012,7 +1866,7 @@
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">Quick Links</h4>
                     <a class="btn btn-link" href="student-dashboard.html">Dashboard</a>
-                    <a class="btn btn-link" href="courses.html">My Courses</a>
+                    <a class="btn btn-link" href="View All Courses.html">My Courses</a>
                     <a class="btn btn-link" href="view-assignments.html">Assignments</a>
                     <a class="btn btn-link" href="events.html">Events</a>
                     <a class="btn btn-link" href="view-help-content.html">Help Center</a>
@@ -2790,88 +2644,147 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     const user = localStorage.getItem("user");
+    const groupTabs = document.querySelectorAll('.group-tab');
+    const groupContents = document.querySelectorAll('.group-content');
+
+    // Function to switch between tabs
+    function switchTab(event) {
+        const targetTab = event.target;
+
+        // Remove 'active' class from all tabs and content
+        groupTabs.forEach(tab => tab.classList.remove('active'));
+        groupContents.forEach(content => content.classList.remove('active'));
+
+        // Add 'active' class to the clicked tab
+        targetTab.classList.add('active');
+
+        // Show the corresponding content based on the tab clicked
+        const targetContentId = targetTab.getAttribute('data-tab');
+        const targetContent = document.getElementById(`${targetContentId}-content`);
+        targetContent.classList.add('active');
+    }
+
+    // Add event listeners to each tab
+    groupTabs.forEach(tab => tab.addEventListener('click', switchTab));
 
     if (user) {
         const userData = JSON.parse(user); // Parse the stored JSON string to an object
         console.log("Stored User Session:", userData);
-        
+
         const userId = userData.id; // Access the id property of the user
         console.log("User ID:", userId);
-        
+
         fetch(`http://localhost:8080/Students/byUser/${userId}`)
             .then(response => response.json())
             .then(studentData => {
-                // Log the relevant student details, specifically the studentID
                 const studentId = studentData.studentID;
                 console.log("Student Data:", studentData);
-                console.log("Student ID:", studentId); // Extract studentID from the response
+                console.log("Student ID:", studentId);
 
-                // Now fetch the groups associated with the studentId
                 return fetch(`http://localhost:8080/api/groups/student/${studentId}`);
             })
             .then(response => response.json())
             .then(groups => {
                 console.log("Groups Data:", groups);
-                
-                // Create a container to append the group cards
-                const groupContainer = document.querySelector('.group-container'); // Ensure you have a div with this class in your HTML
 
-                // Clear any existing content in the container
-                groupContainer.innerHTML = '';
+                const groupContainer = document.querySelector('.group-container');
+                groupContainer.innerHTML = ''; 
 
-                // Iterate through the groups and create the cards
+                // Iterate through the groups and create the group cards
                 groups.forEach(group => {
-                    // Create the group card
                     const groupCard = document.createElement('div');
                     groupCard.classList.add('group-card-small');
                     groupCard.setAttribute('data-group-id', group.groupId);
 
-                    // Create the header of the group card (Group Name)
                     const groupHeader = document.createElement('div');
                     groupHeader.classList.add('group-card-header-small');
                     groupHeader.textContent = group.groupName;
 
-                    // Create the body of the group card
                     const groupBody = document.createElement('div');
                     groupBody.classList.add('group-card-body-small');
 
-                    // Add the description of the group
                     const groupDescription = document.createElement('p');
                     groupDescription.classList.add('mb-1', 'text-muted', 'small');
                     groupDescription.textContent = group.description;
                     groupBody.appendChild(groupDescription);
 
-                    // Create the container for group members
                     const groupMembers = document.createElement('div');
                     groupMembers.classList.add('group-members-small');
 
-                    // Add members to the group card
                     group.members.forEach(member => {
                         const memberDiv = document.createElement('div');
                         memberDiv.classList.add('group-member-small');
 
                         const memberImg = document.createElement('img');
-                        memberImg.src = "img/profile.png"; // Replace with the actual profile image if available
+                        memberImg.src = "img/profile.png"; // Replace with actual profile image
                         memberImg.alt = `${member.user.firstName} ${member.user.lastName}`;
                         memberDiv.appendChild(memberImg);
 
                         groupMembers.appendChild(memberDiv);
                     });
 
-                    // Add the member count
                     const memberCount = document.createElement('div');
                     memberCount.classList.add('group-member-count-small');
                     memberCount.textContent = `+${group.members.length}`;
                     groupMembers.appendChild(memberCount);
 
-                    // Append all elements to the group card body
                     groupBody.appendChild(groupMembers);
-                    
-                    // Append the header and body to the group card
                     groupCard.appendChild(groupHeader);
                     groupCard.appendChild(groupBody);
 
-                    // Finally, append the group card to the container
+                    // Add a click event to the group card to fetch and display group students
+                    groupCard.addEventListener('click', function() {
+                        fetch(`http://localhost:8080/api/groups/group/${group.groupId}/students`)
+                            .then(response => response.json())
+                            .then(students => {
+                                console.log("Group Students:", students);
+
+                                const manageGroupsContent = document.getElementById('manage-groups-content');
+                                const selectedGroupTitle = manageGroupsContent.querySelector('h5');
+                                selectedGroupTitle.textContent = group.groupName;
+
+                                const selectedStudents = document.getElementById('selectedStudents');
+                                selectedStudents.innerHTML = ''; // Clear any previous student list
+
+                                // Loop through the students and display their details in the Group Chat tab
+                                students.forEach(student => {
+                                    const studentDiv = document.createElement('div');
+                                    studentDiv.classList.add('student-item');
+
+                                    const studentName = document.createElement('h6');
+                                    studentName.textContent = `${student.user.firstName} ${student.user.lastName}`;
+                                    studentDiv.appendChild(studentName);
+
+                                    const studentEmail = document.createElement('p');
+                                    studentEmail.textContent = `Email: ${student.user.email}`;
+                                    studentDiv.appendChild(studentEmail);
+
+                                    const studentPhone = document.createElement('p');
+                                    studentPhone.textContent = `Phone: ${student.user.phoneNumber}`;
+                                    studentDiv.appendChild(studentPhone);
+
+                                    const studentDOB = document.createElement('p');
+                                    studentDOB.textContent = `DOB: ${student.user.dob}`;
+                                    studentDiv.appendChild(studentDOB);
+
+                                    const studentDegree = document.createElement('p');
+                                    studentDegree.textContent = `Degree Status: ${student.studentDegrees.map(degree => `${degree.grade}`).join(', ')}`;
+                                    studentDiv.appendChild(studentDegree);
+
+                                    selectedStudents.appendChild(studentDiv);
+                                });
+
+                                // Switch to the "Group Chat" tab
+                                const groupChatTab = document.querySelector('[data-tab="group-chat"]');
+                                if (groupChatTab) {
+                                    groupChatTab.click(); 
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error fetching group students:", error);
+                            });
+                    });
+
                     groupContainer.appendChild(groupCard);
                 });
             })
@@ -2881,9 +2794,129 @@
     } else {
         console.log("No user session found.");
     }
+
+    const defaultTab = document.querySelector('[data-tab="my-groups"]');
+    if (defaultTab) {
+        defaultTab.click();
+    }
 });
 
 </script>
+<script>
+groupCard.addEventListener('click', function() {
+    fetch(`http://localhost:8080/api/groups/group/${group.groupId}/students`)
+        .then(response => response.json())
+        .then(students => {
+            console.log("Group ID:", group.groupId); 
+            console.log("Group Students:", students); 
+
+            const manageGroupsContent = document.getElementById('manage-groups-content');
+            const selectedGroupTitle = manageGroupsContent.querySelector('h5');
+            selectedGroupTitle.textContent = group.groupName;
+
+            const selectedStudents = document.getElementById('selectedStudents');
+            selectedStudents.innerHTML = ''; // Clear any previous student list
+
+            // Loop through the students and display their details in the Group Chat tab
+            students.forEach(student => {
+                const studentDiv = document.createElement('div');
+                studentDiv.classList.add('student-item');
+
+                const studentName = document.createElement('h6');
+                studentName.textContent = `${student.user.firstName} ${student.user.lastName}`;
+                studentDiv.appendChild(studentName);
+
+                const studentEmail = document.createElement('p');
+                studentEmail.textContent = `Email: ${student.user.email}`;
+                studentDiv.appendChild(studentEmail);
+
+                const studentPhone = document.createElement('p');
+                studentPhone.textContent = `Phone: ${student.user.phoneNumber}`;
+                studentDiv.appendChild(studentPhone);
+
+                const studentDOB = document.createElement('p');
+                studentDOB.textContent = `DOB: ${student.user.dob}`;
+                studentDiv.appendChild(studentDOB);
+
+                const studentDegree = document.createElement('p');
+                studentDegree.textContent = `Degree Status: ${student.studentDegrees.map(degree => `${degree.grade}`).join(', ')}`;
+                studentDiv.appendChild(studentDegree);
+
+                selectedStudents.appendChild(studentDiv);
+            });
+
+            // Switch to the "Group Chat" tab
+            const groupChatTab = document.querySelector('[data-tab="group-chat"]');
+            if (groupChatTab) {
+                groupChatTab.click(); 
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching group students:", error);
+        });
+});
+
+</script>
+
+
+<script>
+    $(document).ready(function() {
+      // Fetch data from the API
+      $.ajax({
+        url: 'http://localhost:8080/api/support/allMessages',
+        type: 'GET',
+        success: function(data) {
+          // Populate the support ticket section
+          populateSupportTickets(data);
+        },
+        error: function(error) {
+          console.error('Error fetching support tickets:', error);
+        }
+      });
+  
+      // Function to populate the support tickets
+      function populateSupportTickets(tickets) {
+        var ticketContainer = $('#supportTicketContainer'); // Use ID here
+        ticketContainer.empty();  // Clear existing content
+  
+        if (tickets.length > 0) {
+          tickets.forEach(function(ticket) {
+            // Create a new support ticket row
+            var ticketRow = `
+              <div class="support-ticket">
+                <div class="ticket-info">
+                  <div class="ticket-id">Ticket #SR-2023-${ticket.id}</div>
+                  <div class="ticket-title">${ticket.title}</div>
+                </div>
+                <span class="ticket-status ${getStatusClass(ticket.category)}">${capitalizeFirstLetter(ticket.category.replace('-', ' '))}</span>
+              </div>
+            `;
+            ticketContainer.append(ticketRow);
+          });
+        } else {
+          ticketContainer.append('<p>No tickets available</p>');
+        }
+      }
+  
+      // Function to capitalize the first letter of a string
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+      }
+  
+      // Function to determine the status class based on the category
+      function getStatusClass(category) {
+        switch(category) {
+          case 'getting-started':
+            return 'status-in-progress';
+          case 'resolved':
+            return 'status-resolved';
+          default:
+            return 'status-pending';
+        }
+      }
+    });
+  </script>
+  
 
 </body>
 </html>

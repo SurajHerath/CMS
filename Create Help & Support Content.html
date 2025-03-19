@@ -160,34 +160,40 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Courses</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-course.html" class="dropdown-item">Insert Course</a>
-                        <a href="view-all-courses.html" class="dropdown-item">View All Courses</a>
+                <a href="Student index.html" class="nav-item nav-link">Home</a>
+                
+                <div id="adminMenu" style="display: none;">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Courses</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="Insert Course.html" class="dropdown-item">Insert Course</a>
+                            <a href="View All Courses.html" class="dropdown-item active">View All Courses</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Degree Programmes</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="Insert Degree Programme.html" class="dropdown-item">Insert Degree Programme</a>
+                            <a href="View All Degree Programmes.html" class="dropdown-item">View All Degree Programmes</a>
+                        </div>
                     </div>
                 </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Assignments</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="upload-assignment.html" class="dropdown-item">Upload Assignment</a>
-                        <a href="view-assignments.html" class="dropdown-item">View Assignments</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Help & Support</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="insert-help-content.html" class="dropdown-item active">Create Content</a>
-                        <a href="view-help-content.html" class="dropdown-item">View Help Center</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+    
             </div>
             <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve user data from session storage (or local storage)
+            const userData = JSON.parse(sessionStorage.getItem("user"));
+    
+            if (userData && userData.role === "Admin") {
+                document.getElementById("adminMenu").style.display = "block";
+            }
+        });
+    </script>
     <!-- Navbar End -->
 
     <!-- Header Start -->
