@@ -252,44 +252,35 @@
             </script>
             
             
-            <!-- Category Selector -->
-            <div class="category-selector wow fadeInUp" data-wow-delay="0.3s">
-                <h4 class="mb-3">Select Analytics Category</h4>
-                <div class="d-flex flex-wrap">
-                    <button class="btn btn-outline-primary category-btn active" data-category="overview">Overview</button>
-                    <button class="btn btn-outline-primary category-btn" data-category="events">Events</button>
-                    <button class="btn btn-outline-primary category-btn" data-category="enrollment">Course Enrollment</button>
-                    <button class="btn btn-outline-primary category-btn" data-category="classrooms">Classrooms</button>
-                    <button class="btn btn-outline-primary category-btn" data-category="faculty">Faculty & Students</button>
-                    <button class="btn btn-outline-primary category-btn" data-category="facilities">Facilities</button>
-                </div>
-            </div>
-            
+        
             <!-- Overview Dashboard -->
             <div id="overview-dashboard" class="dashboard-container active wow fadeInUp" data-wow-delay="0.5s">
                 <div class="row">
+                   
                     <div class="col-lg-6">
                         <div class="chart-container">
-                            <div class="chart-title">Student Enrollment Trends</div>
-                            <canvas id="enrollmentTrendChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="chart-container">
-                            <div class="chart-title">Department Distribution</div>
-                            <canvas id="departmentDistributionChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="chart-container">
-                            <div class="chart-title">Classroom Utilization</div>
+                            <div class="chart-title">Resource Utilization</div>
                             <canvas id="classroomUtilizationChart"></canvas>
                         </div>
                     </div>
+
                     <div class="col-lg-6">
                         <div class="chart-container">
-                            <div class="chart-title">Event Attendance</div>
-                            <canvas id="eventAttendanceChart"></canvas>
+                            <div class="chart-title">Student Count by Degree</div>
+                            <canvas id="departmentDistributionChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="chart-container">
+                            <div class="chart-title">Classroom Availability by Day</div>
+                            <canvas id="classroomAvailabilityChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-container">
+                            <div class="chart-title">Classroom Capacity Distribution</div>
+                            <canvas id="classroomCapacityChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -379,26 +370,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="chart-container">
-                            <div class="chart-title">Classroom Availability by Day</div>
-                            <canvas id="classroomAvailabilityChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="chart-container">
-                            <div class="chart-title">Classroom Capacity Distribution</div>
-                            <canvas id="classroomCapacityChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="chart-container">
-                            <div class="chart-title">Classroom Utilization by Hour</div>
-                            <canvas id="hourlyUtilizationChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             
             <!-- Faculty & Students Dashboard -->
@@ -586,10 +558,8 @@
         // Function to initialize all charts
         function initializeCharts() {
             // Overview Dashboard Charts
-            initEnrollmentTrendChart();
             initDepartmentDistributionChart();
             initClassroomUtilizationChart();
-            initEventAttendanceChart();
             
             // Events Dashboard Charts
             initEventTypeAttendanceChart();
@@ -618,127 +588,114 @@
         }
         
         // Overview Dashboard Charts
-        function initEnrollmentTrendChart() {
-            const ctx = document.getElementById('enrollmentTrendChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    datasets: [{
-                        label: 'New Enrollments',
-                        data: [65, 59, 80, 81, 56, 55, 40, 120, 180, 130, 105, 95],
-                        backgroundColor: 'rgba(6, 187, 204, 0.2)',
-                        borderColor: 'rgba(6, 187, 204, 1)',
-                        borderWidth: 2,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+      
+        async function initDepartmentDistributionChart() {
+    try {
+        // Fetch data from API
+        const response = await fetch('http://localhost:8080/api/analytics/student-count-by-program');
+        const data = await response.json();
+
+        // Extract program names and student counts
+        const labels = data.map(item => item.programName);
+        const studentCounts = data.map(item => item.studentCount);
+
+        // Define colors dynamically based on the number of programs
+        const backgroundColors = [
+            'rgba(6, 187, 204, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)'
+        ];
+
+        // Get canvas context
+        const ctx = document.getElementById('departmentDistributionChart').getContext('2d');
+
+        // Create chart
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: studentCounts,
+                    backgroundColor: backgroundColors.slice(0, labels.length),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
                     }
                 }
-            });
-        }
-        
-        function initDepartmentDistributionChart() {
-            const ctx = document.getElementById('departmentDistributionChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Computer Science', 'Mathematics', 'English', 'Science', 'Business', 'Arts'],
-                    datasets: [{
-                        data: [35, 20, 15, 10, 12, 8],
-                        backgroundColor: [
-                            'rgba(6, 187, 204, 0.7)',
-                            'rgba(54, 162, 235, 0.7)',
-                            'rgba(255, 206, 86, 0.7)',
-                            'rgba(75, 192, 192, 0.7)',
-                            'rgba(153, 102, 255, 0.7)',
-                            'rgba(255, 159, 64, 0.7)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        }
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching department data:', error);
+    }
+}
+
+// Initialize the chart
+initDepartmentDistributionChart();
+
+async function initClassroomUtilizationChart() {
+    try {
+        // Fetch data from API
+        const response = await fetch('http://localhost:8080/api/analytics/department-resources');
+        const data = await response.json();
+
+        // Filter only classrooms (or other resource types if needed)
+        const classrooms = data.filter(item => item.type === "Classroom");
+
+        // Extract resource names and capacities
+        const labels = classrooms.map(item => item.resourceName);
+        const capacities = classrooms.map(item => item.capacity);
+        const utilizedHours = classrooms.map(() => Math.floor(Math.random() * 50) + 10); // Simulated values
+        const availableHours = capacities.map((capacity, index) => capacity / 10 - utilizedHours[index]); // Example logic
+
+        // Get canvas context
+        const ctx = document.getElementById('classroomUtilizationChart').getContext('2d');
+
+        // Create chart
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Utilized Hours',
+                    data: utilizedHours,
+                    backgroundColor: 'rgba(6, 187, 204, 0.7)'
+                }, {
+                    label: 'Available Hours',
+                    data: availableHours,
+                    backgroundColor: 'rgba(220, 220, 220, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
                     }
                 }
-            });
-        }
-        
-        function initClassroomUtilizationChart() {
-            const ctx = document.getElementById('classroomUtilizationChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Building A', 'Building B', 'Building C', 'Building D'],
-                    datasets: [{
-                        label: 'Utilized Hours',
-                        data: [42, 38, 30, 25],
-                        backgroundColor: 'rgba(6, 187, 204, 0.7)'
-                    }, {
-                        label: 'Available Hours',
-                        data: [18, 22, 30, 35],
-                        backgroundColor: 'rgba(220, 220, 220, 0.7)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            stacked: true
-                        },
-                        y: {
-                            stacked: true,
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-        
-        function initEventAttendanceChart() {
-            const ctx = document.getElementById('eventAttendanceChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Tech Conference', 'Web Workshop', 'Data Science Seminar', 'AI Webinar', 'Coding Competition'],
-                    datasets: [{
-                        label: 'Attendance',
-                        data: [120, 45, 85, 65, 40],
-                        backgroundColor: [
-                            'rgba(6, 187, 204, 0.7)',
-                            'rgba(54, 162, 235, 0.7)',
-                            'rgba(255, 206, 86, 0.7)',
-                            'rgba(75, 192, 192, 0.7)',
-                            'rgba(153, 102, 255, 0.7)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-        
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching classroom utilization data:', error);
+    }
+}
+
+// Initialize the chart
+initClassroomUtilizationChart();
+
         // Events Dashboard Charts
         function initEventTypeAttendanceChart() {
             const ctx = document.getElementById('eventTypeAttendanceChart').getContext('2d');
@@ -930,14 +887,27 @@
             });
         }
         
-        function initClassroomCapacityChart() {
-            const ctx = document.getElementById('classroomCapacityChart').getContext('2d');
+        async function initClassroomCapacityChart() {
+    const ctx = document.getElementById('classroomCapacityChart').getContext('2d');
+
+    // Fetch the data from the API
+    fetch('http://localhost:8080/api/analytics/capacity-count')
+        .then(response => response.json())
+        .then(data => {
+            // Use the fetched data to populate the chart
+            const capacityData = {
+                small: data.small,
+                medium: data.medium,
+                large: data.large,
+                'extra large': data['extra large']
+            };
+
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: ['Small (< 30)', 'Medium (30-60)', 'Large (60-100)', 'Extra Large (> 100)'],
                     datasets: [{
-                        data: [15, 25, 10, 5],
+                        data: [capacityData.small, capacityData.medium, capacityData.large, capacityData['extra large']],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.7)',
                             'rgba(54, 162, 235, 0.7)',
@@ -957,8 +927,12 @@
                     }
                 }
             });
-        }
-        
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}
+
         function initHourlyUtilizationChart() {
             const ctx = document.getElementById('hourlyUtilizationChart').getContext('2d');
             new Chart(ctx, {

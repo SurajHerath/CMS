@@ -637,37 +637,13 @@ fetch("http://localhost:8080/events", requestOptions)
       const registrationInfo = document.createElement('div');
       registrationInfo.classList.add('registration-info');
       
-      const capacityInfo = document.createElement('div');
-      capacityInfo.classList.add('d-flex', 'justify-content-between', 'align-items-center');
-      const capacityLabel = document.createElement('span');
-      capacityLabel.innerHTML = `<i class="bi bi-people-fill me-1"></i> Maximum Capacity:`;
-      const capacityValue = document.createElement('span');
-      capacityValue.textContent = event.maxCapacity + " attendees";
-
-      capacityInfo.appendChild(capacityLabel);
-      capacityInfo.appendChild(capacityValue);
-
-      const capacityIndicator = document.createElement('div');
-      capacityIndicator.classList.add('capacity-indicator');
-      const capacityFill = document.createElement('div');
-      capacityFill.classList.add('capacity-fill');
-      const capacityPercent = Math.min(100, (Math.random() * 100).toFixed(2)); // Just simulating a random fill percentage for demo
-      capacityFill.style.width = `${capacityPercent}%`;
-      capacityIndicator.appendChild(capacityFill);
-
-      const capacityText = document.createElement('div');
-      capacityText.classList.add('capacity-text');
-      capacityText.textContent = `${Math.floor(capacityPercent * event.maxCapacity / 100)} / ${event.maxCapacity} registered`;
-
       const registrationDeadline = document.createElement('div');
       registrationDeadline.classList.add('mt-2');
       const deadlineText = document.createElement('span');
       deadlineText.classList.add('deadline-upcoming');
       deadlineText.innerHTML = `<i class="bi bi-exclamation-circle me-1"></i> Registration Deadline: ${event.registerDeadline}`;
 
-      registrationInfo.appendChild(capacityInfo);
-      registrationInfo.appendChild(capacityIndicator);
-      registrationInfo.appendChild(capacityText);
+   
       registrationInfo.appendChild(registrationDeadline);
 
       // Append everything to the event body
